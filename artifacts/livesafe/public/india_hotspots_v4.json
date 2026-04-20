@@ -1,0 +1,3343 @@
+[
+  {
+    "id": "hs_012",
+    "city": "Delhi (overall)",
+    "state": "Delhi",
+    "lat": 28.7041,
+    "lon": 77.1025,
+    "risk_level": "critical",
+    "risk_score": 78.4,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 1832,
+    "predicted_crimes": [
+      "assault",
+      "kidnapping",
+      "crime_against_women",
+      "cybercrime"
+    ],
+    "primary_warning": "CRITICAL RISK: Delhi is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, kidnapping.",
+    "trend": "rising",
+    "population_lakh": 320.0,
+    "radius_meters": 2076,
+    "features_v4": {
+      "ipc_rate": 1832,
+      "cyber_rate": 182,
+      "violent_rate": 388,
+      "caw_rate": 215,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.52,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_003",
+    "city": "Muzaffarpur",
+    "state": "Bihar",
+    "lat": 26.1209,
+    "lon": 85.3647,
+    "risk_level": "critical",
+    "risk_score": 60.4,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 695,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Muzaffarpur is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 3.8,
+    "radius_meters": 1884,
+    "features_v4": {
+      "ipc_rate": 695,
+      "cyber_rate": 24,
+      "violent_rate": 310,
+      "caw_rate": 198,
+      "unemployment": 0.19,
+      "poverty_mpce": 0.21,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_004",
+    "city": "Patna City",
+    "state": "Bihar",
+    "lat": 25.6093,
+    "lon": 85.1376,
+    "risk_level": "critical",
+    "risk_score": 59.2,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 712,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Patna City is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 16.8,
+    "radius_meters": 1908,
+    "features_v4": {
+      "ipc_rate": 712,
+      "cyber_rate": 42,
+      "violent_rate": 295,
+      "caw_rate": 188,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.22,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_008",
+    "city": "Samastipur",
+    "state": "Bihar",
+    "lat": 25.87,
+    "lon": 85.78,
+    "risk_level": "critical",
+    "risk_score": 56.5,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 655,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Samastipur is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 4.2,
+    "radius_meters": 1836,
+    "features_v4": {
+      "ipc_rate": 655,
+      "cyber_rate": 19,
+      "violent_rate": 278,
+      "caw_rate": 182,
+      "unemployment": 0.19,
+      "poverty_mpce": 0.2,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_006",
+    "city": "Nuh (Mewat)",
+    "state": "Haryana",
+    "lat": 28.1108,
+    "lon": 77.0,
+    "risk_level": "critical",
+    "risk_score": 55.9,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 668,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Nuh is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 1.1,
+    "radius_meters": 1764,
+    "features_v4": {
+      "ipc_rate": 668,
+      "cyber_rate": 31,
+      "violent_rate": 275,
+      "caw_rate": 172,
+      "unemployment": 0.24,
+      "poverty_mpce": 0.19,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_005",
+    "city": "Dhanbad",
+    "state": "Jharkhand",
+    "lat": 23.7957,
+    "lon": 86.4304,
+    "risk_level": "critical",
+    "risk_score": 54.7,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 689,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Dhanbad is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 11.6,
+    "radius_meters": 1848,
+    "features_v4": {
+      "ipc_rate": 689,
+      "cyber_rate": 29,
+      "violent_rate": 281,
+      "caw_rate": 155,
+      "unemployment": 0.2,
+      "poverty_mpce": 0.24,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_009",
+    "city": "Begusarai",
+    "state": "Bihar",
+    "lat": 25.4182,
+    "lon": 86.1272,
+    "risk_level": "critical",
+    "risk_score": 54.4,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 638,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Begusarai is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 2.9,
+    "radius_meters": 1812,
+    "features_v4": {
+      "ipc_rate": 638,
+      "cyber_rate": 17,
+      "violent_rate": 268,
+      "caw_rate": 176,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.21,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_001",
+    "city": "Dharavi",
+    "state": "Maharashtra",
+    "lat": 19.0422,
+    "lon": 72.8549,
+    "risk_level": "critical",
+    "risk_score": 54.1,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 820,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "crime_against_women",
+      "theft"
+    ],
+    "primary_warning": "CRITICAL RISK: Dharavi is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 8.5,
+    "radius_meters": 2076,
+    "features_v4": {
+      "ipc_rate": 820,
+      "cyber_rate": 18,
+      "violent_rate": 290,
+      "caw_rate": 165,
+      "unemployment": 0.22,
+      "poverty_mpce": 0.28,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_007",
+    "city": "Sangam Vihar",
+    "state": "Delhi",
+    "lat": 28.5111,
+    "lon": 77.2673,
+    "risk_level": "critical",
+    "risk_score": 52.8,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 642,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Sangam Vihar is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 5.5,
+    "radius_meters": 2028,
+    "features_v4": {
+      "ipc_rate": 642,
+      "cyber_rate": 68,
+      "violent_rate": 262,
+      "caw_rate": 145,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.33,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_002",
+    "city": "Govandi",
+    "state": "Maharashtra",
+    "lat": 19.0728,
+    "lon": 72.9222,
+    "risk_level": "critical",
+    "risk_score": 50.9,
+    "model_confidence": 99.6,
+    "crime_rate_per_lakh": 780,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "crime_against_women",
+      "theft"
+    ],
+    "primary_warning": "CRITICAL RISK: Govandi is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 6.2,
+    "radius_meters": 2052,
+    "features_v4": {
+      "ipc_rate": 780,
+      "cyber_rate": 21,
+      "violent_rate": 265,
+      "caw_rate": 142,
+      "unemployment": 0.21,
+      "poverty_mpce": 0.31,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_084",
+    "city": "Patna (metro)",
+    "state": "Bihar",
+    "lat": 25.5941,
+    "lon": 85.1376,
+    "risk_level": "critical",
+    "risk_score": 48.1,
+    "model_confidence": 98.0,
+    "crime_rate_per_lakh": 525,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Patna is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 20.5,
+    "radius_meters": 1932,
+    "features_v4": {
+      "ipc_rate": 525,
+      "cyber_rate": 52,
+      "violent_rate": 212,
+      "caw_rate": 122,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.24,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_011",
+    "city": "Kanpur",
+    "state": "Uttar Pradesh",
+    "lat": 26.4499,
+    "lon": 80.3319,
+    "risk_level": "critical",
+    "risk_score": 44.4,
+    "model_confidence": 89.7,
+    "crime_rate_per_lakh": 561,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Kanpur is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 29.2,
+    "radius_meters": 1956,
+    "features_v4": {
+      "ipc_rate": 561,
+      "cyber_rate": 55,
+      "violent_rate": 218,
+      "caw_rate": 128,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.3,
+      "cluster_id": 4
+    }
+  },
+  {
+    "id": "hs_010",
+    "city": "Howrah",
+    "state": "West Bengal",
+    "lat": 22.5958,
+    "lon": 88.2636,
+    "risk_level": "critical",
+    "risk_score": 44.1,
+    "model_confidence": 89.4,
+    "crime_rate_per_lakh": 588,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Howrah is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 10.8,
+    "radius_meters": 1992,
+    "features_v4": {
+      "ipc_rate": 588,
+      "cyber_rate": 52,
+      "violent_rate": 225,
+      "caw_rate": 132,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.36,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_013",
+    "city": "Agra",
+    "state": "Uttar Pradesh",
+    "lat": 27.1767,
+    "lon": 78.0081,
+    "risk_level": "high",
+    "risk_score": 43.9,
+    "model_confidence": 95.9,
+    "crime_rate_per_lakh": 548,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Agra. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 17.6,
+    "radius_meters": 1526,
+    "features_v4": {
+      "ipc_rate": 548,
+      "cyber_rate": 47,
+      "violent_rate": 208,
+      "caw_rate": 118,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.28,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_085",
+    "city": "Gaya",
+    "state": "Bihar",
+    "lat": 24.7914,
+    "lon": 85.0002,
+    "risk_level": "critical",
+    "risk_score": 43.1,
+    "model_confidence": 82.9,
+    "crime_rate_per_lakh": 498,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "CRITICAL RISK: Gaya is among India's highest-crime zones. Avoid isolated areas, especially after dark. High incidence of assault, murder.",
+    "trend": "rising",
+    "population_lakh": 4.7,
+    "radius_meters": 1836,
+    "features_v4": {
+      "ipc_rate": 498,
+      "cyber_rate": 38,
+      "violent_rate": 202,
+      "caw_rate": 115,
+      "unemployment": 0.19,
+      "poverty_mpce": 0.21,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_086",
+    "city": "Bhagalpur",
+    "state": "Bihar",
+    "lat": 25.2425,
+    "lon": 86.9842,
+    "risk_level": "high",
+    "risk_score": 42.9,
+    "model_confidence": 97.1,
+    "crime_rate_per_lakh": 478,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bhagalpur. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "stable",
+    "population_lakh": 4.1,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 478,
+      "cyber_rate": 32,
+      "violent_rate": 195,
+      "caw_rate": 110,
+      "unemployment": 0.19,
+      "poverty_mpce": 0.2,
+      "cluster_id": 1
+    }
+  },
+  {
+    "id": "hs_015",
+    "city": "Allahabad (Prayagraj)",
+    "state": "Uttar Pradesh",
+    "lat": 25.4358,
+    "lon": 81.8463,
+    "risk_level": "high",
+    "risk_score": 42.8,
+    "model_confidence": 99.3,
+    "crime_rate_per_lakh": 518,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Allahabad. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 11.2,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 518,
+      "cyber_rate": 44,
+      "violent_rate": 198,
+      "caw_rate": 112,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.27,
+      "cluster_id": 5
+    }
+  },
+  {
+    "id": "hs_018",
+    "city": "Ghaziabad",
+    "state": "Uttar Pradesh",
+    "lat": 28.6692,
+    "lon": 77.4538,
+    "risk_level": "high",
+    "risk_score": 42.6,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 498,
+    "predicted_crimes": [
+      "assault",
+      "kidnapping",
+      "crime_against_women",
+      "theft"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Ghaziabad. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 23.6,
+    "radius_meters": 1574,
+    "features_v4": {
+      "ipc_rate": 498,
+      "cyber_rate": 72,
+      "violent_rate": 188,
+      "caw_rate": 106,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.38,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_014",
+    "city": "Meerut",
+    "state": "Uttar Pradesh",
+    "lat": 28.9845,
+    "lon": 77.7064,
+    "risk_level": "high",
+    "risk_score": 42.4,
+    "model_confidence": 85.3,
+    "crime_rate_per_lakh": 532,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Meerut. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 14.5,
+    "radius_meters": 1536,
+    "features_v4": {
+      "ipc_rate": 532,
+      "cyber_rate": 49,
+      "violent_rate": 212,
+      "caw_rate": 122,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.29,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_016",
+    "city": "Lucknow",
+    "state": "Uttar Pradesh",
+    "lat": 26.8467,
+    "lon": 80.9462,
+    "risk_level": "high",
+    "risk_score": 42.3,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 505,
+    "predicted_crimes": [
+      "assault",
+      "kidnapping",
+      "crime_against_women",
+      "theft"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Lucknow. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 34.2,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 505,
+      "cyber_rate": 62,
+      "violent_rate": 192,
+      "caw_rate": 108,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.35,
+      "cluster_id": 4
+    }
+  },
+  {
+    "id": "hs_113",
+    "city": "Aligarh",
+    "state": "Uttar Pradesh",
+    "lat": 27.8974,
+    "lon": 78.088,
+    "risk_level": "high",
+    "risk_score": 42.0,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 465,
+    "predicted_crimes": [
+      "kidnapping",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Aligarh. Stay in well-lit public areas. Notable kidnapping activity reported.",
+    "trend": "rising",
+    "population_lakh": 8.7,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 465,
+      "cyber_rate": 55,
+      "violent_rate": 180,
+      "caw_rate": 100,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.26,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_021",
+    "city": "Ranchi",
+    "state": "Jharkhand",
+    "lat": 23.3441,
+    "lon": 85.3096,
+    "risk_level": "high",
+    "risk_score": 41.5,
+    "model_confidence": 95.8,
+    "crime_rate_per_lakh": 458,
+    "predicted_crimes": [
+      "assault",
+      "murder",
+      "kidnapping",
+      "crime_against_women"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Ranchi. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 14.6,
+    "radius_meters": 1440,
+    "features_v4": {
+      "ipc_rate": 458,
+      "cyber_rate": 42,
+      "violent_rate": 188,
+      "caw_rate": 108,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.28,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_115",
+    "city": "Bareilly",
+    "state": "Uttar Pradesh",
+    "lat": 28.367,
+    "lon": 79.4304,
+    "risk_level": "high",
+    "risk_score": 41.0,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 458,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bareilly. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 10.1,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 458,
+      "cyber_rate": 52,
+      "violent_rate": 176,
+      "caw_rate": 98,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.26,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_114",
+    "city": "Gorakhpur",
+    "state": "Uttar Pradesh",
+    "lat": 26.7606,
+    "lon": 83.3732,
+    "risk_level": "high",
+    "risk_score": 40.6,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 455,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Gorakhpur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 7.4,
+    "radius_meters": 1488,
+    "features_v4": {
+      "ipc_rate": 455,
+      "cyber_rate": 50,
+      "violent_rate": 175,
+      "caw_rate": 98,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.26,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_058",
+    "city": "Indore",
+    "state": "Madhya Pradesh",
+    "lat": 22.7196,
+    "lon": 75.8577,
+    "risk_level": "high",
+    "risk_score": 40.3,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 478,
+    "predicted_crimes": [
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Indore. Stay in well-lit public areas. Notable economic_offence activity reported.",
+    "trend": "rising",
+    "population_lakh": 34.2,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 478,
+      "cyber_rate": 75,
+      "violent_rate": 178,
+      "caw_rate": 100,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.42,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_023",
+    "city": "Nagpur",
+    "state": "Maharashtra",
+    "lat": 21.1458,
+    "lon": 79.0882,
+    "risk_level": "high",
+    "risk_score": 40.2,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 462,
+    "predicted_crimes": [
+      "assault",
+      "crime_against_women",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Nagpur. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "rising",
+    "population_lakh": 25.6,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 462,
+      "cyber_rate": 65,
+      "violent_rate": 182,
+      "caw_rate": 101,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.42,
+      "cluster_id": 6
+    }
+  },
+  {
+    "id": "hs_054",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "lat": 26.9124,
+    "lon": 75.7873,
+    "risk_level": "high",
+    "risk_score": 40.0,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 468,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Jaipur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 34.6,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 468,
+      "cyber_rate": 72,
+      "violent_rate": 175,
+      "caw_rate": 98,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.4,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_019",
+    "city": "Gurgaon (Gurugram)",
+    "state": "Haryana",
+    "lat": 28.4595,
+    "lon": 77.0266,
+    "risk_level": "high",
+    "risk_score": 39.3,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 478,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Gurgaon. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 15.1,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 478,
+      "cyber_rate": 98,
+      "violent_rate": 172,
+      "caw_rate": 95,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.62,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_017",
+    "city": "Varanasi",
+    "state": "Uttar Pradesh",
+    "lat": 25.3176,
+    "lon": 82.9739,
+    "risk_level": "high",
+    "risk_score": 39.1,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 492,
+    "predicted_crimes": [
+      "assault",
+      "crime_against_women",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Varanasi. Stay in well-lit public areas. Notable assault activity reported.",
+    "trend": "stable",
+    "population_lakh": 12.1,
+    "radius_meters": 1516,
+    "features_v4": {
+      "ipc_rate": 492,
+      "cyber_rate": 38,
+      "violent_rate": 185,
+      "caw_rate": 102,
+      "unemployment": 0.17,
+      "poverty_mpce": 0.26,
+      "cluster_id": 5
+    }
+  },
+  {
+    "id": "hs_116",
+    "city": "Moradabad",
+    "state": "Uttar Pradesh",
+    "lat": 28.8386,
+    "lon": 78.7733,
+    "risk_level": "high",
+    "risk_score": 38.9,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 448,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Moradabad. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 8.9,
+    "radius_meters": 1488,
+    "features_v4": {
+      "ipc_rate": 448,
+      "cyber_rate": 50,
+      "violent_rate": 172,
+      "caw_rate": 96,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.25,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_022",
+    "city": "Jamshedpur",
+    "state": "Jharkhand",
+    "lat": 22.8046,
+    "lon": 86.2029,
+    "risk_level": "high",
+    "risk_score": 38.6,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 448,
+    "predicted_crimes": [
+      "murder",
+      "kidnapping",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Jamshedpur. Stay in well-lit public areas. Notable murder activity reported.",
+    "trend": "stable",
+    "population_lakh": 7.2,
+    "radius_meters": 1430,
+    "features_v4": {
+      "ipc_rate": 448,
+      "cyber_rate": 38,
+      "violent_rate": 178,
+      "caw_rate": 98,
+      "unemployment": 0.17,
+      "poverty_mpce": 0.3,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_059",
+    "city": "Bhopal",
+    "state": "Madhya Pradesh",
+    "lat": 23.2599,
+    "lon": 77.4126,
+    "risk_level": "high",
+    "risk_score": 38.6,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 455,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bhopal. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 23.8,
+    "radius_meters": 1526,
+    "features_v4": {
+      "ipc_rate": 455,
+      "cyber_rate": 65,
+      "violent_rate": 168,
+      "caw_rate": 94,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.4,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_061",
+    "city": "Gwalior",
+    "state": "Madhya Pradesh",
+    "lat": 26.2183,
+    "lon": 78.1828,
+    "risk_level": "high",
+    "risk_score": 38.6,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 448,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Gwalior. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 11.7,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 448,
+      "cyber_rate": 58,
+      "violent_rate": 168,
+      "caw_rate": 94,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.35,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_024",
+    "city": "Aurangabad",
+    "state": "Maharashtra",
+    "lat": 19.8762,
+    "lon": 75.3433,
+    "risk_level": "high",
+    "risk_score": 38.5,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 448,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Aurangabad. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 11.8,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 448,
+      "cyber_rate": 52,
+      "violent_rate": 172,
+      "caw_rate": 95,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.38,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_064",
+    "city": "Guwahati",
+    "state": "Assam",
+    "lat": 26.1445,
+    "lon": 91.7362,
+    "risk_level": "high",
+    "risk_score": 38.5,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 418,
+    "predicted_crimes": [
+      "kidnapping",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Guwahati. Stay in well-lit public areas. Notable kidnapping activity reported.",
+    "trend": "rising",
+    "population_lakh": 9.6,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 418,
+      "cyber_rate": 48,
+      "violent_rate": 165,
+      "caw_rate": 92,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.32,
+      "cluster_id": 16
+    }
+  },
+  {
+    "id": "hs_055",
+    "city": "Jodhpur",
+    "state": "Rajasthan",
+    "lat": 26.2389,
+    "lon": 73.0243,
+    "risk_level": "high",
+    "risk_score": 38.2,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 445,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Jodhpur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 11.4,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 445,
+      "cyber_rate": 62,
+      "violent_rate": 165,
+      "caw_rate": 92,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.36,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_112",
+    "city": "Jhansi",
+    "state": "Uttar Pradesh",
+    "lat": 25.4484,
+    "lon": 78.5685,
+    "risk_level": "high",
+    "risk_score": 38.2,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 448,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Jhansi. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 5.1,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 448,
+      "cyber_rate": 48,
+      "violent_rate": 172,
+      "caw_rate": 96,
+      "unemployment": 0.17,
+      "poverty_mpce": 0.28,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_117",
+    "city": "Saharanpur",
+    "state": "Uttar Pradesh",
+    "lat": 29.968,
+    "lon": 77.5552,
+    "risk_level": "high",
+    "risk_score": 38.2,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 442,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Saharanpur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 7.0,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 442,
+      "cyber_rate": 48,
+      "violent_rate": 168,
+      "caw_rate": 94,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.24,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_111",
+    "city": "Bhiwandi",
+    "state": "Maharashtra",
+    "lat": 19.2967,
+    "lon": 73.0631,
+    "risk_level": "high",
+    "risk_score": 38.1,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 412,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bhiwandi. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 7.1,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 412,
+      "cyber_rate": 72,
+      "violent_rate": 158,
+      "caw_rate": 88,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.38,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_082",
+    "city": "Raipur",
+    "state": "Chhattisgarh",
+    "lat": 21.2514,
+    "lon": 81.6296,
+    "risk_level": "high",
+    "risk_score": 37.9,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 412,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Raipur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 10.4,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 412,
+      "cyber_rate": 48,
+      "violent_rate": 162,
+      "caw_rate": 90,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.3,
+      "cluster_id": 20
+    }
+  },
+  {
+    "id": "hs_087",
+    "city": "Bokaro",
+    "state": "Jharkhand",
+    "lat": 23.6693,
+    "lon": 86.1511,
+    "risk_level": "high",
+    "risk_score": 37.9,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 422,
+    "predicted_crimes": [
+      "murder",
+      "kidnapping",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bokaro. Stay in well-lit public areas. Notable murder activity reported.",
+    "trend": "stable",
+    "population_lakh": 5.6,
+    "radius_meters": 1411,
+    "features_v4": {
+      "ipc_rate": 422,
+      "cyber_rate": 35,
+      "violent_rate": 168,
+      "caw_rate": 94,
+      "unemployment": 0.19,
+      "poverty_mpce": 0.25,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_051",
+    "city": "Surat",
+    "state": "Gujarat",
+    "lat": 21.1702,
+    "lon": 72.8311,
+    "risk_level": "high",
+    "risk_score": 37.7,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 452,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Surat. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 71.3,
+    "radius_meters": 1584,
+    "features_v4": {
+      "ipc_rate": 452,
+      "cyber_rate": 82,
+      "violent_rate": 168,
+      "caw_rate": 94,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.54,
+      "cluster_id": 14
+    }
+  },
+  {
+    "id": "hs_032",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "risk_level": "high",
+    "risk_score": 37.3,
+    "model_confidence": 94.6,
+    "crime_rate_per_lakh": 388,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bengaluru. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 132.0,
+    "radius_meters": 1584,
+    "features_v4": {
+      "ipc_rate": 388,
+      "cyber_rate": 165,
+      "violent_rate": 145,
+      "caw_rate": 82,
+      "unemployment": 0.08,
+      "poverty_mpce": 0.68,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_025",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "risk_level": "high",
+    "risk_score": 37.1,
+    "model_confidence": 99.5,
+    "crime_rate_per_lakh": 442,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Mumbai. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 205.0,
+    "radius_meters": 1660,
+    "features_v4": {
+      "ipc_rate": 442,
+      "cyber_rate": 88,
+      "violent_rate": 168,
+      "caw_rate": 92,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.62,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_031",
+    "city": "Siliguri",
+    "state": "West Bengal",
+    "lat": 26.7271,
+    "lon": 88.3953,
+    "risk_level": "high",
+    "risk_score": 37.1,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 372,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Siliguri. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 7.1,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 372,
+      "cyber_rate": 44,
+      "violent_rate": 158,
+      "caw_rate": 88,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.3,
+      "cluster_id": 8
+    }
+  },
+  {
+    "id": "hs_075",
+    "city": "Imphal",
+    "state": "Manipur",
+    "lat": 24.817,
+    "lon": 93.9368,
+    "risk_level": "high",
+    "risk_score": 36.9,
+    "model_confidence": 98.5,
+    "crime_rate_per_lakh": 348,
+    "predicted_crimes": [
+      "murder"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Imphal. Stay in well-lit public areas. Notable murder activity reported.",
+    "trend": "rising",
+    "population_lakh": 3.6,
+    "radius_meters": 1334,
+    "features_v4": {
+      "ipc_rate": 348,
+      "cyber_rate": 28,
+      "violent_rate": 155,
+      "caw_rate": 78,
+      "unemployment": 0.2,
+      "poverty_mpce": 0.26,
+      "cluster_id": 18
+    }
+  },
+  {
+    "id": "hs_050",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "lat": 23.0225,
+    "lon": 72.5714,
+    "risk_level": "high",
+    "risk_score": 36.8,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 445,
+    "predicted_crimes": [
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Ahmedabad. Stay in well-lit public areas. Notable economic_offence activity reported.",
+    "trend": "rising",
+    "population_lakh": 80.5,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 445,
+      "cyber_rate": 78,
+      "violent_rate": 165,
+      "caw_rate": 92,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.52,
+      "cluster_id": 14
+    }
+  },
+  {
+    "id": "hs_020",
+    "city": "Faridabad",
+    "state": "Haryana",
+    "lat": 28.4089,
+    "lon": 77.3178,
+    "risk_level": "high",
+    "risk_score": 36.7,
+    "model_confidence": 99.2,
+    "crime_rate_per_lakh": 465,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Faridabad. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "stable",
+    "population_lakh": 14.8,
+    "radius_meters": 1555,
+    "features_v4": {
+      "ipc_rate": 465,
+      "cyber_rate": 88,
+      "violent_rate": 165,
+      "caw_rate": 91,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.55,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_028",
+    "city": "Solapur",
+    "state": "Maharashtra",
+    "lat": 17.6868,
+    "lon": 75.9064,
+    "risk_level": "high",
+    "risk_score": 36.7,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 412,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Solapur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "rising",
+    "population_lakh": 9.5,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 412,
+      "cyber_rate": 48,
+      "violent_rate": 162,
+      "caw_rate": 90,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.36,
+      "cluster_id": 7
+    }
+  },
+  {
+    "id": "hs_088",
+    "city": "Gurgaon South",
+    "state": "Haryana",
+    "lat": 28.3911,
+    "lon": 77.0447,
+    "risk_level": "high",
+    "risk_score": 36.5,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 412,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Gurgaon South. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 6.2,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 412,
+      "cyber_rate": 92,
+      "violent_rate": 155,
+      "caw_rate": 88,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.6,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_089",
+    "city": "Noida",
+    "state": "Uttar Pradesh",
+    "lat": 28.5355,
+    "lon": 77.391,
+    "risk_level": "high",
+    "risk_score": 36.2,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 398,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Noida. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 6.4,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 398,
+      "cyber_rate": 88,
+      "violent_rate": 148,
+      "caw_rate": 82,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.55,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_060",
+    "city": "Jabalpur",
+    "state": "Madhya Pradesh",
+    "lat": 23.1815,
+    "lon": 79.9864,
+    "risk_level": "high",
+    "risk_score": 35.8,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 438,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Jabalpur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 12.6,
+    "radius_meters": 1488,
+    "features_v4": {
+      "ipc_rate": 438,
+      "cyber_rate": 55,
+      "violent_rate": 162,
+      "caw_rate": 90,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.36,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_046",
+    "city": "Kochi",
+    "state": "Kerala",
+    "lat": 9.9312,
+    "lon": 76.2673,
+    "risk_level": "high",
+    "risk_score": 35.5,
+    "model_confidence": 99.0,
+    "crime_rate_per_lakh": 455,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Kochi. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 21.2,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 455,
+      "cyber_rate": 88,
+      "violent_rate": 162,
+      "caw_rate": 88,
+      "unemployment": 0.08,
+      "poverty_mpce": 0.58,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_091",
+    "city": "Thane",
+    "state": "Maharashtra",
+    "lat": 19.2183,
+    "lon": 72.9781,
+    "risk_level": "high",
+    "risk_score": 35.5,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 405,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Thane. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 18.1,
+    "radius_meters": 1584,
+    "features_v4": {
+      "ipc_rate": 405,
+      "cyber_rate": 82,
+      "violent_rate": 152,
+      "caw_rate": 85,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.56,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_056",
+    "city": "Kota",
+    "state": "Rajasthan",
+    "lat": 25.2138,
+    "lon": 75.8648,
+    "risk_level": "high",
+    "risk_score": 35.4,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 432,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Kota. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 10.1,
+    "radius_meters": 1488,
+    "features_v4": {
+      "ipc_rate": 432,
+      "cyber_rate": 55,
+      "violent_rate": 158,
+      "caw_rate": 88,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.36,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_065",
+    "city": "Dibrugarh",
+    "state": "Assam",
+    "lat": 27.4728,
+    "lon": 94.912,
+    "risk_level": "high",
+    "risk_score": 35.3,
+    "model_confidence": 99.5,
+    "crime_rate_per_lakh": 398,
+    "predicted_crimes": [
+      "kidnapping"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Dibrugarh. Stay in well-lit public areas. Notable kidnapping activity reported.",
+    "trend": "stable",
+    "population_lakh": 1.5,
+    "radius_meters": 1315,
+    "features_v4": {
+      "ipc_rate": 398,
+      "cyber_rate": 38,
+      "violent_rate": 158,
+      "caw_rate": 88,
+      "unemployment": 0.17,
+      "poverty_mpce": 0.26,
+      "cluster_id": 17
+    }
+  },
+  {
+    "id": "hs_083",
+    "city": "Bilaspur",
+    "state": "Chhattisgarh",
+    "lat": 22.0797,
+    "lon": 82.1409,
+    "risk_level": "high",
+    "risk_score": 35.3,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 395,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bilaspur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 4.2,
+    "radius_meters": 1411,
+    "features_v4": {
+      "ipc_rate": 395,
+      "cyber_rate": 42,
+      "violent_rate": 155,
+      "caw_rate": 86,
+      "unemployment": 0.17,
+      "poverty_mpce": 0.27,
+      "cluster_id": 20
+    }
+  },
+  {
+    "id": "hs_090",
+    "city": "Greater Noida",
+    "state": "Uttar Pradesh",
+    "lat": 28.4744,
+    "lon": 77.504,
+    "risk_level": "high",
+    "risk_score": 34.8,
+    "model_confidence": 98.3,
+    "crime_rate_per_lakh": 382,
+    "predicted_crimes": [
+      "economic_offence"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Greater Noida. Stay in well-lit public areas. Notable economic_offence activity reported.",
+    "trend": "rising",
+    "population_lakh": 3.5,
+    "radius_meters": 1526,
+    "features_v4": {
+      "ipc_rate": 382,
+      "cyber_rate": 78,
+      "violent_rate": 142,
+      "caw_rate": 78,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.5,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_057",
+    "city": "Udaipur",
+    "state": "Rajasthan",
+    "lat": 24.5854,
+    "lon": 73.7125,
+    "risk_level": "high",
+    "risk_score": 34.0,
+    "model_confidence": 98.9,
+    "crime_rate_per_lakh": 415,
+    "predicted_crimes": [
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Udaipur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 4.7,
+    "radius_meters": 1411,
+    "features_v4": {
+      "ipc_rate": 415,
+      "cyber_rate": 48,
+      "violent_rate": 152,
+      "caw_rate": 84,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.33,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_027",
+    "city": "Nashik",
+    "state": "Maharashtra",
+    "lat": 19.9975,
+    "lon": 73.7898,
+    "risk_level": "high",
+    "risk_score": 33.9,
+    "model_confidence": 98.0,
+    "crime_rate_per_lakh": 392,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Nashik. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 14.9,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 392,
+      "cyber_rate": 62,
+      "violent_rate": 155,
+      "caw_rate": 86,
+      "unemployment": 0.11,
+      "poverty_mpce": 0.44,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_062",
+    "city": "Bhubaneswar",
+    "state": "Odisha",
+    "lat": 20.2961,
+    "lon": 85.8245,
+    "risk_level": "high",
+    "risk_score": 33.9,
+    "model_confidence": 99.3,
+    "crime_rate_per_lakh": 385,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Bhubaneswar. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 8.4,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 385,
+      "cyber_rate": 52,
+      "violent_rate": 148,
+      "caw_rate": 84,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.36,
+      "cluster_id": 15
+    }
+  },
+  {
+    "id": "hs_030",
+    "city": "Durgapur",
+    "state": "West Bengal",
+    "lat": 23.5204,
+    "lon": 87.3119,
+    "risk_level": "high",
+    "risk_score": 33.8,
+    "model_confidence": 98.7,
+    "crime_rate_per_lakh": 358,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Durgapur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 5.8,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 358,
+      "cyber_rate": 42,
+      "violent_rate": 148,
+      "caw_rate": 82,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.32,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_042",
+    "city": "Warangal",
+    "state": "Telangana",
+    "lat": 17.9689,
+    "lon": 79.5941,
+    "risk_level": "high",
+    "risk_score": 33.8,
+    "model_confidence": 95.4,
+    "crime_rate_per_lakh": 345,
+    "predicted_crimes": [
+      "cybercrime"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Warangal. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 8.1,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 345,
+      "cyber_rate": 85,
+      "violent_rate": 135,
+      "caw_rate": 76,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.4,
+      "cluster_id": 12
+    }
+  },
+  {
+    "id": "hs_041",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "lat": 17.385,
+    "lon": 78.4867,
+    "risk_level": "high",
+    "risk_score": 33.7,
+    "model_confidence": 90.2,
+    "crime_rate_per_lakh": 335,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Hyderabad. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "rising",
+    "population_lakh": 98.0,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 335,
+      "cyber_rate": 148,
+      "violent_rate": 128,
+      "caw_rate": 72,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.55,
+      "cluster_id": 12
+    }
+  },
+  {
+    "id": "hs_043",
+    "city": "Vijayawada",
+    "state": "Andhra Pradesh",
+    "lat": 16.5062,
+    "lon": 80.648,
+    "risk_level": "high",
+    "risk_score": 33.5,
+    "model_confidence": 97.5,
+    "crime_rate_per_lakh": 362,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Vijayawada. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 10.9,
+    "radius_meters": 1507,
+    "features_v4": {
+      "ipc_rate": 362,
+      "cyber_rate": 78,
+      "violent_rate": 142,
+      "caw_rate": 80,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.42,
+      "cluster_id": 13
+    }
+  },
+  {
+    "id": "hs_096",
+    "city": "Nanded",
+    "state": "Maharashtra",
+    "lat": 19.1383,
+    "lon": 77.321,
+    "risk_level": "high",
+    "risk_score": 33.5,
+    "model_confidence": 99.4,
+    "crime_rate_per_lakh": 392,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Nanded. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 5.5,
+    "radius_meters": 1430,
+    "features_v4": {
+      "ipc_rate": 392,
+      "cyber_rate": 45,
+      "violent_rate": 148,
+      "caw_rate": 82,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.34,
+      "cluster_id": 12
+    }
+  },
+  {
+    "id": "hs_026",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "lat": 18.5204,
+    "lon": 73.8567,
+    "risk_level": "high",
+    "risk_score": 33.1,
+    "model_confidence": 95.2,
+    "crime_rate_per_lakh": 382,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Pune. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "stable",
+    "population_lakh": 31.5,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 382,
+      "cyber_rate": 92,
+      "violent_rate": 148,
+      "caw_rate": 82,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.58,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_070",
+    "city": "Haridwar",
+    "state": "Uttarakhand",
+    "lat": 29.9457,
+    "lon": 78.1642,
+    "risk_level": "high",
+    "risk_score": 33.0,
+    "model_confidence": 98.9,
+    "crime_rate_per_lakh": 378,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Haridwar. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 2.3,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 378,
+      "cyber_rate": 42,
+      "violent_rate": 145,
+      "caw_rate": 82,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.34,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_052",
+    "city": "Vadodara",
+    "state": "Gujarat",
+    "lat": 22.3072,
+    "lon": 73.1812,
+    "risk_level": "high",
+    "risk_score": 32.8,
+    "model_confidence": 95.6,
+    "crime_rate_per_lakh": 412,
+    "predicted_crimes": [
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Vadodara. Stay in well-lit public areas. Notable economic_offence activity reported.",
+    "trend": "stable",
+    "population_lakh": 21.7,
+    "radius_meters": 1526,
+    "features_v4": {
+      "ipc_rate": 412,
+      "cyber_rate": 68,
+      "violent_rate": 152,
+      "caw_rate": 85,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.5,
+      "cluster_id": 14
+    }
+  },
+  {
+    "id": "hs_063",
+    "city": "Cuttack",
+    "state": "Odisha",
+    "lat": 20.4625,
+    "lon": 85.883,
+    "risk_level": "high",
+    "risk_score": 32.7,
+    "model_confidence": 98.8,
+    "crime_rate_per_lakh": 372,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Cuttack. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 6.6,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 372,
+      "cyber_rate": 45,
+      "violent_rate": 142,
+      "caw_rate": 80,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.32,
+      "cluster_id": 15
+    }
+  },
+  {
+    "id": "hs_067",
+    "city": "Ludhiana",
+    "state": "Punjab",
+    "lat": 30.901,
+    "lon": 75.8573,
+    "risk_level": "high",
+    "risk_score": 32.7,
+    "model_confidence": 97.1,
+    "crime_rate_per_lakh": 388,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Ludhiana. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 16.9,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 388,
+      "cyber_rate": 62,
+      "violent_rate": 145,
+      "caw_rate": 82,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.46,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_110",
+    "city": "Amravati",
+    "state": "Maharashtra",
+    "lat": 20.932,
+    "lon": 77.7523,
+    "risk_level": "high",
+    "risk_score": 32.6,
+    "model_confidence": 97.5,
+    "crime_rate_per_lakh": 368,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Amravati. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 6.5,
+    "radius_meters": 1430,
+    "features_v4": {
+      "ipc_rate": 368,
+      "cyber_rate": 52,
+      "violent_rate": 140,
+      "caw_rate": 78,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.34,
+      "cluster_id": 6
+    }
+  },
+  {
+    "id": "hs_069",
+    "city": "Dehradun",
+    "state": "Uttarakhand",
+    "lat": 30.3165,
+    "lon": 78.0322,
+    "risk_level": "high",
+    "risk_score": 31.6,
+    "model_confidence": 95.2,
+    "crime_rate_per_lakh": 365,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Dehradun. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 7.1,
+    "radius_meters": 1411,
+    "features_v4": {
+      "ipc_rate": 365,
+      "cyber_rate": 58,
+      "violent_rate": 138,
+      "caw_rate": 78,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.4,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_093",
+    "city": "Kalyan-Dombivli",
+    "state": "Maharashtra",
+    "lat": 19.2403,
+    "lon": 73.1305,
+    "risk_level": "high",
+    "risk_score": 31.5,
+    "model_confidence": 93.5,
+    "crime_rate_per_lakh": 375,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Kalyan-Dombivli. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 12.4,
+    "radius_meters": 1564,
+    "features_v4": {
+      "ipc_rate": 375,
+      "cyber_rate": 72,
+      "violent_rate": 142,
+      "caw_rate": 79,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.5,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_045",
+    "city": "Guntur",
+    "state": "Andhra Pradesh",
+    "lat": 16.3067,
+    "lon": 80.4365,
+    "risk_level": "medium",
+    "risk_score": 31.4,
+    "model_confidence": 98.1,
+    "crime_rate_per_lakh": 338,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Guntur has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 7.4,
+    "radius_meters": 1208,
+    "features_v4": {
+      "ipc_rate": 338,
+      "cyber_rate": 65,
+      "violent_rate": 128,
+      "caw_rate": 72,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.38,
+      "cluster_id": 13
+    }
+  },
+  {
+    "id": "hs_047",
+    "city": "Thiruvananthapuram",
+    "state": "Kerala",
+    "lat": 8.5241,
+    "lon": 76.9366,
+    "risk_level": "high",
+    "risk_score": 31.3,
+    "model_confidence": 89.8,
+    "crime_rate_per_lakh": 428,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence",
+      "theft",
+      "drug_offense"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Thiruvananthapuram. Stay in well-lit public areas. Notable cybercrime activity reported.",
+    "trend": "stable",
+    "population_lakh": 9.5,
+    "radius_meters": 1468,
+    "features_v4": {
+      "ipc_rate": 428,
+      "cyber_rate": 82,
+      "violent_rate": 152,
+      "caw_rate": 84,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.56,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_098",
+    "city": "Gulbarga (Kalaburagi)",
+    "state": "Karnataka",
+    "lat": 17.3297,
+    "lon": 76.8343,
+    "risk_level": "high",
+    "risk_score": 31.2,
+    "model_confidence": 90.1,
+    "crime_rate_per_lakh": 358,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Gulbarga. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 5.3,
+    "radius_meters": 1411,
+    "features_v4": {
+      "ipc_rate": 358,
+      "cyber_rate": 55,
+      "violent_rate": 138,
+      "caw_rate": 78,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.34,
+      "cluster_id": 7
+    }
+  },
+  {
+    "id": "hs_094",
+    "city": "Vasai-Virar",
+    "state": "Maharashtra",
+    "lat": 19.4345,
+    "lon": 72.8163,
+    "risk_level": "high",
+    "risk_score": 31.0,
+    "model_confidence": 91.8,
+    "crime_rate_per_lakh": 368,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Vasai-Virar. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 12.2,
+    "radius_meters": 1545,
+    "features_v4": {
+      "ipc_rate": 368,
+      "cyber_rate": 68,
+      "violent_rate": 138,
+      "caw_rate": 77,
+      "unemployment": 0.11,
+      "poverty_mpce": 0.46,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_102",
+    "city": "Karimnagar",
+    "state": "Telangana",
+    "lat": 18.4386,
+    "lon": 79.1288,
+    "risk_level": "medium",
+    "risk_score": 31.0,
+    "model_confidence": 92.5,
+    "crime_rate_per_lakh": 318,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Karimnagar has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "rising",
+    "population_lakh": 3.2,
+    "radius_meters": 1144,
+    "features_v4": {
+      "ipc_rate": 318,
+      "cyber_rate": 72,
+      "violent_rate": 122,
+      "caw_rate": 68,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.38,
+      "cluster_id": 12
+    }
+  },
+  {
+    "id": "hs_097",
+    "city": "Belgaum (Belagavi)",
+    "state": "Karnataka",
+    "lat": 15.8497,
+    "lon": 74.4977,
+    "risk_level": "medium",
+    "risk_score": 30.9,
+    "model_confidence": 97.6,
+    "crime_rate_per_lakh": 345,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Belgaum has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.9,
+    "radius_meters": 1176,
+    "features_v4": {
+      "ipc_rate": 345,
+      "cyber_rate": 62,
+      "violent_rate": 130,
+      "caw_rate": 73,
+      "unemployment": 0.11,
+      "poverty_mpce": 0.4,
+      "cluster_id": 10
+    }
+  },
+  {
+    "id": "hs_109",
+    "city": "Kolhapur",
+    "state": "Maharashtra",
+    "lat": 16.695,
+    "lon": 74.2083,
+    "risk_level": "high",
+    "risk_score": 30.9,
+    "model_confidence": 90.9,
+    "crime_rate_per_lakh": 358,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Kolhapur. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 5.7,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 358,
+      "cyber_rate": 58,
+      "violent_rate": 135,
+      "caw_rate": 75,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.4,
+      "cluster_id": 10
+    }
+  },
+  {
+    "id": "hs_100",
+    "city": "Nellore",
+    "state": "Andhra Pradesh",
+    "lat": 14.4426,
+    "lon": 79.9865,
+    "risk_level": "medium",
+    "risk_score": 30.8,
+    "model_confidence": 99.0,
+    "crime_rate_per_lakh": 335,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Nellore has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 5.6,
+    "radius_meters": 1176,
+    "features_v4": {
+      "ipc_rate": 335,
+      "cyber_rate": 55,
+      "violent_rate": 128,
+      "caw_rate": 72,
+      "unemployment": 0.14,
+      "poverty_mpce": 0.36,
+      "cluster_id": 11
+    }
+  },
+  {
+    "id": "hs_066",
+    "city": "Chandigarh",
+    "state": "Punjab/Haryana",
+    "lat": 30.7333,
+    "lon": 76.7794,
+    "risk_level": "medium",
+    "risk_score": 30.6,
+    "model_confidence": 92.8,
+    "crime_rate_per_lakh": 358,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence"
+    ],
+    "primary_warning": "MODERATE RISK: Chandigarh has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 10.6,
+    "radius_meters": 1320,
+    "features_v4": {
+      "ipc_rate": 358,
+      "cyber_rate": 82,
+      "violent_rate": 135,
+      "caw_rate": 76,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.55,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_101",
+    "city": "Kurnool",
+    "state": "Andhra Pradesh",
+    "lat": 15.8281,
+    "lon": 78.0373,
+    "risk_level": "medium",
+    "risk_score": 30.6,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 328,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Kurnool has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.8,
+    "radius_meters": 1160,
+    "features_v4": {
+      "ipc_rate": 328,
+      "cyber_rate": 50,
+      "violent_rate": 125,
+      "caw_rate": 70,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.33,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_034",
+    "city": "Hubballi-Dharwad",
+    "state": "Karnataka",
+    "lat": 15.3647,
+    "lon": 75.124,
+    "risk_level": "high",
+    "risk_score": 30.3,
+    "model_confidence": 85.5,
+    "crime_rate_per_lakh": 362,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Hubballi-Dharwad. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 9.4,
+    "radius_meters": 1449,
+    "features_v4": {
+      "ipc_rate": 362,
+      "cyber_rate": 68,
+      "violent_rate": 138,
+      "caw_rate": 78,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.44,
+      "cluster_id": 10
+    }
+  },
+  {
+    "id": "hs_033",
+    "city": "Mysuru",
+    "state": "Karnataka",
+    "lat": 12.2958,
+    "lon": 76.6394,
+    "risk_level": "medium",
+    "risk_score": 30.2,
+    "model_confidence": 89.9,
+    "crime_rate_per_lakh": 355,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Mysuru has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 9.6,
+    "radius_meters": 1224,
+    "features_v4": {
+      "ipc_rate": 355,
+      "cyber_rate": 78,
+      "violent_rate": 135,
+      "caw_rate": 75,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.52,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_044",
+    "city": "Visakhapatnam",
+    "state": "Andhra Pradesh",
+    "lat": 17.6868,
+    "lon": 83.2185,
+    "risk_level": "high",
+    "risk_score": 30.1,
+    "model_confidence": 84.2,
+    "crime_rate_per_lakh": 348,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Visakhapatnam. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 20.3,
+    "radius_meters": 1488,
+    "features_v4": {
+      "ipc_rate": 348,
+      "cyber_rate": 72,
+      "violent_rate": 135,
+      "caw_rate": 76,
+      "unemployment": 0.12,
+      "poverty_mpce": 0.44,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_095",
+    "city": "Pimpri-Chinchwad",
+    "state": "Maharashtra",
+    "lat": 18.6298,
+    "lon": 73.7997,
+    "risk_level": "medium",
+    "risk_score": 30.1,
+    "model_confidence": 90.4,
+    "crime_rate_per_lakh": 362,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Pimpri-Chinchwad has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 17.2,
+    "radius_meters": 1288,
+    "features_v4": {
+      "ipc_rate": 362,
+      "cyber_rate": 75,
+      "violent_rate": 135,
+      "caw_rate": 75,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.54,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_038",
+    "city": "Madurai",
+    "state": "Tamil Nadu",
+    "lat": 9.9252,
+    "lon": 78.1198,
+    "risk_level": "medium",
+    "risk_score": 30.0,
+    "model_confidence": 99.1,
+    "crime_rate_per_lakh": 328,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Madurai has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 14.6,
+    "radius_meters": 1240,
+    "features_v4": {
+      "ipc_rate": 328,
+      "cyber_rate": 58,
+      "violent_rate": 128,
+      "caw_rate": 72,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.46,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_092",
+    "city": "Navi Mumbai",
+    "state": "Maharashtra",
+    "lat": 19.033,
+    "lon": 73.0297,
+    "risk_level": "medium",
+    "risk_score": 30.0,
+    "model_confidence": 91.2,
+    "crime_rate_per_lakh": 358,
+    "predicted_crimes": [
+      "economic_offence"
+    ],
+    "primary_warning": "MODERATE RISK: Navi Mumbai has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 11.9,
+    "radius_meters": 1288,
+    "features_v4": {
+      "ipc_rate": 358,
+      "cyber_rate": 78,
+      "violent_rate": 135,
+      "caw_rate": 75,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.58,
+      "cluster_id": 0
+    }
+  },
+  {
+    "id": "hs_103",
+    "city": "Nizamabad",
+    "state": "Telangana",
+    "lat": 18.6725,
+    "lon": 78.0941,
+    "risk_level": "medium",
+    "risk_score": 29.9,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 312,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Nizamabad has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 3.1,
+    "radius_meters": 1128,
+    "features_v4": {
+      "ipc_rate": 312,
+      "cyber_rate": 68,
+      "violent_rate": 118,
+      "caw_rate": 66,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.36,
+      "cluster_id": 12
+    }
+  },
+  {
+    "id": "hs_035",
+    "city": "Mangaluru",
+    "state": "Karnataka",
+    "lat": 12.9141,
+    "lon": 74.856,
+    "risk_level": "medium",
+    "risk_score": 29.8,
+    "model_confidence": 99.3,
+    "crime_rate_per_lakh": 342,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Mangaluru has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.8,
+    "radius_meters": 1176,
+    "features_v4": {
+      "ipc_rate": 342,
+      "cyber_rate": 72,
+      "violent_rate": 128,
+      "caw_rate": 72,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.54,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_068",
+    "city": "Amritsar",
+    "state": "Punjab",
+    "lat": 31.634,
+    "lon": 74.8723,
+    "risk_level": "high",
+    "risk_score": 29.8,
+    "model_confidence": 82.4,
+    "crime_rate_per_lakh": 375,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "HIGH RISK: Exercise significant caution in Amritsar. Stay in well-lit public areas. Notable theft activity reported.",
+    "trend": "stable",
+    "population_lakh": 11.3,
+    "radius_meters": 1526,
+    "features_v4": {
+      "ipc_rate": 375,
+      "cyber_rate": 55,
+      "violent_rate": 138,
+      "caw_rate": 78,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.42,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_072",
+    "city": "Srinagar",
+    "state": "J&K",
+    "lat": 34.0837,
+    "lon": 74.7973,
+    "risk_level": "medium",
+    "risk_score": 29.7,
+    "model_confidence": 99.2,
+    "crime_rate_per_lakh": 328,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Srinagar has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 13.8,
+    "radius_meters": 1176,
+    "features_v4": {
+      "ipc_rate": 328,
+      "cyber_rate": 35,
+      "violent_rate": 125,
+      "caw_rate": 68,
+      "unemployment": 0.19,
+      "poverty_mpce": 0.32,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_073",
+    "city": "Jammu",
+    "state": "J&K",
+    "lat": 32.7266,
+    "lon": 74.857,
+    "risk_level": "medium",
+    "risk_score": 29.7,
+    "model_confidence": 91.7,
+    "crime_rate_per_lakh": 342,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Jammu has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 7.2,
+    "radius_meters": 1192,
+    "features_v4": {
+      "ipc_rate": 342,
+      "cyber_rate": 38,
+      "violent_rate": 132,
+      "caw_rate": 74,
+      "unemployment": 0.17,
+      "poverty_mpce": 0.34,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_099",
+    "city": "Tirupati",
+    "state": "Andhra Pradesh",
+    "lat": 13.6288,
+    "lon": 79.4192,
+    "risk_level": "medium",
+    "risk_score": 29.6,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 322,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Tirupati has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.6,
+    "radius_meters": 1176,
+    "features_v4": {
+      "ipc_rate": 322,
+      "cyber_rate": 52,
+      "violent_rate": 122,
+      "caw_rate": 68,
+      "unemployment": 0.13,
+      "poverty_mpce": 0.38,
+      "cluster_id": 11
+    }
+  },
+  {
+    "id": "hs_049",
+    "city": "Thrissur",
+    "state": "Kerala",
+    "lat": 10.5276,
+    "lon": 76.2144,
+    "risk_level": "medium",
+    "risk_score": 29.5,
+    "model_confidence": 86.8,
+    "crime_rate_per_lakh": 398,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Thrissur has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 3.5,
+    "radius_meters": 1192,
+    "features_v4": {
+      "ipc_rate": 398,
+      "cyber_rate": 76,
+      "violent_rate": 142,
+      "caw_rate": 80,
+      "unemployment": 0.08,
+      "poverty_mpce": 0.54,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_036",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "lat": 13.0827,
+    "lon": 80.2707,
+    "risk_level": "medium",
+    "risk_score": 29.4,
+    "model_confidence": 98.2,
+    "crime_rate_per_lakh": 318,
+    "predicted_crimes": [
+      "cybercrime",
+      "economic_offence"
+    ],
+    "primary_warning": "MODERATE RISK: Chennai has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 104.0,
+    "radius_meters": 1336,
+    "features_v4": {
+      "ipc_rate": 318,
+      "cyber_rate": 82,
+      "violent_rate": 122,
+      "caw_rate": 68,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.55,
+      "cluster_id": 11
+    }
+  },
+  {
+    "id": "hs_053",
+    "city": "Rajkot",
+    "state": "Gujarat",
+    "lat": 22.3039,
+    "lon": 70.8022,
+    "risk_level": "medium",
+    "risk_score": 29.4,
+    "model_confidence": 79.5,
+    "crime_rate_per_lakh": 398,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Rajkot has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 14.3,
+    "radius_meters": 1240,
+    "features_v4": {
+      "ipc_rate": 398,
+      "cyber_rate": 62,
+      "violent_rate": 145,
+      "caw_rate": 80,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.48,
+      "cluster_id": -1
+    }
+  },
+  {
+    "id": "hs_108",
+    "city": "Kollam",
+    "state": "Kerala",
+    "lat": 8.8932,
+    "lon": 76.6141,
+    "risk_level": "medium",
+    "risk_score": 29.4,
+    "model_confidence": 97.8,
+    "crime_rate_per_lakh": 375,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Kollam has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 1.7,
+    "radius_meters": 1144,
+    "features_v4": {
+      "ipc_rate": 375,
+      "cyber_rate": 68,
+      "violent_rate": 136,
+      "caw_rate": 76,
+      "unemployment": 0.08,
+      "poverty_mpce": 0.52,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_040",
+    "city": "Salem",
+    "state": "Tamil Nadu",
+    "lat": 11.6643,
+    "lon": 78.146,
+    "risk_level": "medium",
+    "risk_score": 29.3,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 322,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Salem has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 9.2,
+    "radius_meters": 1216,
+    "features_v4": {
+      "ipc_rate": 322,
+      "cyber_rate": 54,
+      "violent_rate": 122,
+      "caw_rate": 68,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.43,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_107",
+    "city": "Kannur",
+    "state": "Kerala",
+    "lat": 11.8745,
+    "lon": 75.3704,
+    "risk_level": "medium",
+    "risk_score": 29.0,
+    "model_confidence": 98.8,
+    "crime_rate_per_lakh": 368,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Kannur has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 2.0,
+    "radius_meters": 1128,
+    "features_v4": {
+      "ipc_rate": 368,
+      "cyber_rate": 65,
+      "violent_rate": 132,
+      "caw_rate": 74,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.5,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_105",
+    "city": "Erode",
+    "state": "Tamil Nadu",
+    "lat": 11.341,
+    "lon": 77.7172,
+    "risk_level": "medium",
+    "risk_score": 28.5,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 308,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Erode has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 2.5,
+    "radius_meters": 1160,
+    "features_v4": {
+      "ipc_rate": 308,
+      "cyber_rate": 55,
+      "violent_rate": 118,
+      "caw_rate": 65,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.44,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_039",
+    "city": "Tiruchirappalli",
+    "state": "Tamil Nadu",
+    "lat": 10.7905,
+    "lon": 78.7047,
+    "risk_level": "medium",
+    "risk_score": 28.4,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 315,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Tiruchirappalli has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 9.2,
+    "radius_meters": 1208,
+    "features_v4": {
+      "ipc_rate": 315,
+      "cyber_rate": 52,
+      "violent_rate": 118,
+      "caw_rate": 65,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.45,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_037",
+    "city": "Coimbatore",
+    "state": "Tamil Nadu",
+    "lat": 11.0168,
+    "lon": 76.9558,
+    "risk_level": "medium",
+    "risk_score": 28.2,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 298,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Coimbatore has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 10.5,
+    "radius_meters": 1224,
+    "features_v4": {
+      "ipc_rate": 298,
+      "cyber_rate": 68,
+      "violent_rate": 112,
+      "caw_rate": 62,
+      "unemployment": 0.08,
+      "poverty_mpce": 0.52,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_048",
+    "city": "Kozhikode",
+    "state": "Kerala",
+    "lat": 11.2588,
+    "lon": 75.7804,
+    "risk_level": "medium",
+    "risk_score": 28.2,
+    "model_confidence": 94.1,
+    "crime_rate_per_lakh": 385,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Kozhikode has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 6.4,
+    "radius_meters": 1176,
+    "features_v4": {
+      "ipc_rate": 385,
+      "cyber_rate": 72,
+      "violent_rate": 138,
+      "caw_rate": 78,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.52,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_106",
+    "city": "Vellore",
+    "state": "Tamil Nadu",
+    "lat": 12.9165,
+    "lon": 79.1325,
+    "risk_level": "medium",
+    "risk_score": 28.0,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 305,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Vellore has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.6,
+    "radius_meters": 1160,
+    "features_v4": {
+      "ipc_rate": 305,
+      "cyber_rate": 52,
+      "violent_rate": 116,
+      "caw_rate": 64,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.42,
+      "cluster_id": 11
+    }
+  },
+  {
+    "id": "hs_104",
+    "city": "Tirunelveli",
+    "state": "Tamil Nadu",
+    "lat": 8.7139,
+    "lon": 77.7567,
+    "risk_level": "medium",
+    "risk_score": 27.5,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 295,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Tirunelveli has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.7,
+    "radius_meters": 1144,
+    "features_v4": {
+      "ipc_rate": 295,
+      "cyber_rate": 48,
+      "violent_rate": 112,
+      "caw_rate": 62,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.4,
+      "cluster_id": 9
+    }
+  },
+  {
+    "id": "hs_029",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "lat": 22.5726,
+    "lon": 88.3639,
+    "risk_level": "medium",
+    "risk_score": 25.7,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 295,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Kolkata has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "falling",
+    "population_lakh": 148.0,
+    "radius_meters": 1360,
+    "features_v4": {
+      "ipc_rate": 295,
+      "cyber_rate": 58,
+      "violent_rate": 118,
+      "caw_rate": 65,
+      "unemployment": 0.11,
+      "poverty_mpce": 0.46,
+      "cluster_id": 2
+    }
+  },
+  {
+    "id": "hs_078",
+    "city": "Agartala",
+    "state": "Tripura",
+    "lat": 23.8315,
+    "lon": 91.2868,
+    "risk_level": "medium",
+    "risk_score": 24.9,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 245,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Agartala has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 4.4,
+    "radius_meters": 1048,
+    "features_v4": {
+      "ipc_rate": 245,
+      "cyber_rate": 32,
+      "violent_rate": 95,
+      "caw_rate": 52,
+      "unemployment": 0.16,
+      "poverty_mpce": 0.28,
+      "cluster_id": 19
+    }
+  },
+  {
+    "id": "hs_071",
+    "city": "Shimla",
+    "state": "Himachal Pradesh",
+    "lat": 31.1048,
+    "lon": 77.1734,
+    "risk_level": "medium",
+    "risk_score": 24.4,
+    "model_confidence": 100.0,
+    "crime_rate_per_lakh": 278,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Shimla has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 1.7,
+    "radius_meters": 1016,
+    "features_v4": {
+      "ipc_rate": 278,
+      "cyber_rate": 38,
+      "violent_rate": 105,
+      "caw_rate": 58,
+      "unemployment": 0.1,
+      "poverty_mpce": 0.45,
+      "cluster_id": 3
+    }
+  },
+  {
+    "id": "hs_080",
+    "city": "Itanagar",
+    "state": "Arunachal Pradesh",
+    "lat": 27.0844,
+    "lon": 93.6053,
+    "risk_level": "medium",
+    "risk_score": 23.7,
+    "model_confidence": 99.7,
+    "crime_rate_per_lakh": 225,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Itanagar has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 0.4,
+    "radius_meters": 824,
+    "features_v4": {
+      "ipc_rate": 225,
+      "cyber_rate": 18,
+      "violent_rate": 92,
+      "caw_rate": 48,
+      "unemployment": 0.2,
+      "poverty_mpce": 0.28,
+      "cluster_id": 17
+    }
+  },
+  {
+    "id": "hs_079",
+    "city": "Shillong",
+    "state": "Meghalaya",
+    "lat": 25.5788,
+    "lon": 91.8933,
+    "risk_level": "medium",
+    "risk_score": 23.4,
+    "model_confidence": 99.9,
+    "crime_rate_per_lakh": 218,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Shillong has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 1.5,
+    "radius_meters": 984,
+    "features_v4": {
+      "ipc_rate": 218,
+      "cyber_rate": 28,
+      "violent_rate": 88,
+      "caw_rate": 48,
+      "unemployment": 0.15,
+      "poverty_mpce": 0.34,
+      "cluster_id": 16
+    }
+  },
+  {
+    "id": "hs_081",
+    "city": "Panaji",
+    "state": "Goa",
+    "lat": 15.4909,
+    "lon": 73.8278,
+    "risk_level": "medium",
+    "risk_score": 22.7,
+    "model_confidence": 99.3,
+    "crime_rate_per_lakh": 255,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Panaji has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 1.2,
+    "radius_meters": 1144,
+    "features_v4": {
+      "ipc_rate": 255,
+      "cyber_rate": 48,
+      "violent_rate": 95,
+      "caw_rate": 52,
+      "unemployment": 0.07,
+      "poverty_mpce": 0.65,
+      "cluster_id": 10
+    }
+  },
+  {
+    "id": "hs_077",
+    "city": "Kohima",
+    "state": "Nagaland",
+    "lat": 25.6751,
+    "lon": 94.1086,
+    "risk_level": "medium",
+    "risk_score": 22.3,
+    "model_confidence": 99.2,
+    "crime_rate_per_lakh": 205,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "MODERATE RISK: Kohima has elevated crime levels in some areas. Remain vigilant and secure valuables.",
+    "trend": "stable",
+    "population_lakh": 0.8,
+    "radius_meters": 888,
+    "features_v4": {
+      "ipc_rate": 205,
+      "cyber_rate": 22,
+      "violent_rate": 85,
+      "caw_rate": 45,
+      "unemployment": 0.18,
+      "poverty_mpce": 0.3,
+      "cluster_id": 18
+    }
+  },
+  {
+    "id": "hs_074",
+    "city": "Gangtok",
+    "state": "Sikkim",
+    "lat": 27.3314,
+    "lon": 88.6138,
+    "risk_level": "low",
+    "risk_score": 19.8,
+    "model_confidence": 99.8,
+    "crime_rate_per_lakh": 198,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "LOW RISK: Gangtok maintains relatively safe conditions. Standard urban safety precautions advised.",
+    "trend": "stable",
+    "population_lakh": 1.0,
+    "radius_meters": 723,
+    "features_v4": {
+      "ipc_rate": 198,
+      "cyber_rate": 22,
+      "violent_rate": 78,
+      "caw_rate": 42,
+      "unemployment": 0.09,
+      "poverty_mpce": 0.45,
+      "cluster_id": 8
+    }
+  },
+  {
+    "id": "hs_076",
+    "city": "Aizawl",
+    "state": "Mizoram",
+    "lat": 23.7307,
+    "lon": 92.7173,
+    "risk_level": "low",
+    "risk_score": 19.5,
+    "model_confidence": 99.6,
+    "crime_rate_per_lakh": 188,
+    "predicted_crimes": [
+      "theft",
+      "assault"
+    ],
+    "primary_warning": "LOW RISK: Aizawl maintains relatively safe conditions. Standard urban safety precautions advised.",
+    "trend": "stable",
+    "population_lakh": 2.8,
+    "radius_meters": 697,
+    "features_v4": {
+      "ipc_rate": 188,
+      "cyber_rate": 25,
+      "violent_rate": 72,
+      "caw_rate": 38,
+      "unemployment": 0.11,
+      "poverty_mpce": 0.38,
+      "cluster_id": 19
+    }
+  }
+]
