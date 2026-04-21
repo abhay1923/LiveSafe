@@ -1,4 +1,4 @@
-modules = ["nodejs-24"]
+modules = ["nodejs-24", "postgresql-16"]
 
 [deployment]
 router = "application"
@@ -38,3 +38,6 @@ VITE_SUPABASE_URL = "https://zwoqcszmxwgijgvnaqaw.supabase.co"
 VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3b3Fjc3pteHdnaWpndm5hcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1ODM2MDUsImV4cCI6MjA5MjE1OTYwNX0.AjfXWNIZtMYUAcy5XeLAD1Cdz-_QnZ_ajRpOqPQMXqY"
 VITE_USE_MOCK = "false"
 VITE_API_URL = "/api"
+
+[nix]
+channel = "stable-25_05"
