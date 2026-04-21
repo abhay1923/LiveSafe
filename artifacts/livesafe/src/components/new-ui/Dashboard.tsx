@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { TrendingDown, ShieldCheck, MapPin } from 'lucide-react'
+import { TrendingDown, ShieldCheck, MapPin, Activity, AlertOctagon, Flame, Siren } from 'lucide-react'
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '@/app/services/api'
 
@@ -18,6 +18,15 @@ const typeData = [
   { name: 'Burglary', actual: 24, predicted: 16 },
   { name: 'Theft',    actual: 14, predicted: 8  },
 ]
+
+const TOOLTIP_STYLE = {
+  background: 'rgba(15,23,42,0.95)',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 12,
+  color: '#f1f5f9',
+  fontSize: 12,
+  boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
+}
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -38,126 +47,189 @@ export default function Dashboard() {
     return () => controller.abort()
   }, [])
 
-  // Critical zones is roughly 20% of hotspots in mock data
   const critical_count = Math.round(stats.hotspot_count * 0.2)
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-6 sm:space-y-8 pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+      <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Main Analytics Dashboard</h1>
-          <p className="text-slate-500 text-sm mt-1">LiveSafe AI — Crime Prediction Platform</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            Main Analytics Dashboard
+          </h1>
+          <p className="text-slate-400 text-sm mt-1.5">
+            LiveSafe AI · Real-time crime prediction across India
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <StatCardSmall
-            icon={<TrendingDown className="text-green-600 w-5 h-5" />}
+          <StatPill
+            icon={<TrendingDown className="text-emerald-400 w-5 h-5" />}
             label="Crime Reduction"
             value={loading ? '...' : `-${stats.crime_reduction_pct}%`}
+            accent="emerald"
           />
-          <StatCardSmall
-            icon={<ShieldCheck className="text-blue-600 w-5 h-5" />}
-            label="Accuracy"
+          <StatPill
+            icon={<ShieldCheck className="text-indigo-400 w-5 h-5" />}
+            label="Model Accuracy"
             value="96.5%"
+            accent="indigo"
           />
-          <StatCardSmall
-            icon={<MapPin className="text-blue-600 w-5 h-5" />}
+          <StatPill
+            icon={<MapPin className="text-sky-400 w-5 h-5" />}
             label="Hotspot Cities"
             value={loading ? '...' : String(stats.hotspot_count)}
+            accent="sky"
           />
         </div>
       </div>
 
-      {/* Live Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Total Hotspots"      value={loading ? '...' : stats.hotspot_count}    color="blue" />
-        <StatCard label="Critical Zones"      value={loading ? '...' : critical_count}          color="red" />
-        <StatCard label="Incidents Reported"  value={loading ? '...' : stats.total_incidents}   color="amber" />
-        <StatCard label="Active SOS Alerts"   value={loading ? '...' : stats.active_sos_alerts} color="green" />
+      {/* Live Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <StatCard
+          label="Total Hotspots"
+          value={loading ? '...' : stats.hotspot_count}
+          icon={<Flame className="w-5 h-5" />}
+          color="indigo"
+        />
+        <StatCard
+          label="Critical Zones"
+          value={loading ? '...' : critical_count}
+          icon={<AlertOctagon className="w-5 h-5" />}
+          color="red"
+        />
+        <StatCard
+          label="Incidents Reported"
+          value={loading ? '...' : stats.total_incidents}
+          icon={<Activity className="w-5 h-5" />}
+          color="amber"
+        />
+        <StatCard
+          label="Active SOS Alerts"
+          value={loading ? '...' : stats.active_sos_alerts}
+          icon={<Siren className="w-5 h-5" />}
+          color="emerald"
+        />
       </div>
 
       {/* Charts */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-3xl border shadow-sm p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="font-bold text-slate-900">Crime Trends (30 Days)</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Actual vs Predicted</p>
-            </div>
-          </div>
-          <div className="h-[280px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={trendData}>
-                <defs>
-                  <linearGradient id="gradActual" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor="#2563eb" stopOpacity={0.12} />
-                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
-                <Tooltip />
-                <Area type="monotone" dataKey="actual"    stroke="#2563eb" fill="url(#gradActual)" strokeWidth={2} />
-                <Area type="monotone" dataKey="predicted" stroke="#94a3b8" fill="none" strokeDasharray="4 4" strokeWidth={2} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+      <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
+        <ChartCard
+          title="Crime Trends (30 Days)"
+          subtitle="Actual vs predicted incidents nationwide"
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={trendData}>
+              <defs>
+                <linearGradient id="gradActual" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="gradPredicted" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#38bdf8" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ stroke: 'rgba(99,102,241,0.3)', strokeWidth: 1 }} />
+              <Area type="monotone" dataKey="actual"    stroke="#818cf8" fill="url(#gradActual)"    strokeWidth={2.5} />
+              <Area type="monotone" dataKey="predicted" stroke="#38bdf8" fill="url(#gradPredicted)" strokeWidth={2} strokeDasharray="4 4" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartCard>
 
-        <div className="bg-white rounded-3xl border shadow-sm p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="font-bold text-slate-900">Crime Types</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Distribution</p>
-            </div>
-          </div>
-          <div className="h-[280px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={typeData} margin={{ left: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip />
-                <Bar dataKey="actual"    name="Historical" fill="#1e293b" radius={[4,4,0,0]} barSize={20} />
-                <Bar dataKey="predicted" name="Predicted"  fill="#3b82f6" radius={[4,4,0,0]} barSize={20} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <ChartCard title="Crime Types" subtitle="Historical vs predicted distribution">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={typeData} margin={{ left: 0, right: 8 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: 'rgba(99,102,241,0.08)' }} />
+              <Bar dataKey="actual"    name="Historical" fill="#475569" radius={[6,6,0,0]} barSize={22} />
+              <Bar dataKey="predicted" name="Predicted"  fill="#6366f1" radius={[6,6,0,0]} barSize={22} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
       </div>
 
-      {/* Attribution */}
-      <p className="text-xs text-slate-400 text-right">
+      <p className="text-xs text-slate-500 text-right">
         Data Source: National Crime Records Bureau (NCRB) — Crime in India 2022
       </p>
     </div>
   )
 }
 
-function StatCard({ label, value, color }: { label: string; value: number | string; color: string }) {
-  const colors: Record<string, string> = {
-    blue:  'bg-blue-50 text-blue-700',
-    red:   'bg-red-50 text-red-700',
-    amber: 'bg-amber-50 text-amber-700',
-    green: 'bg-green-50 text-green-700',
-  }
+const COLOR_MAP: Record<string, { bg: string; text: string; ring: string; glow: string }> = {
+  indigo:  { bg: 'rgba(99,102,241,0.12)',  text: '#a5b4fc', ring: 'rgba(99,102,241,0.25)',  glow: 'rgba(99,102,241,0.3)'  },
+  red:     { bg: 'rgba(239,68,68,0.12)',   text: '#fca5a5', ring: 'rgba(239,68,68,0.25)',   glow: 'rgba(239,68,68,0.3)'   },
+  amber:   { bg: 'rgba(245,158,11,0.12)',  text: '#fcd34d', ring: 'rgba(245,158,11,0.25)',  glow: 'rgba(245,158,11,0.3)'  },
+  emerald: { bg: 'rgba(16,185,129,0.12)',  text: '#6ee7b7', ring: 'rgba(16,185,129,0.25)',  glow: 'rgba(16,185,129,0.3)'  },
+  sky:     { bg: 'rgba(56,189,248,0.12)',  text: '#7dd3fc', ring: 'rgba(56,189,248,0.25)',  glow: 'rgba(56,189,248,0.3)'  },
+}
+
+function StatCard({ label, value, icon, color }: { label: string; value: number | string; icon: React.ReactNode; color: string }) {
+  const c = COLOR_MAP[color] ?? COLOR_MAP.indigo
   return (
-    <div className={`rounded-2xl p-4 ${colors[color]}`}>
-      <p className="text-xs font-medium uppercase tracking-wider opacity-70">{label}</p>
-      <p className="text-3xl font-bold mt-1">{value}</p>
+    <div
+      className="relative overflow-hidden rounded-2xl p-4 sm:p-5 border transition-all hover:scale-[1.02] hover:-translate-y-0.5"
+      style={{
+        background: `linear-gradient(135deg, ${c.bg} 0%, rgba(15,23,42,0.4) 100%)`,
+        borderColor: c.ring,
+        boxShadow: `0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px ${c.ring}`,
+      }}
+    >
+      <div className="flex items-start justify-between gap-2 mb-3">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{label}</p>
+        <div className="p-1.5 rounded-lg" style={{ background: c.bg, color: c.text }}>
+          {icon}
+        </div>
+      </div>
+      <p className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: c.text }}>
+        {value}
+      </p>
     </div>
   )
 }
 
-function StatCardSmall({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function StatPill({ icon, label, value, accent }: { icon: React.ReactNode; label: string; value: string; accent: string }) {
+  const c = COLOR_MAP[accent] ?? COLOR_MAP.indigo
   return (
-    <div className="bg-white px-4 py-3 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3 min-w-[140px]">
-      <div className="bg-slate-50 p-2 rounded-xl shrink-0">{icon}</div>
+    <div
+      className="px-4 py-2.5 rounded-xl border flex items-center gap-3 min-w-[160px]"
+      style={{
+        background: 'rgba(15,23,42,0.5)',
+        borderColor: 'rgba(255,255,255,0.06)',
+        backdropFilter: 'blur(8px)',
+      }}
+    >
+      <div className="p-1.5 rounded-lg shrink-0" style={{ background: c.bg }}>{icon}</div>
       <div>
-        <p className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">{label}</p>
-        <p className="text-lg font-bold text-slate-900">{value}</p>
+        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{label}</p>
+        <p className="text-base font-bold text-white leading-tight mt-0.5">{value}</p>
       </div>
+    </div>
+  )
+}
+
+function ChartCard({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
+  return (
+    <div
+      className="rounded-2xl p-5 sm:p-6 border"
+      style={{
+        background: 'linear-gradient(180deg, rgba(30,41,59,0.6) 0%, rgba(15,23,42,0.6) 100%)',
+        borderColor: 'rgba(255,255,255,0.06)',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+        backdropFilter: 'blur(8px)',
+      }}
+    >
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h3 className="font-bold text-white text-base">{title}</h3>
+          {subtitle && <p className="text-xs text-slate-500 mt-1">{subtitle}</p>}
+        </div>
+      </div>
+      <div className="h-[280px]">{children}</div>
     </div>
   )
 }
