@@ -142,9 +142,14 @@ export interface SOSAlert {
   user_name?: string
   latitude: number
   longitude: number
+  current_latitude?: number
+  current_longitude?: number
+  location_updated_at?: string
   status: SOSStatus
   assigned_officer?: string
   response_time?: number      // seconds
+  acknowledged_at?: string
+  resolved_at?: string
   created_at: string
 }
 

@@ -50,6 +50,8 @@ export default function HotspotMapNew() {
   const [sosError, setSOSError] = useState('')
   const [sosResult, setSOSResult] = useState<SOSAlert | null>(null)
   const [userLocation, setUserLocation] = useState<{ lat: number; lon: number } | null>(null)
+  const [watchId, setWatchId] = useState<number | null>(null)
+  const [shareLive, setShareLive] = useState(true)
 
   const { data: rawHotspots, isLoading, error, refetch } = useApi((sig) => api.getHotspots(sig))
   const hotspots: Hotspot[] = rawHotspots || []
@@ -71,10 +73,29 @@ export default function HotspotMapNew() {
       setUserLocation({ lat, lon })
       setSOSPhase('sending')
       try {
-        const alert = await api.triggerSOS({ latitude: lat, longitude: lon })
+        const alert = await api.triggerSOS({
+          latitude: lat,
+          longitude: lon,
+          user_id: user?.id ?? 'anonymous',
+          user_name: user?.name,
+        })
         setSOSResult(alert)
         setSOSPhase('success')
-        setTimeout(() => { setSOSPhase('idle'); setSOSResult(null) }, 8000)
+
+        // Start live location sharing if enabled
+        if (shareLive && navigator.geolocation) {
+          const id = navigator.geolocation.watchPosition(
+            (pos) => {
+              const newLat = pos.coords.latitude
+              const newLon = pos.coords.longitude
+              setUserLocation({ lat: newLat, lon: newLon })
+              api.updateSOSLocation(alert.id, { latitude: newLat, longitude: newLon }).catch(() => {})
+            },
+            () => {},
+            { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 }
+          )
+          setWatchId(id)
+        }
       } catch {
         setSOSError('Could not send SOS. Please call 112 immediately.')
         setSOSPhase('error')
@@ -92,14 +113,27 @@ export default function HotspotMapNew() {
       () => send(28.6139, 77.2090),
       { timeout: 8000, maximumAge: 30000 }
     )
-  }, [sosPhase])
+  }, [sosPhase, user, shareLive])
 
   const resetSOS = () => {
     setSOSPhase('idle')
     setSOSError('')
     setSOSResult(null)
     setUserLocation(null)
+    if (watchId !== null && navigator.geolocation) {
+      navigator.geolocation.clearWatch(watchId)
+      setWatchId(null)
+    }
   }
+
+  // Cleanup watch on unmount
+  useEffect(() => {
+    return () => {
+      if (watchId !== null && navigator.geolocation) {
+        navigator.geolocation.clearWatch(watchId)
+      }
+    }
+  }, [watchId])
 
   if (isLoading) {
     return (

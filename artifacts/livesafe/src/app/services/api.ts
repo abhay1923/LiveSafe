@@ -85,11 +85,16 @@ const SOSAlertSchema: z.ZodType<SOSAlert> = z.object({
   user_name: z.string().optional(),
   latitude: z.number(),
   longitude: z.number(),
+  current_latitude: z.number().optional(),
+  current_longitude: z.number().optional(),
+  location_updated_at: z.string().optional(),
   status: z.enum(['active', 'acknowledged', 'resolved']),
   assigned_officer: z.string().optional(),
   response_time: z.number().optional(),
+  acknowledged_at: z.string().optional(),
+  resolved_at: z.string().optional(),
   created_at: z.string(),
-})
+}) as z.ZodType<SOSAlert>
 
 const MLMetricsSchema: z.ZodType<MLMetrics> = z.object({
   accuracy: z.number(),
@@ -366,40 +371,52 @@ export const api = {
     return IncidentSchema.parse(data)
   },
 
-  // ---- SOS ----
+  // ---- SOS (always real backend) ----
   async getSOSAlerts(signal?: AbortSignal): Promise<SOSAlert[]> {
-    return withMockFallback(
-      MOCK_SOS_ALERTS,
-      z.array(SOSAlertSchema),
-      () => apiFetch('/sos', { signal })
-    )
+    const data = await apiFetch<unknown>('/sos', { signal })
+    return z.array(SOSAlertSchema).parse(data)
   },
 
   async triggerSOS(
+    payload: { latitude: number; longitude: number; user_id: string; user_name?: string },
+    signal?: AbortSignal
+  ): Promise<SOSAlert> {
+    const data = await apiFetch<unknown>('/sos', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      signal,
+    })
+    return SOSAlertSchema.parse(data)
+  },
+
+  async updateSOSLocation(
+    id: string,
     payload: { latitude: number; longitude: number },
     signal?: AbortSignal
   ): Promise<SOSAlert> {
-    if (_useMock) {
-      await new Promise((r) => setTimeout(r, 400))
-      return SOSAlertSchema.parse({
-        id: `sos-${Date.now()}`,
-        user_id: 'current-user',
-        latitude: payload.latitude,
-        longitude: payload.longitude,
-        status: 'active',
-        created_at: new Date().toISOString(),
-      })
-    }
-    return apiFetch('/sos', { method: 'POST', body: JSON.stringify(payload), signal })
+    const data = await apiFetch<unknown>(`/sos/${id}/location`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      signal,
+    })
+    return SOSAlertSchema.parse(data)
   },
 
-  async acknowledgeSOSAlert(id: string, signal?: AbortSignal): Promise<SOSAlert> {
-    if (_useMock) {
-      await new Promise((r) => setTimeout(r, 300))
-      const alert = MOCK_SOS_ALERTS.find((a) => a.id === id)
-      return SOSAlertSchema.parse({ ...(alert ?? MOCK_SOS_ALERTS[0]), status: 'acknowledged', assigned_officer: 'Officer on duty' })
-    }
-    return apiFetch(`/sos/${id}/acknowledge`, { method: 'PATCH', signal })
+  async acknowledgeSOSAlert(id: string, officer?: string, signal?: AbortSignal): Promise<SOSAlert> {
+    const data = await apiFetch<unknown>(`/sos/${id}/acknowledge`, {
+      method: 'PATCH',
+      body: JSON.stringify({ officer }),
+      signal,
+    })
+    return SOSAlertSchema.parse(data)
+  },
+
+  async resolveSOSAlert(id: string, signal?: AbortSignal): Promise<SOSAlert> {
+    const data = await apiFetch<unknown>(`/sos/${id}/resolve`, {
+      method: 'PATCH',
+      signal,
+    })
+    return SOSAlertSchema.parse(data)
   },
 
   // ---- ML ----
