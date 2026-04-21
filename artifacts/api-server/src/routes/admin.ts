@@ -6,7 +6,7 @@ import { requireAuth, requireRole, type AuthedRequest } from "../lib/auth";
 
 const router: IRouter = Router();
 
-router.use(requireAuth, requireRole("super_admin"));
+router.use("/admin", requireAuth, requireRole("super_admin"));
 
 function serializeRequest(row: typeof accessRequestsTable.$inferSelect) {
   return {

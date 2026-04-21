@@ -334,52 +334,42 @@ export const api = {
     )
   },
 
-  // ---- Incidents ----
-  async getIncidents(signal?: AbortSignal): Promise<Incident[]> {
-    return withMockFallback(
-      MOCK_INCIDENTS,
-      z.array(IncidentSchema),
-      async () => {
-        const { data, error } = await supabase
-          .from('incidents')
-          .select('*')
-          .order('created_at', { ascending: false })
-        if (error) throw new ApiError(500, error.message)
-        return data
-      }
-    )
+  // ---- Incidents (real backend) ----
+  async getIncidents(
+    filters?: { type?: string; severity?: string; status?: string; from?: string; to?: string; limit?: number },
+    signal?: AbortSignal
+  ): Promise<Incident[]> {
+    const qs = new URLSearchParams()
+    if (filters?.type)     qs.set('type', filters.type)
+    if (filters?.severity) qs.set('severity', filters.severity)
+    if (filters?.status)   qs.set('status', filters.status)
+    if (filters?.from)     qs.set('from', filters.from)
+    if (filters?.to)       qs.set('to', filters.to)
+    if (filters?.limit)    qs.set('limit', String(filters.limit))
+    const url = `/incidents${qs.toString() ? '?' + qs.toString() : ''}`
+    const data = await apiFetch<unknown>(url, { signal })
+    return z.array(IncidentSchema).parse(data)
+  },
+
+  async getIncidentStats(signal?: AbortSignal): Promise<{
+    total: number
+    by_type: Array<{ type: string; count: number }>
+    by_severity: Array<{ severity: string; count: number }>
+    by_status: Array<{ status: string; count: number }>
+    timeline_7d: Array<{ day: string; count: number }>
+  }> {
+    return apiFetch('/incidents/stats', { signal })
   },
 
   async reportIncident(
-    incident: Omit<Incident, 'id' | 'status' | 'verified_by' | 'created_at'>,
+    incident: Omit<Incident, 'id' | 'status' | 'verified_by' | 'created_at' | 'reported_by'>,
     signal?: AbortSignal
   ): Promise<Incident> {
-    if (_useMock) {
-      await new Promise((r) => setTimeout(r, 500))
-      return IncidentSchema.parse({
-        ...incident,
-        id: `i-${Date.now()}`,
-        status: 'reported',
-        created_at: new Date().toISOString(),
-      })
-    }
-
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) throw new ApiError(401, 'Not authenticated')
-
-    const newIncident = {
-      ...incident,
-      reported_by: user.id,
-      status: 'reported' as const,
-    }
-
-    const { data, error } = await supabase
-      .from('incidents')
-      .insert(newIncident)
-      .select()
-      .single()
-
-    if (error) throw new ApiError(400, error.message)
+    const data = await apiFetch<unknown>('/incidents', {
+      method: 'POST',
+      body: JSON.stringify(incident),
+      signal,
+    })
     return IncidentSchema.parse(data)
   },
 
@@ -431,29 +421,31 @@ export const api = {
     return SOSAlertSchema.parse(data)
   },
 
-  // ---- ML ----
-  async getMLMetrics(signal?: AbortSignal): Promise<MLMetrics> {
-    return withMockFallback(
-      MOCK_ML_METRICS,
-      MLMetricsSchema,
-      () => apiFetch('/ml/metrics', { signal })
-    )
+  // ---- ML (real backend) ----
+  async getMLMetrics(signal?: AbortSignal): Promise<MLMetrics & {
+    recent_30d_incidents?: number
+    algorithm?: string
+    cv_strategy?: string
+    training_records?: number
+    feature_count?: number
+  }> {
+    return apiFetch('/ml/metrics', { signal })
   },
 
   async getPrediction(
     req: PredictionRequest,
     signal?: AbortSignal
-  ): Promise<PredictionResult> {
-    if (_useMock) {
-      await new Promise((r) => setTimeout(r, 700))
-      const score = Math.floor(Math.random() * 80) + 10
-      return {
-        risk_score: score,
-        classification: score > 75 ? 'critical' : score > 55 ? 'high' : score > 35 ? 'medium' : 'low',
-        predicted_crimes: score > 60 ? ['theft', 'robbery'] : ['vandalism'],
-        confidence: 0.87 + Math.random() * 0.1,
-      }
+  ): Promise<PredictionResult & {
+    explanation?: {
+      nearest_area: string
+      distance_km: number
+      base_risk: number
+      proximity_factor: number
+      time_factor: { value: number; label: string }
+      day_factor: { value: number; label: string }
+      season_factor: { value: number; label: string }
     }
+  }> {
     return apiFetch('/ml/predict', { method: 'POST', body: JSON.stringify(req), signal })
   },
 
