@@ -10,7 +10,6 @@ import { z } from 'zod'
 import { tokenStore } from '@/lib/tokenStore'
 import type {
   User,
-  UserRole,
   Incident,
   Hotspot,
   CrimeType,
@@ -20,6 +19,21 @@ import type {
   PredictionResult,
   DashboardStats,
 } from '@/types'
+
+export interface AccessRequest {
+  id: string
+  email: string
+  name: string
+  requested_role: 'police' | 'admin'
+  badge_number?: string
+  phone?: string
+  reason?: string
+  status: 'pending' | 'approved' | 'rejected'
+  reviewed_by?: number
+  reviewed_at?: string
+  rejection_reason?: string
+  created_at: string
+}
 import { RAW_HOTSPOTS_V5, type V5HotspotRaw } from './hotspots_v5'
 
 const CrimeTypeSchema = z.enum([
@@ -43,12 +57,12 @@ const UserSchema: z.ZodType<User> = z.object({
   id: z.string(),
   email: z.string().email(),
   name: z.string(),
-  role: z.enum(['citizen', 'police', 'admin']),
+  role: z.enum(['citizen', 'police', 'admin', 'super_admin']),
   phone: z.string().nullable().optional(),
   badge_number: z.string().nullable().optional(),
   is_active: z.boolean(),
   created_at: z.string(),
-})
+}) as z.ZodType<User>
 
 const IncidentSchema: z.ZodType<Incident> = z.object({
   id: z.string(),
@@ -185,14 +199,6 @@ const MOCK_STATS: DashboardStats = {
   crime_reduction_pct: 12.3,
 }
 
-// ---- Demo accounts — bypass Supabase for quick testing ----
-
-const DEMO_ACCOUNTS: Record<string, { password: string; name: string; role: UserRole }> = {
-  'citizen@example.com': { password: 'citizen123', name: 'Priya Sharma', role: 'citizen' },
-  'police@example.com':  { password: 'police123',  name: 'Officer Rajesh Kumar', role: 'police' },
-  'admin@example.com':   { password: 'admin123',   name: 'Admin Vikram Singh', role: 'admin' },
-}
-
 // ---- Mock mode flag ----
 // Set VITE_USE_MOCK=false in .env to use real Supabase tables
 const _useMock = import.meta.env.VITE_USE_MOCK !== 'false'
@@ -219,79 +225,85 @@ async function withMockFallback<T>(
 // ---- API methods ----
 
 export const api = {
-  // ---- Auth ----
+  // ---- Auth (real backend) ----
   async login(
     email: string,
     password: string,
-    _signal?: AbortSignal
+    signal?: AbortSignal
   ): Promise<{ user: User; token: string }> {
-    const key = email.toLowerCase().trim()
-
-    // Demo account bypass — works without Supabase tables
-    const demo = DEMO_ACCOUNTS[key]
-    if (demo && demo.password === password) {
-      const user: User = {
-        id: `demo-${demo.role}`,
-        email: key,
-        name: demo.name,
-        role: demo.role,
-        is_active: true,
-        created_at: new Date().toISOString(),
-      }
-      await new Promise((r) => setTimeout(r, 500)) // realistic delay
-      return { user, token: `demo-token-${demo.role}` }
-    }
-
-    // Real Supabase login for non-demo accounts
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw new ApiError(401, error.message)
-
-    const { data: profile } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', data.user.id)
-      .single()
-
-    if (!profile) throw new ApiError(404, 'User profile not found in database')
-
-    return {
-      user: UserSchema.parse(profile),
-      token: data.session.access_token,
-    }
+    const data = await apiFetch<{ user: unknown; token: string }>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
+      signal,
+    })
+    return { user: UserSchema.parse(data.user), token: data.token }
   },
 
   async register(
     name: string,
     email: string,
     password: string,
-    _signal?: AbortSignal
+    signal?: AbortSignal
   ): Promise<{ user: User; token: string }> {
-    const { data, error } = await supabase.auth.signUp({ email, password })
-    if (error) throw new ApiError(400, error.message)
-    if (!data.user) throw new ApiError(400, 'Registration failed')
+    const data = await apiFetch<{ user: unknown; token: string }>('/auth/signup-citizen', {
+      method: 'POST',
+      body: JSON.stringify({ name: name.trim(), email: email.trim().toLowerCase(), password }),
+      signal,
+    })
+    return { user: UserSchema.parse(data.user), token: data.token }
+  },
 
-    const newUser = {
-      id: data.user.id,
-      email: email.trim().toLowerCase(),
-      name: name.trim(),
-      role: 'citizen' as const,
-      is_active: true,
-      created_at: new Date().toISOString(),
-    }
-
-    const { error: insertError } = await supabase.from('users').insert(newUser)
-    if (insertError) throw new ApiError(400, insertError.message)
-
-    return {
-      user: UserSchema.parse(newUser),
-      token: data.session?.access_token ?? '',
-    }
+  async requestAccess(
+    payload: {
+      name: string
+      email: string
+      password: string
+      requestedRole: 'police' | 'admin'
+      badgeNumber?: string
+      phone?: string
+      reason?: string
+    },
+    signal?: AbortSignal
+  ): Promise<{ message: string }> {
+    return apiFetch('/auth/request-access', {
+      method: 'POST',
+      body: JSON.stringify({
+        ...payload,
+        name: payload.name.trim(),
+        email: payload.email.trim().toLowerCase(),
+      }),
+      signal,
+    })
   },
 
   async logout(): Promise<void> {
+    try {
+      await apiFetch('/auth/logout', { method: 'POST' })
+    } catch {
+      /* ignore */
+    }
     tokenStore.clear()
-    // Sign out from Supabase (ignore errors for demo tokens)
-    await supabase.auth.signOut().catch(() => {})
+  },
+
+  // ---- Super admin ----
+  async listAccessRequests(signal?: AbortSignal): Promise<AccessRequest[]> {
+    return apiFetch<AccessRequest[]>('/admin/access-requests', { signal })
+  },
+
+  async approveAccessRequest(id: string, signal?: AbortSignal): Promise<{ message: string }> {
+    return apiFetch(`/admin/access-requests/${id}/approve`, { method: 'POST', signal })
+  },
+
+  async rejectAccessRequest(
+    id: string,
+    reason?: string,
+    signal?: AbortSignal
+  ): Promise<{ message: string }> {
+    return apiFetch(`/admin/access-requests/${id}/reject`, {
+      method: 'POST',
+      body: JSON.stringify({ reason }),
+      signal,
+    })
   },
 
   // ---- Hotspots ----

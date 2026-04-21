@@ -12,6 +12,7 @@ import AnalyticsPage from '@/pages/AnalyticsPage'
 import MLDashboardPage from '@/pages/MLDashboardPage'
 import UserManagementPage from '@/pages/UserManagementPage'
 import SettingsPage from '@/pages/SettingsPage'
+import SuperAdminRequestsPage from '@/pages/SuperAdminRequestsPage'
 
 // ---- Protected Route wrapper ----
 interface ProtectedRouteProps {
@@ -53,6 +54,7 @@ function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
 function RoleRedirect() {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
+  if (user.role === 'super_admin') return <Navigate to="/super-admin" replace />
   return <Navigate to="/map" replace />
 }
 
@@ -123,6 +125,16 @@ export default function App() {
         }
       />
 
+      {/* Super admin only */}
+      <Route
+        path="/super-admin"
+        element={
+          <ProtectedRoute allowedRoles={['super_admin']}>
+            <SuperAdminRequestsPage />
+          </ProtectedRoute>
+        }
+      />
+
       {/* Catch-all */}
 <Route path="*" element={<RoleRedirect />} />
     </Routes>
@@ -131,7 +143,10 @@ export default function App() {
 
 // Redirect authenticated users away from /login
 function LoginRedirect() {
-  const { isAuthenticated } = useAuth()
-  if (isAuthenticated) return <Navigate to="/map" replace />
+  const { isAuthenticated, user } = useAuth()
+  if (isAuthenticated) {
+    if (user?.role === 'super_admin') return <Navigate to="/super-admin" replace />
+    return <Navigate to="/map" replace />
+  }
   return <LoginPage />
 }

@@ -6,10 +6,12 @@ export const usersTable = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
-  role: text("role", { enum: ["citizen", "police", "admin"] }).notNull().default("citizen"),
+  passwordHash: text("password_hash").notNull(),
+  role: text("role", { enum: ["citizen", "police", "admin", "super_admin"] }).notNull().default("citizen"),
   phone: text("phone"),
   badgeNumber: text("badge_number"),
   isActive: boolean("is_active").notNull().default(true),
+  isApproved: boolean("is_approved").notNull().default(true),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

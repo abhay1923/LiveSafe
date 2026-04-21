@@ -2,7 +2,7 @@
 // LiveSafe — Shared Type Definitions
 // ============================================================
 
-export type UserRole = 'citizen' | 'police' | 'admin'
+export type UserRole = 'citizen' | 'police' | 'admin' | 'super_admin'
 
 /** CrimeGuard v5 shell navigation */
 export type Screen =
