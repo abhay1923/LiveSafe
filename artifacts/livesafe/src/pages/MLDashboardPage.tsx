@@ -150,7 +150,7 @@ export default function MLDashboardPage() {
                   </div>
                   <div className="metrics-footer-item">
                     <Cpu size={14} color="#64748b" />
-                    <span>Algorithm: <strong>Random Forest + Gradient Boost Ensemble</strong></span>
+                    <span>Algorithm: <strong>{metrics.algorithm ?? 'XGBoost + LightGBM + RandomForest Ensemble'}</strong></span>
                   </div>
                   <div className="metrics-footer-item">
                     <CheckCircle size={14} color="#22c55e" />
@@ -165,22 +165,22 @@ export default function MLDashboardPage() {
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(99,102,241,0.12)' }}>📊</div>
                 <div className="info-title">Dataset Source</div>
-                <div className="info-desc">Real Kaggle crime dataset with 198,355+ validated samples from Delhi NCR police records</div>
+                <div className="info-desc">Official NCRB-derived India city crime data, retrained on the 2020-2023 published window used by the app&apos;s v5 hotspot model</div>
               </div>
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(34,197,94,0.12)' }}>🎯</div>
                 <div className="info-title">Feature Engineering</div>
-                <div className="info-desc">Time of day, day of week, location cluster, weather index, historical crime density</div>
+                <div className="info-desc">City crime rates, trend signals, spatial clusters, socio-economic proxies, and chargesheet-rate features</div>
               </div>
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(245,158,11,0.12)' }}>🔄</div>
                 <div className="info-title">Retraining Schedule</div>
-                <div className="info-desc">Auto-retrained weekly with new incident data. Manual trigger available for urgent updates</div>
+                <div className="info-desc">Manual retraining is available now; automated refresh should only be enabled when a real backend training job is connected</div>
               </div>
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(56,189,248,0.12)' }}>🛡️</div>
                 <div className="info-title">Prediction Latency</div>
-                <div className="info-desc">Sub-50ms inference per request. Hotspot grid updated every 6 hours via batch job</div>
+                <div className="info-desc">Local fallback inference is instant in the browser; backend latency depends on whether a production ML service is connected</div>
               </div>
             </div>
           </>

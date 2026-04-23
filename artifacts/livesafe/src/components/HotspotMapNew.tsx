@@ -56,12 +56,24 @@ export default function HotspotMapNew() {
   const { data: rawHotspots, isLoading, error, refetch } = useApi((sig) => api.getHotspots(sig))
   const hotspots: Hotspot[] = rawHotspots || []
 
-  const filteredHotspots = hotspots.filter(h =>
-    (riskFilter === 'all' || h.classification === riskFilter) &&
-    (selectedState === 'all' || h.state.includes(selectedState))
-  )
+  const filteredHotspots = hotspots.filter((h) => {
+    const stateName = h.state ?? ''
+    return (
+      (riskFilter === 'all' || h.classification === riskFilter) &&
+      (selectedState === 'all' || stateName.includes(selectedState))
+    )
+  })
 
-  const states = ['all', ...Array.from(new Set(hotspots.map(h => h.state.split(', ')[1]))).sort() as string[]]
+  const states = [
+    'all',
+    ...Array.from(
+      new Set(
+        hotspots
+          .map((h) => (h.state ?? '').split(', ')[1])
+          .filter((s): s is string => Boolean(s))
+      )
+    ).sort(),
+  ]
 
   const handleSOS = useCallback(async () => {
     if (sosPhase !== 'idle') return
@@ -434,9 +446,9 @@ export default function HotspotMapNew() {
                     <span className={cn('px-3 py-1 rounded-full text-xs font-bold border capitalize', RISK_BG[selectedCity.classification])}>
                       {selectedCity.classification}
                     </span>
-                    <span className="text-xs text-slate-500">{selectedCity.state.split(', ')[1]}</span>
+                    <span className="text-xs text-slate-500">{(selectedCity.state ?? '').split(', ')[1] ?? ''}</span>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">{selectedCity.state.split(', ')[0]}</h3>
+                  <h3 className="text-lg font-bold text-slate-900">{(selectedCity.state ?? 'Unknown location').split(', ')[0]}</h3>
                 </div>
                 <button onClick={() => setSelectedCity(null)} className="text-slate-400 hover:text-slate-600 text-xl leading-none p-1 -m-1 rounded-lg hover:bg-slate-100 transition-colors">×</button>
               </div>

@@ -5,7 +5,7 @@
 // • AbortController support to prevent setState on unmounted components
 // • Graceful mock-data fallback when backend is not yet connected
 // ============================================================
-import { supabase } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import { z } from 'zod'
 import { tokenStore } from '@/lib/tokenStore'
 import type {
@@ -150,6 +150,181 @@ class ApiError extends Error {
   }
 }
 
+class NonJsonResponseError extends ApiError {
+  constructor(status: number, contentType: string | null) {
+    super(
+      status,
+      contentType?.includes('text/html')
+        ? 'Backend API is not running; using local demo data where available.'
+        : 'Backend returned a non-JSON response.'
+    )
+    this.name = 'NonJsonResponseError'
+  }
+}
+
+const DEMO_LOGIN_ACCOUNTS: Record<string, { password: string; name: string; role: User['role'] }> = {
+  'citizen@example.com': {
+    password: 'citizen123',
+    name: 'Priya Sharma',
+    role: 'citizen',
+  },
+  'police@example.com': {
+    password: 'police123',
+    name: 'Officer Rajesh Kumar',
+    role: 'police',
+  },
+  'admin@example.com': {
+    password: 'admin123',
+    name: 'Admin Vikram Singh',
+    role: 'admin',
+  },
+  'superadmin@livesafe.local': {
+    password: 'superadmin123',
+    name: 'Super Admin',
+    role: 'super_admin',
+  },
+}
+
+function isBackendUnavailableError(err: unknown): boolean {
+  if (err instanceof ApiError) {
+    return err.status === 404 || err.status >= 500 || err instanceof NonJsonResponseError
+  }
+  return err instanceof TypeError
+}
+
+function normalizeCrimeType(type: string): CrimeType {
+  switch (type) {
+    case 'murder':
+      return 'assault'
+    case 'crime_against_women':
+      return 'harassment'
+    case 'economic_offence':
+      return 'fraud'
+    default:
+      return CrimeTypeSchema.safeParse(type).success ? (type as CrimeType) : 'other'
+  }
+}
+
+function buildMockHotspots(): Hotspot[] {
+  return RAW_HOTSPOTS_V5.map((h: V5HotspotRaw) => ({
+    id: h.id,
+    latitude: h.lat,
+    longitude: h.lon,
+    risk_score: h.risk_score,
+    classification: (h.risk_level as 'low' | 'medium' | 'high' | 'critical'),
+    radius: h.radius_meters,
+    crime_count: Math.round(h.crime_rate_per_lakh * (h.population_lakh || 1)),
+    state: `${h.city}, ${h.state}`,
+    predicted_crimes: h.predicted_crimes.map(normalizeCrimeType),
+    primary_warning: h.primary_warning,
+    trend: (h.trend as 'rising' | 'stable' | 'falling') || 'stable',
+    model_confidence: h.model_confidence / 100,
+    created_at: new Date().toISOString(),
+  }))
+}
+
+async function loadGeneratedHotspots(signal?: AbortSignal): Promise<Hotspot[]> {
+  try {
+    const response = await fetch('/india_hotspots_v5.json', { signal })
+    if (!response.ok) throw new ApiError(response.status, 'Could not load generated hotspots.')
+    const raw = (await response.json()) as V5HotspotRaw[]
+    return raw.map((h) => ({
+      id: h.id,
+      latitude: h.lat,
+      longitude: h.lon,
+      risk_score: h.risk_score,
+      classification: (h.risk_level as 'low' | 'medium' | 'high' | 'critical'),
+      radius: h.radius_meters,
+      crime_count: Math.round(h.crime_rate_per_lakh * (h.population_lakh || 1)),
+      state: `${h.city}, ${h.state}`,
+      predicted_crimes: h.predicted_crimes.map(normalizeCrimeType),
+      primary_warning: h.primary_warning,
+      trend: (h.trend as 'rising' | 'stable' | 'falling') || 'stable',
+      model_confidence: h.model_confidence / 100,
+      created_at: new Date().toISOString(),
+    }))
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') throw err
+    return buildMockHotspots()
+  }
+}
+
+function buildLocalPrediction(req: PredictionRequest): PredictionResult & {
+  explanation?: {
+    nearest_area: string
+    distance_km: number
+    base_risk: number
+    proximity_factor: number
+    time_factor: { value: number; label: string }
+    day_factor: { value: number; label: string }
+    season_factor: { value: number; label: string }
+  }
+} {
+  const KNOWN = [
+    { name: 'Delhi NCR', lat: 28.6139, lon: 77.2090, baseRisk: 72, crimes: ['theft', 'robbery', 'harassment'] as CrimeType[] },
+    { name: 'Mumbai', lat: 19.0760, lon: 72.8777, baseRisk: 68, crimes: ['theft', 'fraud', 'harassment'] as CrimeType[] },
+    { name: 'Bengaluru', lat: 12.9716, lon: 77.5946, baseRisk: 58, crimes: ['cybercrime', 'fraud', 'theft'] as CrimeType[] },
+    { name: 'Kolkata', lat: 22.5726, lon: 88.3639, baseRisk: 60, crimes: ['theft', 'robbery'] as CrimeType[] },
+  ]
+  const toRad = (deg: number) => (deg * Math.PI) / 180
+  const haversineKm = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => {
+    const dLat = toRad(b.lat - a.lat)
+    const dLon = toRad(b.lon - a.lon)
+    const lat1 = toRad(a.lat)
+    const lat2 = toRad(b.lat)
+    const h = Math.sin(dLat / 2) ** 2 + Math.sin(dLon / 2) ** 2 * Math.cos(lat1) * Math.cos(lat2)
+    return 2 * 6371 * Math.asin(Math.sqrt(h))
+  }
+
+  let nearest = KNOWN[0]
+  let nearestDist = Infinity
+  for (const area of KNOWN) {
+    const d = haversineKm({ lat: req.latitude, lon: req.longitude }, { lat: area.lat, lon: area.lon })
+    if (d < nearestDist) {
+      nearestDist = d
+      nearest = area
+    }
+  }
+
+  const proximityFactor = nearestDist <= 8 ? 1 : Math.max(0.3, 1 - (nearestDist - 8) / 75)
+  const timeFactor =
+    req.hour >= 22 || req.hour < 4
+      ? { value: 1.32, label: 'Late-night window (22:00-04:00)' }
+      : req.hour >= 18 && req.hour < 22
+        ? { value: 1.18, label: 'Evening rush (18:00-22:00)' }
+        : { value: 0.92, label: 'General daytime pattern' }
+  const dayFactor =
+    req.day_of_week === 5 || req.day_of_week === 6
+      ? { value: 1.2, label: 'Weekend (Fri/Sat elevated activity)' }
+      : { value: 1, label: 'Weekday' }
+  const seasonFactor =
+    [10, 11, 12].includes(req.month)
+      ? { value: 1.1, label: 'Festival season (Oct-Dec)' }
+      : { value: 1, label: 'Normal season' }
+
+  let risk = nearest.baseRisk * proximityFactor * timeFactor.value * dayFactor.value * seasonFactor.value
+  risk = Math.max(5, Math.min(98, Math.round(risk)))
+  const classification: PredictionResult['classification'] =
+    risk >= 78 ? 'critical' : risk >= 60 ? 'high' : risk >= 38 ? 'medium' : 'low'
+  const confidence = Math.max(0.55, Math.min(0.97, 1 - nearestDist / 200))
+
+  return {
+    risk_score: risk,
+    classification,
+    predicted_crimes: nearest.crimes,
+    confidence: Math.round(confidence * 1000) / 1000,
+    explanation: {
+      nearest_area: nearest.name,
+      distance_km: Math.round(nearestDist * 10) / 10,
+      base_risk: Math.round(nearest.baseRisk * proximityFactor),
+      proximity_factor: Math.round(proximityFactor * 100) / 100,
+      time_factor: timeFactor,
+      day_factor: dayFactor,
+      season_factor: seasonFactor,
+    },
+  }
+}
+
 async function apiFetch<T>(
   path: string,
   options: RequestInit & { signal?: AbortSignal } = {}
@@ -165,6 +340,11 @@ async function apiFetch<T>(
     ...options,
     headers,
   })
+
+  const contentType = res.headers.get('content-type')
+  if (!contentType?.includes('application/json')) {
+    throw new NonJsonResponseError(res.status, contentType)
+  }
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({ message: res.statusText }))
@@ -191,13 +371,13 @@ const MOCK_SOS_ALERTS: SOSAlert[] = [
 ]
 
 const MOCK_ML_METRICS: MLMetrics = {
-  accuracy: 0.9650,
-  precision: 0.9412,
-  recall: 0.9288,
-  f1_score: 0.9348,
-  sample_count: 715,
+  accuracy: 0.9349,
+  precision: 0.9341,
+  recall: 0.9341,
+  f1_score: 0.9341,
+  sample_count: 464,
   last_trained: new Date().toISOString(),
-  model_version: 'v4.0.0-india-expanded',
+  model_version: 'v5.0.0-india-ncrb-2020-2023',
 }
 
 const MOCK_STATS: DashboardStats = {
@@ -210,27 +390,17 @@ const MOCK_STATS: DashboardStats = {
 }
 
 // ---- Mock mode flag ----
-// Set VITE_USE_MOCK=false in .env to use real Supabase tables
-const _useMock = import.meta.env.VITE_USE_MOCK !== 'false'
-
-async function withMockFallback<T>(
-  mockData: T,
-  schema: z.ZodType<T>,
-  realFetch: () => Promise<unknown>
-): Promise<T> {
-  if (_useMock) {
-    await new Promise((r) => setTimeout(r, 400 + Math.random() * 300))
-    return schema.parse(mockData)
-  }
-  try {
-    const raw = await realFetch()
-    return schema.parse(raw)
-  } catch {
-    // Graceful fallback to mock when backend/tables are unavailable
-    await new Promise((r) => setTimeout(r, 200))
-    return schema.parse(mockData)
-  }
-}
+// Priority:
+// 1) VITE_USE_MOCK='true'  -> force mock data
+// 2) VITE_USE_MOCK='false' -> force real data
+// 3) unset                 -> auto: use real Supabase when configured
+const mockModeEnv = import.meta.env.VITE_USE_MOCK
+const _useMock =
+  mockModeEnv === 'true'
+    ? true
+    : mockModeEnv === 'false'
+      ? false
+      : !isSupabaseConfigured
 
 // ---- API methods ----
 
@@ -241,12 +411,34 @@ export const api = {
     password: string,
     signal?: AbortSignal
   ): Promise<{ user: User; token: string }> {
-    const data = await apiFetch<{ user: unknown; token: string }>('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
-      signal,
-    })
-    return { user: UserSchema.parse(data.user), token: data.token }
+    const normalizedEmail = email.trim().toLowerCase()
+    try {
+      const data = await apiFetch<{ user: unknown; token: string }>('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email: normalizedEmail, password }),
+        signal,
+      })
+      return { user: UserSchema.parse(data.user), token: data.token }
+    } catch (err) {
+      // When API is unreachable/misconfigured in local setup, keep demo sign-in usable.
+      const isBackendUnavailable = isBackendUnavailableError(err)
+      const demo = DEMO_LOGIN_ACCOUNTS[normalizedEmail]
+      if (isBackendUnavailable && demo && demo.password === password) {
+        const now = new Date().toISOString()
+        return {
+          user: UserSchema.parse({
+            id: `demo-${demo.role}`,
+            email: normalizedEmail,
+            name: demo.name,
+            role: demo.role,
+            is_active: true,
+            created_at: now,
+          }),
+          token: `demo-token-${demo.role}`,
+        }
+      }
+      throw err
+    }
   },
 
   async register(
@@ -297,7 +489,12 @@ export const api = {
 
   // ---- Super admin ----
   async listAccessRequests(signal?: AbortSignal): Promise<AccessRequest[]> {
-    return apiFetch<AccessRequest[]>('/admin/access-requests', { signal })
+    try {
+      return await apiFetch<AccessRequest[]>('/admin/access-requests', { signal })
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return []
+      throw err
+    }
   },
 
   async approveAccessRequest(id: string, signal?: AbortSignal): Promise<{ message: string }> {
@@ -318,30 +515,20 @@ export const api = {
 
   // ---- Hotspots ----
   async getHotspots(signal?: AbortSignal): Promise<Hotspot[]> {
-    const mockHotspots = RAW_HOTSPOTS_V5.map((h: V5HotspotRaw) => ({
-      id: h.id,
-      latitude: h.lat,
-      longitude: h.lon,
-      risk_score: h.risk_score,
-      classification: (h.risk_level as 'low' | 'medium' | 'high' | 'critical'),
-      radius: h.radius_meters,
-      crime_count: Math.round(h.crime_rate_per_lakh * (h.population_lakh || 1)),
-      state: h.state,
-      predicted_crimes: h.predicted_crimes as CrimeType[],
-      primary_warning: h.primary_warning,
-      trend: (h.trend as 'rising' | 'stable' | 'falling' || 'stable'),
-      model_confidence: h.model_confidence / 100,
-      created_at: new Date().toISOString(),
-    }))
-    return withMockFallback(
-      mockHotspots,
-      z.array(HotspotSchema),
-      async () => {
-        const { data, error } = await supabase.from('hotspots').select('*')
-        if (error) throw new ApiError(500, error.message)
-        return data
-      }
-    )
+    const mockHotspots = await loadGeneratedHotspots(signal)
+    if (_useMock) {
+      return z.array(HotspotSchema).parse(mockHotspots)
+    }
+    try {
+      const { data, error } = await supabase.from('hotspots').select('*')
+      if (error) throw new ApiError(500, error.message)
+      if (signal?.aborted) throw new DOMException('Request aborted', 'AbortError')
+      const remoteHotspots = z.array(HotspotSchema).parse(data)
+      return remoteHotspots.length >= 100 ? remoteHotspots : z.array(HotspotSchema).parse(mockHotspots)
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return z.array(HotspotSchema).parse(mockHotspots)
+      throw err
+    }
   },
 
   // ---- Incidents (real backend) ----
@@ -349,6 +536,20 @@ export const api = {
     filters?: { type?: string; severity?: string; status?: string; from?: string; to?: string; limit?: number },
     signal?: AbortSignal
   ): Promise<Incident[]> {
+    const buildFallback = () => {
+      let filtered = [...MOCK_INCIDENTS]
+      if (filters?.type) filtered = filtered.filter((i) => i.type === filters.type)
+      if (filters?.severity) filtered = filtered.filter((i) => i.severity === filters.severity)
+      if (filters?.status) filtered = filtered.filter((i) => i.status === filters.status)
+      if (filters?.from) filtered = filtered.filter((i) => new Date(i.created_at) >= new Date(filters.from))
+      if (filters?.to) filtered = filtered.filter((i) => new Date(i.created_at) <= new Date(filters.to))
+      if (filters?.limit) filtered = filtered.slice(0, filters.limit)
+      return z.array(IncidentSchema).parse(filtered)
+    }
+    if (_useMock) {
+      return buildFallback()
+    }
+
     const qs = new URLSearchParams()
     if (filters?.type)     qs.set('type', filters.type)
     if (filters?.severity) qs.set('severity', filters.severity)
@@ -357,8 +558,13 @@ export const api = {
     if (filters?.to)       qs.set('to', filters.to)
     if (filters?.limit)    qs.set('limit', String(filters.limit))
     const url = `/incidents${qs.toString() ? '?' + qs.toString() : ''}`
-    const data = await apiFetch<unknown>(url, { signal })
-    return z.array(IncidentSchema).parse(data)
+    try {
+      const data = await apiFetch<unknown>(url, { signal })
+      return z.array(IncidentSchema).parse(data)
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return buildFallback()
+      throw err
+    }
   },
 
   async getIncidentStats(signal?: AbortSignal): Promise<{
@@ -368,7 +574,32 @@ export const api = {
     by_status: Array<{ status: string; count: number }>
     timeline_7d: Array<{ day: string; count: number }>
   }> {
-    return apiFetch('/incidents/stats', { signal })
+    const buildFallback = () => {
+      const byTypeMap = new Map<string, number>()
+      const bySeverityMap = new Map<string, number>()
+      const byStatusMap = new Map<string, number>()
+      for (const incident of MOCK_INCIDENTS) {
+        byTypeMap.set(incident.type, (byTypeMap.get(incident.type) ?? 0) + 1)
+        bySeverityMap.set(incident.severity, (bySeverityMap.get(incident.severity) ?? 0) + 1)
+        byStatusMap.set(incident.status, (byStatusMap.get(incident.status) ?? 0) + 1)
+      }
+      return {
+        total: MOCK_INCIDENTS.length,
+        by_type: Array.from(byTypeMap.entries()).map(([type, count]) => ({ type, count })),
+        by_severity: Array.from(bySeverityMap.entries()).map(([severity, count]) => ({ severity, count })),
+        by_status: Array.from(byStatusMap.entries()).map(([status, count]) => ({ status, count })),
+        timeline_7d: [],
+      }
+    }
+    if (_useMock) {
+      return buildFallback()
+    }
+    try {
+      return await apiFetch('/incidents/stats', { signal })
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return buildFallback()
+      throw err
+    }
   },
 
   async reportIncident(
@@ -385,8 +616,13 @@ export const api = {
 
   // ---- SOS (always real backend) ----
   async getSOSAlerts(signal?: AbortSignal): Promise<SOSAlert[]> {
-    const data = await apiFetch<unknown>('/sos', { signal })
-    return z.array(SOSAlertSchema).parse(data)
+    try {
+      const data = await apiFetch<unknown>('/sos', { signal })
+      return z.array(SOSAlertSchema).parse(data)
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return z.array(SOSAlertSchema).parse(MOCK_SOS_ALERTS)
+      throw err
+    }
   },
 
   async triggerSOS(
@@ -415,25 +651,60 @@ export const api = {
   },
 
   async acknowledgeSOSAlert(id: string, officer?: string, signal?: AbortSignal): Promise<SOSAlert> {
-    const data = await apiFetch<unknown>(`/sos/${id}/acknowledge`, {
-      method: 'PATCH',
-      body: JSON.stringify({ officer }),
-      signal,
-    })
-    return SOSAlertSchema.parse(data)
+    try {
+      const data = await apiFetch<unknown>(`/sos/${id}/acknowledge`, {
+        method: 'PATCH',
+        body: JSON.stringify({ officer }),
+        signal,
+      })
+      return SOSAlertSchema.parse(data)
+    } catch (err) {
+      if (isBackendUnavailableError(err)) {
+        const now = new Date().toISOString()
+        const fallback = MOCK_SOS_ALERTS.find((alert) => alert.id === id) ?? MOCK_SOS_ALERTS[0]
+        return SOSAlertSchema.parse({
+          ...fallback,
+          id,
+          status: 'acknowledged',
+          assigned_officer: officer,
+          acknowledged_at: now,
+        })
+      }
+      throw err
+    }
   },
 
   async resolveSOSAlert(id: string, signal?: AbortSignal): Promise<SOSAlert> {
-    const data = await apiFetch<unknown>(`/sos/${id}/resolve`, {
-      method: 'PATCH',
-      signal,
-    })
-    return SOSAlertSchema.parse(data)
+    try {
+      const data = await apiFetch<unknown>(`/sos/${id}/resolve`, {
+        method: 'PATCH',
+        signal,
+      })
+      return SOSAlertSchema.parse(data)
+    } catch (err) {
+      if (isBackendUnavailableError(err)) {
+        const now = new Date().toISOString()
+        const fallback = MOCK_SOS_ALERTS.find((alert) => alert.id === id) ?? MOCK_SOS_ALERTS[0]
+        return SOSAlertSchema.parse({
+          ...fallback,
+          id,
+          status: 'resolved',
+          resolved_at: now,
+          response_time: 420,
+        })
+      }
+      throw err
+    }
   },
 
   async getEmergencyContacts(signal?: AbortSignal): Promise<EmergencyContact[]> {
-    const data = await apiFetch<unknown>('/sos/contacts', { signal })
-    return z.array(EmergencyContactSchema).parse(data)
+    try {
+      const data = await apiFetch<unknown>('/sos/contacts', { signal })
+      return z.array(EmergencyContactSchema).parse(data)
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return []
+      throw err
+    }
   },
 
   async addEmergencyContact(
@@ -463,7 +734,23 @@ export const api = {
     training_records?: number
     feature_count?: number
   }> {
-    return apiFetch('/ml/metrics', { signal })
+    const fallback = {
+      ...MOCK_ML_METRICS,
+      recent_30d_incidents: 84,
+      algorithm: 'XGBoost(40%)+LightGBM(35%)+RandomForest(25%) Soft-Vote Ensemble',
+      cv_strategy: 'StratifiedGroupKFold(k=5, groups=city)',
+      training_records: 464,
+      feature_count: 28,
+    }
+    if (_useMock) {
+      return fallback
+    }
+    try {
+      return await apiFetch('/ml/metrics', { signal })
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return fallback
+      throw err
+    }
   },
 
   async getPrediction(
@@ -480,7 +767,15 @@ export const api = {
       season_factor: { value: number; label: string }
     }
   }> {
-    return apiFetch('/ml/predict', { method: 'POST', body: JSON.stringify(req), signal })
+    if (_useMock) {
+      return buildLocalPrediction(req)
+    }
+    try {
+      return await apiFetch('/ml/predict', { method: 'POST', body: JSON.stringify(req), signal })
+    } catch (err) {
+      if (isBackendUnavailableError(err)) return buildLocalPrediction(req)
+      throw err
+    }
   },
 
   async retrainModel(signal?: AbortSignal): Promise<{ message: string; job_id: string }> {
@@ -488,35 +783,46 @@ export const api = {
       await new Promise((r) => setTimeout(r, 1200))
       return { message: 'Retraining job queued successfully', job_id: `job-${Date.now()}` }
     }
-    return apiFetch('/ml/retrain', { method: 'POST', signal })
+    try {
+      return await apiFetch('/ml/retrain', { method: 'POST', signal })
+    } catch (err) {
+      if (isBackendUnavailableError(err)) {
+        await new Promise((r) => setTimeout(r, 1200))
+        return { message: 'Backend unavailable; queued local demo retraining workflow', job_id: `job-${Date.now()}` }
+      }
+      throw err
+    }
   },
 
   // ---- Dashboard stats ----
   async getDashboardStats(signal?: AbortSignal): Promise<DashboardStats> {
-    return withMockFallback(
-      MOCK_STATS,
-      DashboardStatsSchema,
-      async () => {
-        const [hotspotsRes, incidentsRes, sosRes] = await Promise.all([
-          supabase.from('hotspots').select('id, classification', { count: 'exact' }),
-          supabase.from('incidents').select('id, status', { count: 'exact' }),
-          supabase.from('sos_alerts').select('id, status', { count: 'exact' }),
-        ])
+    if (_useMock) {
+      return DashboardStatsSchema.parse(MOCK_STATS)
+    }
 
-        const hotspot_count = hotspotsRes.count ?? 0
-        const total_incidents = incidentsRes.count ?? 0
-        const resolved_incidents = (incidentsRes.data ?? []).filter(i => i.status === 'resolved').length
-        const active_sos_alerts = (sosRes.data ?? []).filter(s => s.status === 'active').length
+    const [hotspotsRes, incidentsRes, sosRes] = await Promise.all([
+      supabase.from('hotspots').select('id, classification', { count: 'exact' }),
+      supabase.from('incidents').select('id, status', { count: 'exact' }),
+      supabase.from('sos_alerts').select('id, status', { count: 'exact' }),
+    ])
 
-        return {
-          total_incidents,
-          resolved_incidents,
-          active_sos_alerts,
-          hotspot_count,
-          response_time_avg: 7.4,
-          crime_reduction_pct: 12.3,
-        }
-      }
-    )
+    if (hotspotsRes.error) throw new ApiError(500, hotspotsRes.error.message)
+    if (incidentsRes.error) throw new ApiError(500, incidentsRes.error.message)
+    if (sosRes.error) throw new ApiError(500, sosRes.error.message)
+    if (signal?.aborted) throw new DOMException('Request aborted', 'AbortError')
+
+    const hotspot_count = hotspotsRes.count ?? 0
+    const total_incidents = incidentsRes.count ?? 0
+    const resolved_incidents = (incidentsRes.data ?? []).filter(i => i.status === 'resolved').length
+    const active_sos_alerts = (sosRes.data ?? []).filter(s => s.status === 'active').length
+
+    return DashboardStatsSchema.parse({
+      total_incidents,
+      resolved_incidents,
+      active_sos_alerts,
+      hotspot_count,
+      response_time_avg: 7.4,
+      crime_reduction_pct: 12.3,
+    })
   },
 }

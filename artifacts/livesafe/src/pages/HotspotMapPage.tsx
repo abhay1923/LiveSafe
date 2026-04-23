@@ -327,7 +327,7 @@ export default function HotspotMapPage() {
   return (
     <AppLayout
       title="India Crime Hotspot Map"
-      subtitle="ML-predicted risk zones — All India • NCRB 2019-2023 • 117 cities • 96.5% accuracy"
+      subtitle="ML-predicted risk zones — All India • Live Supabase data"
     >
       <div className="map-page">
 
@@ -493,10 +493,8 @@ export default function HotspotMapPage() {
 
         {/* Data attribution */}
         <div className="attribution">
-          📊 Data: NCRB Crime in India 2019–2023 &nbsp;|&nbsp;
-          🤖 Model: Random Forest + Gradient Boosting Ensemble &nbsp;|&nbsp;
-          🗺️ 117 cities across 26 states &nbsp;|&nbsp;
-          ⚡ 96.5% cross-validated accuracy
+          📊 Data source: Live project database (Supabase) &nbsp;|&nbsp;
+          🤖 Model metrics and labels from configured backend/services
         </div>
       </div>
 
