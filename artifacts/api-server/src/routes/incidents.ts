@@ -1,5 +1,6 @@
 import { Router, type IRouter } from "express";
-import { db, incidentsTable } from "@workspace/db";
+import { db } from "@workspace/db";
+import { incidentsTable } from "../../../../lib/db/src/schema/incidents";
 import { eq, desc, and, gte, lte, sql, count } from "drizzle-orm";
 import { z } from "zod";
 import { requireAuth, type AuthedRequest } from "../lib/auth";

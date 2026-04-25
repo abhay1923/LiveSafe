@@ -1,6 +1,5 @@
 import { pgTable, text, serial, timestamp, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
 import { usersTable } from "./users";
 
 export const emergencyContactsTable = pgTable("emergency_contacts", {
@@ -18,5 +17,5 @@ export const insertEmergencyContactSchema = createInsertSchema(emergencyContacts
   createdAt: true,
 });
 
-export type InsertEmergencyContact = z.infer<typeof insertEmergencyContactSchema>;
+export type InsertEmergencyContact = typeof emergencyContactsTable.$inferInsert;
 export type EmergencyContact = typeof emergencyContactsTable.$inferSelect;

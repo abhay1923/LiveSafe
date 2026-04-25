@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import {
   Shield, LayoutDashboard, Map as MapIcon, Zap,
   BarChart3, Settings, LogOut, Search, Bell, Menu, X,
-  AlertTriangle, Siren, Activity, Brain, Users,
+  AlertTriangle, Siren, Activity, Brain, Users, PhoneCall,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/app/hooks/useAuth'
 import type { Screen, UserRole } from '@/types'
@@ -15,6 +15,7 @@ import Dashboard from '@/components/new-ui/Dashboard'
 import Simulation from '@/components/new-ui/Simulation'
 import Reports from '@/components/new-ui/Reports'
 import SettingsPage from '@/components/new-ui/SettingsPage'
+import SafetyContactsPage from '@/components/new-ui/SafetyContactsPage'
 
 interface NavItemConfig {
   icon: React.ReactNode
@@ -29,6 +30,7 @@ const ALL_NAV_ITEMS: NavItemConfig[] = [
   { icon: <MapIcon />,         label: 'Map Analysis',      key: 'hotspot',    roles: ['citizen', 'police', 'admin'] },
   { icon: <Zap />,             label: 'Prediction Models', key: 'simulation', roles: ['citizen', 'police', 'admin'] },
   { icon: <BarChart3 />,       label: 'Reports',           key: 'reports',    roles: ['citizen', 'police', 'admin'] },
+  { icon: <PhoneCall />,       label: 'Safety Contacts',   key: 'contacts',   roles: ['citizen'] },
   { icon: <AlertTriangle />,   label: 'Report Incident',   key: 'report',     roles: ['citizen'],             route: '/report' },
   { icon: <Siren />,           label: 'SOS Alerts',        key: 'sos',        roles: ['police', 'admin'],     route: '/sos' },
   { icon: <Activity />,        label: 'Analytics',         key: 'analytics',  roles: ['police', 'admin'],     route: '/analytics' },
@@ -40,19 +42,22 @@ const ROLE_LABELS: Record<UserRole, string> = {
   citizen: 'Citizen',
   police:  'Police Officer',
   admin:   'Administrator',
+  super_admin: 'Super Admin',
 }
 
 const ROLE_COLORS: Record<UserRole, string> = {
   citizen: '#22c55e',
   police:  '#38bdf8',
   admin:   '#f59e0b',
+  super_admin: '#a855f7',
 }
 
-type InternalScreen = 'dashboard' | 'hotspot' | 'simulation' | 'reports' | 'settings'
+type InternalScreen = 'dashboard' | 'hotspot' | 'simulation' | 'reports' | 'contacts' | 'settings'
 
 export default function NewApp() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [screen, setScreen] = useState<InternalScreen>('dashboard')
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -67,6 +72,12 @@ export default function NewApp() {
 
   useEffect(() => { setScreen('dashboard') }, [user?.id])
   useEffect(() => { setMobileOpen(false) }, [screen])
+  useEffect(() => {
+    const screenParam = new URLSearchParams(location.search).get('screen')
+    if (screenParam === 'dashboard' || screenParam === 'hotspot' || screenParam === 'simulation' || screenParam === 'reports' || screenParam === 'contacts' || screenParam === 'settings') {
+      setScreen(screenParam)
+    }
+  }, [location.search])
 
   const role = user?.role ?? 'citizen'
   const nav = ALL_NAV_ITEMS.filter(item => item.roles.includes(role))
@@ -77,7 +88,11 @@ export default function NewApp() {
 
   const handleNavClick = (item: NavItemConfig) => {
     if (item.route) navigate(item.route)
-    else setScreen(item.key as InternalScreen)
+    else {
+      const nextScreen = item.key as InternalScreen
+      setScreen(nextScreen)
+      navigate(`/map?screen=${nextScreen}`)
+    }
   }
 
   const renderScreen = () => {
@@ -86,6 +101,7 @@ export default function NewApp() {
       case 'hotspot':    return <HotspotMap />
       case 'simulation': return <Simulation />
       case 'reports':    return <Reports />
+      case 'contacts':   return <SafetyContactsPage />
       case 'settings':   return <SettingsPage />
       default:           return <Dashboard />
     }
@@ -99,6 +115,7 @@ export default function NewApp() {
     hotspot: 'Map Analysis',
     simulation: 'Prediction Models',
     reports: 'Reports & Analytics',
+    contacts: 'Safety Contacts',
     settings: 'Settings',
   }
 
@@ -221,7 +238,10 @@ export default function NewApp() {
                 icon={<Settings />}
                 label="Settings"
                 collapsed={!expanded}
-                onClick={() => setScreen('settings')}
+                onClick={() => {
+                  setScreen('settings')
+                  navigate('/map?screen=settings')
+                }}
                 active={screen === 'settings'}
               />
               <NavItemButton
@@ -308,7 +328,7 @@ export default function NewApp() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="h-full"
+              className="min-h-full"
             >
               {renderScreen()}
             </motion.div>
@@ -355,7 +375,9 @@ function NavItemButton({
         />
       )}
       <div className="shrink-0">
-        {React.cloneElement(icon as React.ReactElement, { className: 'w-5 h-5' })}
+        {React.isValidElement<{ className?: string }>(icon)
+          ? React.cloneElement(icon, { className: 'w-5 h-5' })
+          : icon}
       </div>
       {!collapsed && (
         <span className="font-medium text-sm whitespace-nowrap flex-1 text-left">{label}</span>

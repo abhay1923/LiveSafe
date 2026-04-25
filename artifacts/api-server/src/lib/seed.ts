@@ -1,4 +1,5 @@
-import { db, usersTable } from "@workspace/db";
+import { db } from "@workspace/db";
+import { usersTable } from "../../../../lib/db/src/schema/users";
 import { eq } from "drizzle-orm";
 import { hashPassword } from "./auth";
 import { logger } from "./logger";

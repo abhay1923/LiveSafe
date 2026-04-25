@@ -75,7 +75,6 @@ export default function ReportIncidentPage() {
         latitude: parseFloat(form.latitude),
         longitude: parseFloat(form.longitude),
         severity: form.severity,
-        reported_by: user?.id ?? 'anonymous',
       })
       setSubmitted(true)
     } catch (err) {

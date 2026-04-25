@@ -1,5 +1,7 @@
 import { Router, type IRouter } from "express";
-import { db, usersTable, accessRequestsTable } from "@workspace/db";
+import { db } from "@workspace/db";
+import { accessRequestsTable } from "../../../../lib/db/src/schema/access_requests";
+import { usersTable } from "../../../../lib/db/src/schema/users";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import {

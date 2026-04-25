@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { db, usersTable, sessionsTable } from "@workspace/db";
+import { db } from "@workspace/db";
+import { sessionsTable } from "../../../../lib/db/src/schema/sessions";
+import { usersTable } from "../../../../lib/db/src/schema/users";
 import { eq, and, gt } from "drizzle-orm";
 import type { Request, Response, NextFunction } from "express";
 

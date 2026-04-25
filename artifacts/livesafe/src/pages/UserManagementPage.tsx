@@ -17,6 +17,7 @@ const ROLE_COLORS: Record<UserRole, string> = {
   citizen: '#22c55e',
   police:  '#38bdf8',
   admin:   '#f59e0b',
+  super_admin: '#a855f7',
 }
 
 export default function UserManagementPage() {

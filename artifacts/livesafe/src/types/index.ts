@@ -11,6 +11,7 @@ export type Screen =
   | 'hotspot'
   | 'simulation'
   | 'reports'
+  | 'contacts'
   | 'settings'
   | 'sos'
   | 'analytics'
@@ -135,6 +136,9 @@ export interface Hotspot {
 }
 
 export type SOSStatus = 'active' | 'acknowledged' | 'resolved'
+export type SOSResponderRole = 'police' | 'family' | 'volunteer' | 'hospital'
+export type SOSResponderState = 'queued' | 'notified' | 'accepted' | 'en_route' | 'standby'
+export type SOSEvidenceReviewState = 'new' | 'flagged' | 'reviewed'
 
 export interface SOSAlert {
   id: string
@@ -145,10 +149,31 @@ export interface SOSAlert {
   current_latitude?: number
   current_longitude?: number
   location_updated_at?: string
+  trail?: Array<{ latitude: number; longitude: number; recorded_at: string }>
+  events?: Array<{ id: string; type: string; detail: string; created_at: string }>
+  responder_status?: Array<{
+    id: string
+    label: string
+    role: SOSResponderRole
+    status: SOSResponderState
+    eta_minutes?: number
+  }>
+  evidence_items?: Array<{
+    id: string
+    type: 'audio' | 'video'
+    label: string
+    captured_at: string
+    review_status: SOSEvidenceReviewState
+  }>
   status: SOSStatus
   assigned_officer?: string
   response_time?: number      // seconds
   whatsapp_notifications_sent?: number
+  escalated?: boolean
+  safety_mode?: 'everyday' | 'night' | 'women' | 'student'
+  last_checkin_at?: string
+  notified_targets?: string[]
+  evidence_count?: number
   acknowledged_at?: string
   resolved_at?: string
   created_at: string

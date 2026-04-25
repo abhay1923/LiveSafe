@@ -1,63 +1,11 @@
-import { useEffect, useState } from 'react'
 import AppLayout from '@/components/layout/AppLayout'
 import { useAuth } from '@/app/hooks/useAuth'
-import { api } from '@/app/services/api'
-import type { EmergencyContact } from '@/types'
-import { User, Shield, Bell, Eye, LogOut, MessageCircle, Plus, Trash2, Loader2 } from 'lucide-react'
+import EmergencyContactsCard from '@/components/EmergencyContactsCard'
+import { User, Shield, Bell, Eye, LogOut } from 'lucide-react'
 
 export default function SettingsPage() {
   const { user, logout } = useAuth()
   const isCitizen = user?.role === 'citizen'
-  const [contacts, setContacts] = useState<EmergencyContact[]>([])
-  const [loadingContacts, setLoadingContacts] = useState(false)
-  const [contactName, setContactName] = useState('')
-  const [contactPhone, setContactPhone] = useState('')
-  const [savingContact, setSavingContact] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!isCitizen) return
-    setLoadingContacts(true)
-    api
-      .getEmergencyContacts()
-      .then((rows) => {
-        setContacts(rows)
-        setError(null)
-      })
-      .catch((e) => {
-        setError((e as Error).message)
-      })
-      .finally(() => setLoadingContacts(false))
-  }, [isCitizen])
-
-  const handleAddContact = async () => {
-    if (!contactName.trim() || !contactPhone.trim()) return
-    setSavingContact(true)
-    try {
-      const created = await api.addEmergencyContact({
-        name: contactName.trim(),
-        phone: contactPhone.trim(),
-      })
-      setContacts((prev) => [created, ...prev])
-      setContactName('')
-      setContactPhone('')
-      setError(null)
-    } catch (e) {
-      setError((e as Error).message)
-    } finally {
-      setSavingContact(false)
-    }
-  }
-
-  const handleDeleteContact = async (id: string) => {
-    try {
-      await api.deleteEmergencyContact(id)
-      setContacts((prev) => prev.filter((c) => c.id !== id))
-      setError(null)
-    } catch (e) {
-      setError((e as Error).message)
-    }
-  }
 
   return (
     <AppLayout title="Settings" subtitle="Account and application preferences">
@@ -141,50 +89,10 @@ export default function SettingsPage() {
 
         {isCitizen && (
           <div className="settings-section">
-            <h2><MessageCircle size={16} /> SOS WhatsApp Contacts</h2>
-            <div className="settings-card">
-              <div className="contact-form">
-                <input
-                  value={contactName}
-                  onChange={(e) => setContactName(e.target.value)}
-                  placeholder="Contact name"
-                  className="contact-input"
-                />
-                <input
-                  value={contactPhone}
-                  onChange={(e) => setContactPhone(e.target.value)}
-                  placeholder="WhatsApp number (e.g. +919876543210)"
-                  className="contact-input"
-                />
-                <button
-                  className="contact-add-btn"
-                  onClick={handleAddContact}
-                  disabled={savingContact || !contactName.trim() || !contactPhone.trim()}
-                >
-                  {savingContact ? <Loader2 size={14} className="spin" /> : <Plus size={14} />}
-                  Add Contact
-                </button>
-              </div>
-
-              {loadingContacts ? (
-                <div className="contacts-empty"><Loader2 size={16} className="spin" /> Loading contacts…</div>
-              ) : contacts.length === 0 ? (
-                <div className="contacts-empty">No emergency contacts yet. Add at least one to receive SOS WhatsApp alerts.</div>
-              ) : (
-                contacts.map((contact) => (
-                  <div key={contact.id} className="contact-row">
-                    <div>
-                      <div className="contact-name">{contact.name}</div>
-                      <div className="contact-phone">{contact.phone}</div>
-                    </div>
-                    <button className="contact-del-btn" onClick={() => handleDeleteContact(contact.id)}>
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-                ))
-              )}
-              {error && <div className="contact-error">{error}</div>}
-            </div>
+            <EmergencyContactsCard
+              title="SOS WhatsApp Contacts"
+              description="These contacts can be notified when you trigger an SOS alert from the citizen safety tools."
+            />
           </div>
         )}
 
@@ -301,79 +209,6 @@ export default function SettingsPage() {
         .toggle-chip.active { background: rgba(34,197,94,0.1); color: #22c55e; border-color: rgba(34,197,94,0.25); }
         .sign-out-btn { align-self: flex-start; color: #f87171; border-color: rgba(239,68,68,0.25); }
         .sign-out-btn:hover { background: rgba(239,68,68,0.1); }
-        .contact-form {
-          display: grid;
-          grid-template-columns: 1fr 1fr auto;
-          gap: 0.5rem;
-          padding: 0.9rem 1rem;
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .contact-input {
-          background: rgba(15,23,42,0.7);
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 8px;
-          padding: 0.55rem 0.7rem;
-          color: #f1f5f9;
-          font-size: 0.8rem;
-          outline: none;
-        }
-        .contact-input:focus { border-color: rgba(129,140,248,0.6); }
-        .contact-add-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-          border: 1px solid rgba(34,197,94,0.35);
-          background: rgba(34,197,94,0.14);
-          color: #22c55e;
-          border-radius: 8px;
-          padding: 0.5rem 0.75rem;
-          font-size: 0.78rem;
-          font-weight: 700;
-          cursor: pointer;
-        }
-        .contact-add-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .contact-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0.75rem 1rem;
-          border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        .contact-row:last-of-type { border-bottom: none; }
-        .contact-name { color: #f1f5f9; font-size: 0.82rem; font-weight: 600; }
-        .contact-phone { color: #94a3b8; font-size: 0.75rem; margin-top: 2px; }
-        .contact-del-btn {
-          border: 1px solid rgba(239,68,68,0.28);
-          background: rgba(239,68,68,0.1);
-          color: #f87171;
-          border-radius: 7px;
-          width: 30px;
-          height: 30px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-        .contacts-empty {
-          padding: 0.9rem 1rem;
-          color: #94a3b8;
-          font-size: 0.78rem;
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-        }
-        .contact-error {
-          color: #f87171;
-          font-size: 0.75rem;
-          padding: 0.7rem 1rem 0.9rem;
-          border-top: 1px solid rgba(239,68,68,0.16);
-          background: rgba(239,68,68,0.06);
-        }
-        .spin { animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @media (max-width: 768px) {
-          .contact-form { grid-template-columns: 1fr; }
-        }
       `}</style>
     </AppLayout>
   )

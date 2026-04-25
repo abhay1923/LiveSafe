@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { api } from '@/app/services/api'
-import type { PredictionResult, MLMetrics } from '@/types'
+import { buildExplainabilityPanel, buildNearbySafetyHubs, buildRiskOutlook, buildRouteOptions, buildTimeForecasts } from '@/app/services/safetyIntelligence'
+import type { Hotspot, PredictionResult, MLMetrics } from '@/types'
 import {
   Zap, MapPin, Clock, Calendar, Loader2, AlertCircle, Activity,
-  Brain, TrendingUp, Target, Crosshair, Info,
+  Brain, TrendingUp, Target, Crosshair, Info, Route, ShieldCheck, Building2, Sparkles,
 } from 'lucide-react'
 
 const PRESET_LOCATIONS = [
@@ -45,9 +46,11 @@ export default function Simulation() {
   const [error, setError] = useState('')
 
   const [metrics, setMetrics] = useState<Awaited<ReturnType<typeof api.getMLMetrics>> | null>(null)
+  const [hotspots, setHotspots] = useState<Hotspot[]>([])
 
   useEffect(() => {
     api.getMLMetrics().then(setMetrics).catch(() => {})
+    api.getHotspots().then(setHotspots).catch(() => {})
     runPrediction()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -80,6 +83,39 @@ export default function Simulation() {
   }
 
   const colorScheme = prediction ? RISK_COLORS[prediction.classification as keyof typeof RISK_COLORS] : null
+  const outlook = useMemo(
+    () => (prediction ? buildRiskOutlook(prediction.risk_score, hour) : []),
+    [hour, prediction]
+  )
+  const activeLocation = useMemo(() => ({ lat, lon }), [lat, lon])
+  const routeOptions = useMemo(
+    () => (Number.isFinite(lat) && Number.isFinite(lon) ? buildRouteOptions(hotspots, activeLocation) : []),
+    [activeLocation, hotspots, lat, lon]
+  )
+  const timeForecasts = useMemo(
+    () => (prediction ? buildTimeForecasts(prediction.risk_score, hour) : []),
+    [hour, prediction]
+  )
+  const nearbyHubs = useMemo(
+    () => (Number.isFinite(lat) && Number.isFinite(lon) ? buildNearbySafetyHubs(hotspots, activeLocation) : []),
+    [activeLocation, hotspots, lat, lon]
+  )
+  const explainability = useMemo(
+    () => (
+      prediction
+        ? buildExplainabilityPanel(
+            prediction.risk_score,
+            prediction.predicted_crimes,
+            prediction.confidence,
+            prediction.explanation?.nearest_area
+          )
+        : null
+    ),
+    [prediction]
+  )
+  const bestWindow = outlook.length
+    ? [...outlook].sort((a, b) => a.score - b.score)[0]
+    : null
 
   return (
     <div className="sm-page">
@@ -223,6 +259,146 @@ export default function Simulation() {
         </div>
       )}
 
+      {(explainability || timeForecasts.length > 0) && (
+        <div className="sm-grid sm-secondary-grid">
+          <div className="sm-card">
+            <h3><Sparkles size={16}/> Explainability panel</h3>
+            {explainability && (
+              <div className="sm-stack">
+                <div className="sm-insight-banner">
+                  <strong>{explainability.confidenceLabel}</strong>. {explainability.trend}
+                </div>
+                <div className="sm-driver-list">
+                  {explainability.topDrivers.map((driver) => (
+                    <div key={driver} className="sm-driver-item">{driver}</div>
+                  ))}
+                </div>
+                <div className="sm-mix-grid">
+                  {explainability.crimeMix.map((item) => (
+                    <div key={item.label} className="sm-mix-item">
+                      <span>{item.label}</span>
+                      <strong>{item.weight}%</strong>
+                    </div>
+                  ))}
+                </div>
+                <div className="sm-guidance">{explainability.guidance}</div>
+              </div>
+            )}
+          </div>
+
+          <div className="sm-card">
+            <h3><Clock size={16}/> Time-based forecasts</h3>
+            <div className="sm-stack">
+              {timeForecasts.map((point) => (
+                <div key={point.label} className="sm-route-card">
+                  <div className="sm-route-head">
+                    <div>
+                      <div className="sm-route-title">{point.label}</div>
+                      <div className="sm-route-summary">{point.note}</div>
+                    </div>
+                    <span
+                      className="sm-route-pill"
+                      style={{ background: `${RISK_COLORS[point.risk].bg}22`, color: RISK_COLORS[point.risk].bg }}
+                    >
+                      {point.score}
+                    </span>
+                  </div>
+                  <div className="sm-route-meta">
+                    <span>{String(point.hour).padStart(2, '0')}:00</span>
+                    <span className="capitalize">{point.risk} risk</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(prediction || routeOptions.length > 0 || nearbyHubs.length > 0) && (
+        <div className="sm-grid sm-secondary-grid">
+          <div className="sm-card">
+            <h3><TrendingUp size={16}/> Risk outlook</h3>
+            {outlook.length === 0 ? (
+              <div className="sm-placeholder sm-inline-placeholder">Run a prediction to compare upcoming time windows.</div>
+            ) : (
+              <div className="sm-outlook">
+                {outlook.map((point) => (
+                  <div key={point.label} className="sm-outlook-card">
+                    <div className="sm-outlook-top">
+                      <span className="sm-outlook-label">{point.label}</span>
+                      <span
+                        className="sm-outlook-risk"
+                        style={{ background: `${RISK_COLORS[point.risk].bg}22`, color: RISK_COLORS[point.risk].bg }}
+                      >
+                        {point.score}
+                      </span>
+                    </div>
+                    <div className="sm-outlook-time">{String(point.hour).padStart(2, '0')}:00</div>
+                    <div className="sm-outlook-note">{point.note}</div>
+                  </div>
+                ))}
+                {bestWindow && (
+                  <div className="sm-insight-banner">
+                    Lowest projected exposure is around <strong>{String(bestWindow.hour).padStart(2, '0')}:00</strong>.
+                    That is the best movement window in the next few hours.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="sm-card">
+            <h3><Route size={16}/> Route intelligence</h3>
+            <div className="sm-stack">
+              {routeOptions.map((option) => (
+                <div key={option.id} className="sm-route-card">
+                  <div className="sm-route-head">
+                    <div>
+                      <div className="sm-route-title">{option.label}</div>
+                      <div className="sm-route-summary">{option.summary}</div>
+                    </div>
+                    <span
+                      className="sm-route-pill"
+                      style={{ background: `${RISK_COLORS[option.risk].bg}22`, color: RISK_COLORS[option.risk].bg }}
+                    >
+                      {option.risk}
+                    </span>
+                  </div>
+                  <div className="sm-route-meta">
+                    <span>{option.distanceKm} km</span>
+                    <span>{option.etaMinutes} min</span>
+                    <span>Exposure {option.exposureScore}/100</span>
+                  </div>
+                  <div className="sm-route-checkpoints">
+                    {option.checkpoints.map((checkpoint) => (
+                      <span key={checkpoint} className="sm-route-chip">{checkpoint}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {nearbyHubs.length > 0 && (
+        <div className="sm-card">
+          <h3><ShieldCheck size={16}/> Recommended safe hubs</h3>
+          <div className="sm-hub-grid">
+            {nearbyHubs.map((hub) => (
+              <div key={hub.id} className="sm-hub-card">
+                <div className="sm-hub-icon"><Building2 size={15} /></div>
+                <div>
+                  <div className="sm-hub-name">{hub.name}</div>
+                  <div className="sm-hub-meta">{hub.distanceKm} km away - about {hub.etaMinutes} min</div>
+                  <div className="sm-hub-note">{hub.note}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <style>{`
         .sm-page{padding:1.25rem;display:flex;flex-direction:column;gap:1rem;color:#e2e8f0}
         .sm-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
@@ -270,6 +446,37 @@ export default function Simulation() {
         .sm-metric{background:rgba(15,23,42,.5);border:1px solid #334155;border-radius:8px;padding:.6rem .75rem;display:flex;flex-direction:column;gap:2px}
         .sm-metric-label{font-size:.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
         .sm-metric-value{font-size:.92rem;color:#f1f5f9;font-weight:700}
+        .sm-secondary-grid{align-items:start}
+        .sm-inline-placeholder{justify-content:flex-start}
+        .sm-outlook{display:flex;flex-direction:column;gap:.75rem}
+        .sm-outlook-card{background:rgba(15,23,42,.5);border:1px solid #334155;border-radius:10px;padding:.75rem .85rem}
+        .sm-outlook-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+        .sm-outlook-label{font-size:.72rem;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+        .sm-outlook-risk{padding:.2rem .5rem;border-radius:999px;font-size:.75rem;font-weight:700}
+        .sm-outlook-time{font-size:1rem;font-weight:700;color:#f1f5f9;margin-top:.35rem}
+        .sm-outlook-note{font-size:.76rem;color:#94a3b8;margin-top:.2rem}
+        .sm-insight-banner{background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);color:#c7d2fe;padding:.7rem .8rem;border-radius:10px;font-size:.8rem;line-height:1.5}
+        .sm-stack{display:flex;flex-direction:column;gap:.75rem}
+        .sm-route-card{background:rgba(15,23,42,.5);border:1px solid #334155;border-radius:10px;padding:.8rem .9rem}
+        .sm-route-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+        .sm-route-title{font-size:.88rem;font-weight:700;color:#f1f5f9}
+        .sm-route-summary{font-size:.76rem;color:#94a3b8;line-height:1.5;margin-top:.2rem}
+        .sm-route-pill{padding:.2rem .5rem;border-radius:999px;font-size:.72rem;font-weight:700;text-transform:capitalize}
+        .sm-route-meta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.55rem;font-size:.74rem;color:#cbd5e1}
+        .sm-route-checkpoints{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+        .sm-route-chip{background:rgba(99,102,241,.14);color:#c7d2fe;padding:.22rem .5rem;border-radius:999px;font-size:.7rem;font-weight:600}
+        .sm-driver-list{display:flex;flex-direction:column;gap:.55rem}
+        .sm-driver-item{background:rgba(15,23,42,.5);border:1px solid #334155;border-radius:10px;padding:.7rem .8rem;font-size:.78rem;color:#cbd5e1;line-height:1.45}
+        .sm-mix-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem}
+        .sm-mix-item{background:rgba(15,23,42,.5);border:1px solid #334155;border-radius:10px;padding:.7rem .8rem;display:flex;justify-content:space-between;gap:.6rem;font-size:.77rem;color:#cbd5e1}
+        .sm-mix-item strong{color:#f1f5f9}
+        .sm-guidance{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#bbf7d0;padding:.75rem .85rem;border-radius:10px;font-size:.8rem;line-height:1.5}
+        .sm-hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem}
+        .sm-hub-card{background:rgba(15,23,42,.5);border:1px solid #334155;border-radius:10px;padding:.85rem;display:flex;gap:.7rem}
+        .sm-hub-icon{width:34px;height:34px;border-radius:10px;background:rgba(34,197,94,.12);color:#4ade80;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .sm-hub-name{font-size:.84rem;font-weight:700;color:#f1f5f9}
+        .sm-hub-meta{font-size:.73rem;color:#94a3b8;margin-top:.15rem}
+        .sm-hub-note{font-size:.75rem;color:#cbd5e1;line-height:1.45;margin-top:.35rem}
         .spin{animation:spin .8s linear infinite}
         @keyframes spin{to{transform:rotate(360deg)}}
       `}</style>
