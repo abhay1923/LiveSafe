@@ -6,13 +6,6 @@ import {
   ShieldCheck, Briefcase,
 } from 'lucide-react'
 
-const DEMO_ACCOUNTS = [
-  { role: 'Citizen',     email: 'citizen@example.com',         password: 'citizen123',     color: '#22c55e' },
-  { role: 'Police',      email: 'police@example.com',          password: 'police123',      color: '#38bdf8' },
-  { role: 'Admin',       email: 'admin@example.com',           password: 'admin123',       color: '#f59e0b' },
-  { role: 'Super Admin', email: 'superadmin@livesafe.local',   password: 'superadmin123',  color: '#a855f7' },
-]
-
 type Mode = 'signin' | 'signup-citizen' | 'request-police' | 'request-admin'
 
 export default function LoginPage() {
@@ -81,8 +74,6 @@ export default function LoginPage() {
       setError(err instanceof Error ? err.message : 'Something went wrong.')
     } finally { setLoading(false) }
   }
-
-  const fillDemo = (demoEmail: string, pw: string) => { setEmail(demoEmail); setPassword(pw); setError('') }
 
   const titles: Record<Mode, { title: string; subtitle: string }> = {
     'signin':           { title: 'Welcome back',                 subtitle: 'Sign in to access real-time crime predictions' },
@@ -225,22 +216,6 @@ export default function LoginPage() {
             <button type="button" className="switch-link" onClick={()=>switchMode('signin')}>Back to sign in</button>
           </p>
         )}
-
-        {mode==='signin' && (
-          <div className="demo-section">
-            <p className="demo-label">Demo accounts — click to fill:</p>
-            <div className="demo-accounts">
-              {DEMO_ACCOUNTS.map(a=>(
-                <button key={a.role} type="button" className="demo-btn"
-                  onClick={()=>fillDemo(a.email, a.password)}
-                  style={{borderColor:a.color+'44','--accent':a.color} as React.CSSProperties}>
-                  <span className="demo-role" style={{color:a.color}}>{a.role}</span>
-                  <span className="demo-email">{a.email}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       <style>{`
@@ -288,13 +263,6 @@ export default function LoginPage() {
         .role-apply-btn.admin{color:#fbbf24;border-color:rgba(245,158,11,.3)}
         .role-apply-btn.admin:hover{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.6)}
         .role-apply-note{margin:0;font-size:.7rem;color:#64748b;text-align:center;line-height:1.5}
-        .demo-section{background:rgba(30,41,59,.5);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:.85rem}
-        .demo-label{margin:0 0 .65rem;font-size:.7rem;color:#64748b;text-align:center;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-        .demo-accounts{display:flex;flex-direction:column;gap:.4rem}
-        .demo-btn{display:flex;align-items:center;gap:.75rem;background:rgba(15,23,42,.4);border:1px solid;border-radius:8px;padding:.5rem .8rem;cursor:pointer;text-align:left;transition:background .15s;width:100%}
-        .demo-btn:hover{background:rgba(15,23,42,.7)}
-        .demo-role{font-size:.75rem;font-weight:700;min-width:78px;letter-spacing:.02em}
-        .demo-email{font-size:.75rem;color:#64748b}
       `}</style>
     </div>
   )

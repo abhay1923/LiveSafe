@@ -1,43 +1,56 @@
 import { Router, type IRouter } from "express";
-import { db, incidentsTable } from "@workspace/db";
-import { count, sql, gte } from "drizzle-orm";
+import { readFileSync, existsSync } from "node:fs";
+import path from "node:path";
+import { db, hotspotsTable, incidentsTable } from "@workspace/db";
+import { count, gte } from "drizzle-orm";
 import { z } from "zod";
+import { requireAuth, requireRole } from "../lib/auth";
 
 const router: IRouter = Router();
 
-// ---- Prediction model (interpretable heuristic ensemble) ----
-//
-// Inputs : lat, lon, hour, day_of_week, month
-// Output : risk score 0-100, classification, predicted crimes, confidence,
-//          and the contributing factors so police can understand the result.
-//
-// This is a transparent production-style scorer (not a placeholder) that
-// blends spatial density, temporal risk windows, weekly patterns, and
-// seasonal effects observed in Indian urban crime data.
-// ---------------------------------------------------------------
+interface ModelMetricsFile {
+  model: string;
+  train_rows: number;
+  test_rows: number;
+  feature_count: number;
+  test_r2: number;
+  test_mae: number;
+  test_rmse: number;
+  train_r2: number;
+  cv_r2_mean_5fold_on_train: number;
+  cv_r2_std_5fold_on_train: number;
+  risk_class_accuracy_on_holdout: number;
+  risk_class_precision_weighted_on_holdout: number;
+  risk_class_recall_weighted_on_holdout: number;
+  risk_class_weighted_f1_on_holdout: number;
+  naive_persistence_baseline_r2: number;
+  naive_persistence_baseline_mae: number;
+  naive_persistence_risk_class_accuracy: number;
+  naive_persistence_risk_class_f1: number;
+  top_features: Array<{ feature: string; importance: number }>;
+}
 
-// baseRisk values are the real `severity` composite score (0-100, a
-// within-state percentile blend across IPC / SLL / crimes-against-women /
-// crimes-against-children / cyber-crime counts) computed from
-// ncrb_district_year_features.csv for each city's matching NCRB district
-// (latest reported year; Delhi NCR uses the mean across its real police
-// districts since NCRB reports Delhi by zone, not one "Delhi" district).
-// Previously these 12 numbers were hand-typed estimates; see
-// /ml-pipeline/README.md for how they were recomputed from real data.
-const KNOWN_HIGH_RISK_AREAS: Array<{ name: string; lat: number; lon: number; baseRisk: number; crimes: string[] }> = [
-  { name: "Delhi NCR",    lat: 28.6139, lon: 77.2090, baseRisk: 65, crimes: ["ipc_crime", "sll_crime", "crime_against_women"] },
-  { name: "Mumbai",       lat: 19.0760, lon: 72.8777, baseRisk: 57, crimes: ["ipc_crime", "sll_crime"] },
-  { name: "Bengaluru",    lat: 12.9716, lon: 77.5946, baseRisk: 97, crimes: ["ipc_crime", "sll_crime", "cybercrime"] },
-  { name: "Chennai",      lat: 13.0827, lon: 80.2707, baseRisk: 98, crimes: ["ipc_crime", "sll_crime"] },
-  { name: "Kolkata",      lat: 22.5726, lon: 88.3639, baseRisk: 94, crimes: ["ipc_crime", "sll_crime"] },
-  { name: "Hyderabad",    lat: 17.3850, lon: 78.4867, baseRisk: 92, crimes: ["sll_crime", "ipc_crime"] },
-  { name: "Ahmedabad",    lat: 23.0225, lon: 72.5714, baseRisk: 98, crimes: ["ipc_crime", "sll_crime"] },
-  { name: "Pune",         lat: 18.5204, lon: 73.8567, baseRisk: 82, crimes: ["ipc_crime", "sll_crime"] },
-  { name: "Jaipur",       lat: 26.9124, lon: 75.7873, baseRisk: 64, crimes: ["ipc_crime", "crime_against_women"] },
-  { name: "Lucknow",      lat: 26.8467, lon: 80.9462, baseRisk: 98, crimes: ["sll_crime", "crime_against_women"] },
-  { name: "Patna",        lat: 25.5941, lon: 85.1376, baseRisk: 98, crimes: ["ipc_crime", "sll_crime"] },
-  { name: "Chandigarh",   lat: 30.7333, lon: 76.7794, baseRisk: 73, crimes: ["ipc_crime"] },
-];
+function loadModelMetrics(): ModelMetricsFile {
+  const candidates = [
+    path.resolve(process.cwd(), "../../ml-pipeline/model_metrics.json"),
+    path.resolve(process.cwd(), "ml-pipeline/model_metrics.json"),
+  ];
+  const metricsPath = candidates.find((candidate) => existsSync(candidate));
+  if (!metricsPath) {
+    throw new Error("model_metrics.json not found. Run the ml-pipeline before starting the API.");
+  }
+  return JSON.parse(readFileSync(metricsPath, "utf-8")) as ModelMetricsFile;
+}
+
+function toCrimeType(category: string) {
+  const normalized = category.toLowerCase();
+  if (normalized === "ipc") return "ipc_crime";
+  if (normalized === "sll") return "sll_crime";
+  if (normalized === "women") return "crime_against_women";
+  if (normalized === "children") return "crime_against_children";
+  if (normalized === "cyber") return "cybercrime";
+  return normalized;
+}
 
 function haversineKm(a: { lat: number; lon: number }, b: { lat: number; lon: number }) {
   const R = 6371;
@@ -81,29 +94,38 @@ const predictSchema = z.object({
   month: z.number().int().min(1).max(12),
 });
 
-router.post("/ml/predict", (req, res) => {
+router.post("/ml/predict", requireAuth, async (req, res) => {
   const parsed = predictSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ message: "Invalid input", errors: parsed.error.issues });
 
   const { latitude, longitude, hour, day_of_week, month } = parsed.data;
-
-  // 1. Find the nearest known high-risk area to anchor base risk
-  let nearest = KNOWN_HIGH_RISK_AREAS[0];
-  let nearestDist = Infinity;
-  for (const area of KNOWN_HIGH_RISK_AREAS) {
-    const d = haversineKm({ lat: latitude, lon: longitude }, { lat: area.lat, lon: area.lon });
-    if (d < nearestDist) { nearestDist = d; nearest = area; }
+  const rows = await db.select().from(hotspotsTable);
+  if (rows.length === 0) {
+    return res.status(503).json({
+      message: "No real hotspot rows found. Run `pnpm --filter @workspace/scripts run seed-hotspots` after pushing the DB schema.",
+    });
   }
 
-  // 2. Spatial decay: closer to a known hotspot = higher base risk.
-  //    Within 8km full effect; out to 60km decays linearly to 30% baseline.
+  // Use the nearest real NCRB-geocoded district as the model anchor. The
+  // predictedNextYearSeverity value is generated by ml-pipeline/model.pkl via
+  // 03_export_hotspots.py and stored in the hotspots table.
+  let nearest = rows[0];
+  let nearestDist = Infinity;
+  for (const hotspot of rows) {
+    const d = haversineKm({ lat: latitude, lon: longitude }, { lat: hotspot.latitude, lon: hotspot.longitude });
+    if (d < nearestDist) { nearestDist = d; nearest = hotspot; }
+  }
+
+  // Spatial decay keeps faraway coordinates from inheriting a full district
+  // score while preserving the real model output near known district anchors.
   const proximityFactor = nearestDist <= 8
     ? 1.0
     : Math.max(0.30, 1.0 - (nearestDist - 8) / 75);
 
-  const baseRisk = nearest.baseRisk * proximityFactor;
+  const baseRisk = nearest.predictedNextYearSeverity * proximityFactor;
 
-  // 3. Temporal multipliers
+  // Temporal multipliers are transparent operational adjustments around the
+  // trained district-level forecast; the anchor score itself is model output.
   const t = timeRiskFactor(hour);
   const d = dayRiskFactor(day_of_week);
   const m = monthRiskFactor(month);
@@ -117,26 +139,34 @@ router.post("/ml/predict", (req, res) => {
   // 4. Confidence — higher when we are close to a known area & in a typical pattern
   const proximityConfidence = Math.max(0.55, 1 - nearestDist / 200);
   const patternConfidence = (t.factor + d.factor) / 2 - 0.05;
-  const confidence = Math.min(0.97, (proximityConfidence * 0.6 + patternConfidence * 0.4));
+  const dataConfidence = nearest.dataCompleteness / 100;
+  const confidence = Math.min(0.97, (proximityConfidence * 0.45 + patternConfidence * 0.3 + dataConfidence * 0.25));
 
   res.json({
     risk_score: risk,
     classification,
-    predicted_crimes: nearest.crimes,
+    predicted_crimes: nearest.reportedCategories.map(toCrimeType),
     confidence: Math.round(confidence * 1000) / 1000,
     explanation: {
-      nearest_area: nearest.name,
+      nearest_area: `${nearest.district}, ${nearest.state}`,
       distance_km: Math.round(nearestDist * 10) / 10,
       base_risk: Math.round(baseRisk),
       proximity_factor: Math.round(proximityFactor * 100) / 100,
       time_factor: { value: t.factor, label: t.label },
       day_factor: { value: d.factor, label: d.label },
       season_factor: { value: m.factor, label: m.label },
+      model_anchor: {
+        observed_risk_score: nearest.riskScore,
+        predicted_next_year_severity: nearest.predictedNextYearSeverity,
+        predicted_next_year_risk_level: nearest.predictedNextYearRiskLevel,
+        data_year: nearest.dataYear,
+        geo_source: nearest.geoSource,
+      },
     },
   });
 });
 
-router.get("/ml/metrics", async (_req, res) => {
+router.get("/ml/metrics", requireAuth, requireRole("admin", "super_admin"), async (_req, res) => {
   const total = await db.select({ c: count() }).from(incidentsTable);
   const since = new Date();
   since.setDate(since.getDate() - 30);
@@ -147,37 +177,33 @@ router.get("/ml/metrics", async (_req, res) => {
 
   const sample = Number(total[0]?.c ?? 0);
 
-  // Honest metrics from a GradientBoostingRegressor trained on real NCRB
-  // district-year features (children/cyber/ipc/sll/women counts, state-
-  // percentile ranks, growth rates) to forecast next-year severity, scored
-  // on a true temporal holdout: train on target_year<=2022 (4,888 rows),
-  // test on target_year in {2023,2024} (1,895 rows). Risk-class
-  // accuracy/precision/recall/f1 bucket the predicted severity into the
-  // same low/medium/high/critical bands the app already uses.
-  //
-  // Important honesty note: a naive "next year = this year" persistence
-  // baseline scores R²=0.929 / accuracy=0.825 on the SAME holdout — this
-  // model does not decisively beat that baseline, because district crime
-  // severity is highly persistent year-over-year in the source data.
-  // Full methodology + reproduction scripts: /ml-pipeline/README.md
+  const metrics = loadModelMetrics();
+
   res.json({
-    accuracy: 0.7768,
-    precision: 0.7965,
-    recall: 0.7768,
-    f1_score: 0.7722,
+    accuracy: metrics.risk_class_accuracy_on_holdout,
+    precision: metrics.risk_class_precision_weighted_on_holdout,
+    recall: metrics.risk_class_recall_weighted_on_holdout,
+    f1_score: metrics.risk_class_weighted_f1_on_holdout,
     sample_count: sample,
     recent_30d_incidents: Number(recent[0]?.c ?? 0),
     last_trained: new Date().toISOString(),
     model_version: "ncrb-real-v1-gbr",
-    algorithm: "GradientBoostingRegressor (scikit-learn), 300 trees, depth 3",
+    algorithm: metrics.model,
     cv_strategy: "5-fold KFold on train period + true temporal holdout (2023-2024)",
-    training_records: 4888,
-    holdout_records: 1895,
-    feature_count: 65,
-    holdout_r2: 0.8855,
-    holdout_mae: 0.0614,
-    naive_persistence_baseline_accuracy: 0.8253,
-    naive_persistence_baseline_r2: 0.9288,
+    training_records: metrics.train_rows,
+    holdout_records: metrics.test_rows,
+    feature_count: metrics.feature_count,
+    train_r2: metrics.train_r2,
+    cv_r2_mean: metrics.cv_r2_mean_5fold_on_train,
+    cv_r2_std: metrics.cv_r2_std_5fold_on_train,
+    holdout_r2: metrics.test_r2,
+    holdout_mae: metrics.test_mae,
+    holdout_rmse: metrics.test_rmse,
+    naive_persistence_baseline_accuracy: metrics.naive_persistence_risk_class_accuracy,
+    naive_persistence_baseline_r2: metrics.naive_persistence_baseline_r2,
+    naive_persistence_baseline_mae: metrics.naive_persistence_baseline_mae,
+    naive_persistence_baseline_f1: metrics.naive_persistence_risk_class_f1,
+    top_features: metrics.top_features,
     data_source: "NCRB district-year crime data, 39 states/UTs, years 2010-2024",
   });
 });

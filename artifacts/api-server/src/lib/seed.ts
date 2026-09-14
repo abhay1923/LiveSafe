@@ -38,24 +38,4 @@ export async function seedDefaults() {
     password: superAdminPassword,
     role: "super_admin",
   });
-
-  // Demo accounts (still work as in the original UI)
-  await ensureUser({
-    email: "citizen@example.com",
-    name: "Priya Sharma",
-    password: "citizen123",
-    role: "citizen",
-  });
-  await ensureUser({
-    email: "police@example.com",
-    name: "Officer Rajesh Kumar",
-    password: "police123",
-    role: "police",
-  });
-  await ensureUser({
-    email: "admin@example.com",
-    name: "Admin Vikram Singh",
-    password: "admin123",
-    role: "admin",
-  });
 }

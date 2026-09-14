@@ -327,7 +327,7 @@ export default function HotspotMapPage() {
   return (
     <AppLayout
       title="India Crime Hotspot Map"
-      subtitle="ML-predicted risk zones — All India • NCRB 2019-2023 • 117 cities • 96.5% accuracy"
+      subtitle="Observed NCRB risk zones — All India • 445 real geocoded districts • honest model metrics"
     >
       <div className="map-page">
 
@@ -338,7 +338,7 @@ export default function HotspotMapPage() {
               <MapPin size={18} color="#818cf8" />
               <div>
                 <div className="stat-value">{counts.total}</div>
-                <div className="stat-label">All India Cities</div>
+                <div className="stat-label">Geocoded Districts</div>
               </div>
             </div>
             <div className="stat-card critical-card" onClick={() => setFilter(filter === 'critical' ? 'all' : 'critical')}>
@@ -372,8 +372,8 @@ export default function HotspotMapPage() {
             <div className="stat-card">
               <Shield size={18} color="#22c55e" />
               <div>
-                <div className="stat-value">96.5%</div>
-                <div className="stat-label">ML Accuracy</div>
+                <div className="stat-value">0.886</div>
+                <div className="stat-label">Holdout R2</div>
               </div>
             </div>
           </div>
@@ -493,10 +493,10 @@ export default function HotspotMapPage() {
 
         {/* Data attribution */}
         <div className="attribution">
-          📊 Data: NCRB Crime in India 2019–2023 &nbsp;|&nbsp;
-          🤖 Model: Random Forest + Gradient Boosting Ensemble &nbsp;|&nbsp;
-          🗺️ 117 cities across 26 states &nbsp;|&nbsp;
-          ⚡ 96.5% cross-validated accuracy
+          Data: NCRB district-year crime data, 2010-2024 &nbsp;|&nbsp;
+          Model: GradientBoostingRegressor &nbsp;|&nbsp;
+          Map: 445 real geocoded districts &nbsp;|&nbsp;
+          Holdout R2: 0.886
         </div>
       </div>
 

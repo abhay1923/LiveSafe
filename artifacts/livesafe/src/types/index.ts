@@ -117,16 +117,17 @@ export interface V5City {
   risk_level: RiskClassification
   risk_score: number
   model_confidence: number
-  crime_rate_per_lakh: number
+  crime_rate_per_lakh: number | null
   predicted_crimes: string[]
   primary_warning: string
   trend: 'rising' | 'stable' | 'falling'
-  population_lakh: number
+  population_lakh: number | null
   radius_meters: number
 }
 
 export interface Hotspot {
   id: string
+  city?: string
   latitude: number
   longitude: number
   risk_score: number          // 0–100
@@ -199,6 +200,7 @@ export interface DashboardStats {
   resolved_incidents: number
   active_sos_alerts: number
   hotspot_count: number
+  critical_hotspot_count?: number
   response_time_avg: number
   crime_reduction_pct: number
 }

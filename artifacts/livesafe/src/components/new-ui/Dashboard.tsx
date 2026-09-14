@@ -3,22 +3,6 @@ import { TrendingDown, ShieldCheck, MapPin, Activity, AlertOctagon, Flame, Siren
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '@/app/services/api'
 
-const trendData = [
-  { day: 'Day 3',  actual: 120, predicted: 115 },
-  { day: 'Day 6',  actual: 132, predicted: 128 },
-  { day: 'Day 9',  actual: 141, predicted: 138 },
-  { day: 'Day 15', actual: 160, predicted: 165 },
-  { day: 'Day 20', actual: 185, predicted: 190 },
-  { day: 'Day 28', actual: 178, predicted: 182 },
-]
-
-const typeData = [
-  { name: 'Assault',  actual: 32, predicted: 10 },
-  { name: 'Robbery',  actual: 28, predicted: 18 },
-  { name: 'Burglary', actual: 24, predicted: 16 },
-  { name: 'Theft',    actual: 14, predicted: 8  },
-]
-
 const TOOLTIP_STYLE = {
   background: 'rgba(15,23,42,0.95)',
   border: '1px solid rgba(255,255,255,0.1)',
@@ -28,26 +12,54 @@ const TOOLTIP_STYLE = {
   boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
 }
 
+function titleCase(value: string) {
+  return value.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+function formatDay(day: string) {
+  return new Date(`${day}T00:00:00`).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })
+}
+
 export default function Dashboard() {
   const [stats, setStats] = useState({
     hotspot_count: 0,
+    critical_hotspot_count: 0,
     total_incidents: 0,
     active_sos_alerts: 0,
     resolved_incidents: 0,
     crime_reduction_pct: 0,
   })
+  const [incidentStats, setIncidentStats] = useState<Awaited<ReturnType<typeof api.getIncidentStats>> | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const controller = new AbortController()
-    api.getDashboardStats(controller.signal)
-      .then(data => setStats(data))
+    Promise.all([
+      api.getDashboardStats(controller.signal),
+      api.getIncidentStats(controller.signal),
+    ])
+      .then(([dashboardData, incidentData]) => {
+        setStats({
+          ...dashboardData,
+          critical_hotspot_count: dashboardData.critical_hotspot_count ?? 0,
+        })
+        setIncidentStats(incidentData)
+      })
       .catch(e => { if (e.name !== 'AbortError') console.error('Dashboard stats error:', e) })
       .finally(() => setLoading(false))
     return () => controller.abort()
   }, [])
 
-  const critical_count = Math.round(stats.hotspot_count * 0.2)
+  const trendData = (incidentStats?.timeline_7d ?? []).map((row) => ({
+    day: formatDay(row.day),
+    incidents: row.count,
+    resolved: row.resolved ?? 0,
+  }))
+
+  const typeData = (incidentStats?.by_type ?? []).map((row) => ({
+    name: titleCase(row.type),
+    incidents: row.count,
+  }))
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-12">
@@ -68,15 +80,15 @@ export default function Dashboard() {
             value={loading ? '...' : `-${stats.crime_reduction_pct}%`}
             accent="emerald"
           />
-          <StatPill
-            icon={<ShieldCheck className="text-indigo-400 w-5 h-5" />}
-            label="Model Accuracy"
-            value="96.5%"
+            <StatPill
+              icon={<ShieldCheck className="text-indigo-400 w-5 h-5" />}
+            label="Holdout R2"
+            value="0.886"
             accent="indigo"
           />
           <StatPill
             icon={<MapPin className="text-sky-400 w-5 h-5" />}
-            label="Hotspot Cities"
+            label="Geocoded Districts"
             value={loading ? '...' : String(stats.hotspot_count)}
             accent="sky"
           />
@@ -91,9 +103,9 @@ export default function Dashboard() {
           icon={<Flame className="w-5 h-5" />}
           color="indigo"
         />
-        <StatCard
-          label="Critical Zones"
-          value={loading ? '...' : critical_count}
+          <StatCard
+            label="Critical Zones"
+          value={loading ? '...' : stats.critical_hotspot_count}
           icon={<AlertOctagon className="w-5 h-5" />}
           color="red"
         />
@@ -114,8 +126,8 @@ export default function Dashboard() {
       {/* Charts */}
       <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
         <ChartCard
-          title="Crime Trends (30 Days)"
-          subtitle="Actual vs predicted incidents nationwide"
+          title="Incident Trend"
+          subtitle="Reported vs resolved incidents from the database"
         >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={trendData}>
@@ -124,7 +136,7 @@ export default function Dashboard() {
                   <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
                   <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
                 </linearGradient>
-                <linearGradient id="gradPredicted" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="gradResolved" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.2} />
                   <stop offset="95%" stopColor="#38bdf8" stopOpacity={0} />
                 </linearGradient>
@@ -133,28 +145,27 @@ export default function Dashboard() {
               <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
               <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ stroke: 'rgba(99,102,241,0.3)', strokeWidth: 1 }} />
-              <Area type="monotone" dataKey="actual"    stroke="#818cf8" fill="url(#gradActual)"    strokeWidth={2.5} />
-              <Area type="monotone" dataKey="predicted" stroke="#38bdf8" fill="url(#gradPredicted)" strokeWidth={2} strokeDasharray="4 4" />
+              <Area type="monotone" dataKey="incidents" stroke="#818cf8" fill="url(#gradActual)" strokeWidth={2.5} />
+              <Area type="monotone" dataKey="resolved" stroke="#38bdf8" fill="url(#gradResolved)" strokeWidth={2} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
 
-        <ChartCard title="Crime Types" subtitle="Historical vs predicted distribution">
+        <ChartCard title="Crime Types" subtitle="Incident distribution from reported records">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={typeData} margin={{ left: 0, right: 8 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" />
               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748b' }} />
               <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: 'rgba(99,102,241,0.08)' }} />
-              <Bar dataKey="actual"    name="Historical" fill="#475569" radius={[6,6,0,0]} barSize={22} />
-              <Bar dataKey="predicted" name="Predicted"  fill="#6366f1" radius={[6,6,0,0]} barSize={22} />
+              <Bar dataKey="incidents" name="Incidents" fill="#6366f1" radius={[6,6,0,0]} barSize={22} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>
 
       <p className="text-xs text-slate-500 text-right">
-        Data Source: National Crime Records Bureau (NCRB) — Crime in India 2022
+        Data Source: NCRB district-year crime data, 2010-2024 • Geocoded district coverage only
       </p>
     </div>
   )

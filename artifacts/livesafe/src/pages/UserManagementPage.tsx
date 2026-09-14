@@ -1,17 +1,10 @@
 import React from 'react'
 import AppLayout from '@/components/layout/AppLayout'
-import { Users, Search, UserCheck, UserX, Hash } from "lucide-react"
+import { AlertCircle, Shield, Settings, UserRound, Users, Search, UserCheck, UserX, Hash } from "lucide-react"
 import { useState } from 'react'
 import type { User, UserRole } from '@/types'
-
-const MOCK_USERS: User[] = [
-  { id: '1', email: 'citizen@example.com', name: 'Arjun Mehta',    role: 'citizen', phone: '+91-9876543210', is_active: true,  created_at: '2024-01-15T00:00:00Z' },
-  { id: '2', email: 'police@example.com',  name: 'Inspector Singh', role: 'police',  badge_number: 'BD-2024-001', is_active: true,  created_at: '2024-01-10T00:00:00Z' },
-  { id: '3', email: 'admin@example.com',   name: 'Admin User',      role: 'admin',   is_active: true,  created_at: '2024-01-01T00:00:00Z' },
-  { id: '4', email: 'priya@example.com',   name: 'Priya Sharma',   role: 'citizen', phone: '+91-9812345678', is_active: true,  created_at: '2024-02-05T00:00:00Z' },
-  { id: '5', email: 'rahul@example.com',   name: 'Rahul Gupta',    role: 'citizen', is_active: false, created_at: '2024-02-12T00:00:00Z' },
-  { id: '6', email: 'kumar@example.com',   name: 'Officer Kumar',  role: 'police',  badge_number: 'BD-2024-002', is_active: true,  created_at: '2024-02-18T00:00:00Z' },
-]
+import { api } from '@/app/services/api'
+import { useApi } from '@/app/hooks/useApi'
 
 const ROLE_COLORS: Record<UserRole, string> = {
   citizen: '#22c55e',
@@ -23,8 +16,10 @@ const ROLE_COLORS: Record<UserRole, string> = {
 export default function UserManagementPage() {
   const [search, setSearch] = useState('')
   const [roleFilter, setRoleFilter] = useState<UserRole | 'all'>('all')
+  const { data, isLoading, error } = useApi((sig) => api.listUsers(sig))
+  const users = data ?? []
 
-  const filtered = MOCK_USERS.filter((u) => {
+  const filtered = users.filter((u) => {
     const matchesSearch = u.name.toLowerCase().includes(search.toLowerCase()) ||
                           u.email.toLowerCase().includes(search.toLowerCase())
     const matchesRole = roleFilter === 'all' || u.role === roleFilter
@@ -37,10 +32,12 @@ export default function UserManagementPage() {
         {/* Stats */}
         <div className="users-stats">
           {(['citizen', 'police', 'admin'] as UserRole[]).map((r) => {
-            const count = MOCK_USERS.filter((u) => u.role === r).length
+            const count = users.filter((u) => u.role === r).length
             return (
               <div key={r} className="user-stat-card">
-                <span className="user-stat-icon">{r === 'citizen' ? '👤' : r === 'police' ? '🚔' : '⚙️'}</span>
+                <span className="user-stat-icon">
+                  {r === 'citizen' ? <UserRound size={22} /> : r === 'police' ? <Shield size={22} /> : <Settings size={22} />}
+                </span>
                 <div>
                   <div className="user-stat-val">{count}</div>
                   <div className="user-stat-lbl" style={{ color: ROLE_COLORS[r] }}>
@@ -53,7 +50,7 @@ export default function UserManagementPage() {
           <div className="user-stat-card">
             <Users size={22} color="#94a3b8" />
             <div>
-              <div className="user-stat-val">{MOCK_USERS.length}</div>
+              <div className="user-stat-val">{users.length}</div>
               <div className="user-stat-lbl">Total Users</div>
             </div>
           </div>
@@ -86,54 +83,62 @@ export default function UserManagementPage() {
 
         {/* Table */}
         <div className="users-table-wrapper">
-          <table className="users-table">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Role</th>
-                <th>Badge / Phone</th>
-                <th>Joined</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((u) => (
-                <tr key={u.id}>
-                  <td>
-                    <div className="user-cell">
-                      <div className="user-av" style={{ background: ROLE_COLORS[u.role] + '22', borderColor: ROLE_COLORS[u.role] + '44' }}>
-                        {u.name.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="user-cell-name">{u.name}</div>
-                        <div className="user-cell-email">{u.email}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="role-badge" style={{ color: ROLE_COLORS[u.role], background: ROLE_COLORS[u.role] + '18', borderColor: ROLE_COLORS[u.role] + '44' }}>
-                      {u.role}
-                    </span>
-                  </td>
-                  <td className="meta-cell">
-                    {u.badge_number
-                      ? <span className="badge-num"><Hash size={11} /> {u.badge_number}</span>
-                      : u.phone ?? '—'
-                    }
-                  </td>
-                  <td className="date-cell">{new Date(u.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: '2-digit' })}</td>
-                  <td>
-                    {u.is_active
-                      ? <span className="status-chip active"><UserCheck size={11} /> Active</span>
-                      : <span className="status-chip inactive"><UserX size={11} /> Inactive</span>
-                    }
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filtered.length === 0 && (
-            <div className="no-users">No users match your search.</div>
+          {isLoading ? (
+            <div className="no-users">Loading users from the database...</div>
+          ) : error ? (
+            <div className="no-users error"><AlertCircle size={16} /> {error.message}</div>
+          ) : (
+            <>
+              <table className="users-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Badge / Phone</th>
+                    <th>Joined</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="user-cell">
+                          <div className="user-av" style={{ background: ROLE_COLORS[u.role] + '22', borderColor: ROLE_COLORS[u.role] + '44' }}>
+                            {u.name.charAt(0)}
+                          </div>
+                          <div>
+                            <div className="user-cell-name">{u.name}</div>
+                            <div className="user-cell-email">{u.email}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="role-badge" style={{ color: ROLE_COLORS[u.role], background: ROLE_COLORS[u.role] + '18', borderColor: ROLE_COLORS[u.role] + '44' }}>
+                          {u.role}
+                        </span>
+                      </td>
+                      <td className="meta-cell">
+                        {u.badge_number
+                          ? <span className="badge-num"><Hash size={11} /> {u.badge_number}</span>
+                          : u.phone ?? '-'
+                        }
+                      </td>
+                      <td className="date-cell">{new Date(u.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: '2-digit' })}</td>
+                      <td>
+                        {u.is_active
+                          ? <span className="status-chip active"><UserCheck size={11} /> Active</span>
+                          : <span className="status-chip inactive"><UserX size={11} /> Inactive</span>
+                        }
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {filtered.length === 0 && (
+                <div className="no-users">No users match your search.</div>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -156,7 +161,7 @@ export default function UserManagementPage() {
           align-items: center;
           gap: 0.75rem;
         }
-        .user-stat-icon { font-size: 1.4rem; flex-shrink: 0; }
+        .user-stat-icon { flex-shrink: 0; color: #94a3b8; display: flex; }
         .user-stat-val { font-size: 1.4rem; font-weight: 800; color: #f1f5f9; line-height: 1; }
         .user-stat-lbl { font-size: 0.72rem; color: #64748b; margin-top: 2px; font-weight: 600; }
         .users-filters { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
@@ -271,6 +276,7 @@ export default function UserManagementPage() {
           color: #64748b;
           font-size: 0.85rem;
         }
+        .no-users.error { color: #f87171; display: flex; align-items: center; justify-content: center; gap: 8px; }
       `}</style>
     </AppLayout>
   )

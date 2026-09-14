@@ -113,7 +113,7 @@ export default function SettingsPage() {
             </div>
             <div className="settings-row">
               <span className="settings-label">Data Mode</span>
-              <span className="settings-value">Demo (Mock Data)</span>
+              <span className="settings-value">API-backed real data</span>
             </div>
           </div>
         </div>

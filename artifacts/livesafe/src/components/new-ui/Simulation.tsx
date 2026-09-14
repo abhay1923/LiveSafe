@@ -88,7 +88,7 @@ export default function Simulation() {
           <Zap size={22} color="#fbbf24"/>
           <div>
             <h2>Crime Prediction Engine</h2>
-            <p>Run the LiveSafe v5.0 ensemble model on any location and time</p>
+            <p>Run the NCRB-calibrated risk scorer on any location and time</p>
           </div>
         </div>
         {metrics && (

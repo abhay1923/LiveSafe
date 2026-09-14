@@ -31,14 +31,14 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
             <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-xs font-bold text-blue-600 mb-6">
-              Powered by XGBoost + LightGBM Ensemble
+              Powered by real NCRB district-year data
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
               Secure Your Community with{' '}
               <span className="text-blue-600">AI-Powered</span> Crime Prediction.
             </h1>
             <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-xl">
-              Proactive safety through advanced data analysis. Anticipate risks before they happen with our state-of-the-art predictive engine trained on 23 years of NCRB data.
+              Proactive safety through verified crime-risk analysis, transparent model metrics, and documented NCRB data limitations.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <button onClick={onGetStarted} className="bg-blue-600 text-white px-8 py-4 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 flex items-center gap-2">
@@ -58,12 +58,12 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-lg font-black text-slate-900">73</p>
-                  <p className="text-xs text-slate-500">Delhi Risk</p>
+                  <p className="text-lg font-black text-slate-900">445</p>
+                  <p className="text-xs text-slate-500">Geocoded Districts</p>
                 </div>
                 <div>
-                  <p className="text-lg font-black text-slate-900">116</p>
-                  <p className="text-xs text-slate-500">Cities</p>
+                  <p className="text-lg font-black text-slate-900">39</p>
+                  <p className="text-xs text-slate-500">States / UTs</p>
                 </div>
               </div>
             </div>

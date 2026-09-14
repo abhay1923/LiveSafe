@@ -74,7 +74,6 @@ router.get("/incidents/stats", requireAuth, requireRole("police", "admin"), asyn
     .from(incidentsTable)
     .groupBy(incidentsTable.status);
 
-  // Last 7 days timeline
   const since = new Date();
   since.setDate(since.getDate() - 6);
   since.setHours(0, 0, 0, 0);
@@ -82,17 +81,41 @@ router.get("/incidents/stats", requireAuth, requireRole("police", "admin"), asyn
     .select({
       day: sql<string>`to_char(${incidentsTable.createdAt}, 'YYYY-MM-DD')`,
       c: count(),
+      resolved: sql<number>`count(*) filter (where ${incidentsTable.status} = 'resolved')`,
     })
     .from(incidentsTable)
     .where(gte(incidentsTable.createdAt, since))
     .groupBy(sql`to_char(${incidentsTable.createdAt}, 'YYYY-MM-DD')`);
+
+  const monthStart = new Date();
+  monthStart.setMonth(monthStart.getMonth() - 6);
+  monthStart.setDate(1);
+  monthStart.setHours(0, 0, 0, 0);
+  const monthly = await db
+    .select({
+      month: sql<string>`to_char(${incidentsTable.createdAt}, 'YYYY-MM')`,
+      c: count(),
+    })
+    .from(incidentsTable)
+    .where(gte(incidentsTable.createdAt, monthStart))
+    .groupBy(sql`to_char(${incidentsTable.createdAt}, 'YYYY-MM')`);
+
+  const hourly = await db
+    .select({
+      hour: sql<number>`extract(hour from ${incidentsTable.createdAt})::int`,
+      c: count(),
+    })
+    .from(incidentsTable)
+    .groupBy(sql`extract(hour from ${incidentsTable.createdAt})::int`);
 
   res.json({
     total: total[0]?.c ?? 0,
     by_type: byType.map(r => ({ type: r.type, count: Number(r.c) })),
     by_severity: bySeverity.map(r => ({ severity: r.severity, count: Number(r.c) })),
     by_status: byStatus.map(r => ({ status: r.status, count: Number(r.c) })),
-    timeline_7d: timeline.map(r => ({ day: r.day, count: Number(r.c) })),
+    timeline_7d: timeline.map(r => ({ day: r.day, count: Number(r.c), resolved: Number(r.resolved) })),
+    monthly_7m: monthly.map(r => ({ month: r.month, count: Number(r.c) })),
+    hourly_distribution: hourly.map(r => ({ hour: Number(r.hour), count: Number(r.c) })),
   });
 });
 

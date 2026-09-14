@@ -33,6 +33,33 @@ router.get("/admin/access-requests", async (_req, res) => {
   res.json(rows.map(serializeRequest));
 });
 
+router.get("/admin/users", async (_req, res) => {
+  const rows = await db
+    .select({
+      id: usersTable.id,
+      email: usersTable.email,
+      name: usersTable.name,
+      role: usersTable.role,
+      phone: usersTable.phone,
+      badgeNumber: usersTable.badgeNumber,
+      isActive: usersTable.isActive,
+      createdAt: usersTable.createdAt,
+    })
+    .from(usersTable)
+    .orderBy(desc(usersTable.createdAt));
+
+  res.json(rows.map((row) => ({
+    id: String(row.id),
+    email: row.email,
+    name: row.name,
+    role: row.role,
+    phone: row.phone ?? undefined,
+    badge_number: row.badgeNumber ?? undefined,
+    is_active: row.isActive,
+    created_at: row.createdAt.toISOString(),
+  })));
+});
+
 router.post("/admin/access-requests/:id/approve", async (req: AuthedRequest, res) => {
   const id = Number(req.params.id);
   if (Number.isNaN(id)) return res.status(400).json({ message: "Invalid id" });

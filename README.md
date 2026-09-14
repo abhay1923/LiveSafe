@@ -54,7 +54,7 @@ The hotspot layer is built from real National Crime Records Bureau district-year
 - Risk bands: low, medium, high, and critical.
 - Express API with Drizzle ORM and PostgreSQL/Supabase support.
 - Vite frontend with React, TypeScript, Tailwind CSS, shadcn/ui patterns, Leaflet, and Recharts.
-- Local mock mode for running the frontend without a database.
+- Real API-backed views for hotspots, incidents, analytics, dashboard statistics, SOS alerts, and users.
 - Supabase browser client helper and environment examples.
 - Reproducible ML scripts under `ml-pipeline/`.
 
@@ -83,12 +83,11 @@ cd "C:\path\to\LiveSafe"
 pnpm install
 ```
 
-### Run Frontend Only
+### Run Frontend
 
-Use mock mode when you want the UI, real bundled hotspot data, and demo workflows without a database.
+The frontend expects the API server and database-backed endpoints to be available.
 
 ```powershell
-$env:VITE_USE_MOCK="true"
 $env:PORT="5173"
 pnpm --filter @workspace/livesafe run dev
 ```
@@ -115,7 +114,6 @@ Create `artifacts/livesafe/.env.local`:
 ```env
 VITE_API_URL=http://localhost:3000/api
 VITE_API_PROXY_TARGET=http://localhost:3000
-VITE_USE_MOCK=false
 PORT=5173
 BASE_PATH=/
 VITE_SUPABASE_URL=https://your-project.supabase.co

@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { useApi } from '@/app/hooks/useApi'
 import { api } from '@/app/services/api'
 import AppLayout from '@/components/layout/AppLayout'
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip } from 'recharts'
-import { Brain, RefreshCw, CheckCircle, AlertTriangle, Database, Cpu, Loader2 } from 'lucide-react'
+import { Brain, CheckCircle, AlertTriangle, Database, Cpu } from 'lucide-react'
 
 function MetricBar({ label, value, color }: { label: string; value: number; color: string }) {
   return (
@@ -23,23 +22,7 @@ function MetricBar({ label, value, color }: { label: string; value: number; colo
 }
 
 export default function MLDashboardPage() {
-  const { data: metrics, isLoading, error, refetch } = useApi((sig) => api.getMLMetrics(sig))
-  const [retraining, setRetraining] = useState(false)
-  const [retrainMsg, setRetrainMsg] = useState('')
-
-  const handleRetrain = async () => {
-    setRetraining(true)
-    setRetrainMsg('')
-    try {
-      const res = await api.retrainModel()
-      setRetrainMsg(`✅ ${res.message} (Job ID: ${res.job_id})`)
-    } catch (err) {
-      setRetrainMsg(`❌ ${err instanceof Error ? err.message : 'Retrain failed.'}`)
-    } finally {
-      setRetraining(false)
-      setTimeout(() => refetch(), 3000)
-    }
-  }
+  const { data: metrics, isLoading, error } = useApi((sig) => api.getMLMetrics(sig))
 
   const radialData = metrics
     ? [
@@ -51,7 +34,7 @@ export default function MLDashboardPage() {
     : []
 
   return (
-    <AppLayout title="ML Dashboard" subtitle="Model performance, retraining, and prediction engine">
+    <AppLayout title="ML Dashboard" subtitle="Model performance and NCRB prediction engine">
       <div className="ml-page">
         {isLoading && (
           <div className="ml-loading">
@@ -82,23 +65,10 @@ export default function MLDashboardPage() {
                   </div>
                 </div>
               </div>
-              <button
-                className="btn btn-primary retrain-btn"
-                onClick={handleRetrain}
-                disabled={retraining}
-              >
-                {retraining
-                  ? <><Loader2 size={15} className="spin" /> Queuing Retrain…</>
-                  : <><RefreshCw size={15} /> Retrain Model</>
-                }
-              </button>
-            </div>
-
-            {retrainMsg && (
-              <div className={`retrain-msg ${retrainMsg.startsWith('✅') ? 'success' : 'fail'}`}>
-                {retrainMsg}
+              <div className="model-status">
+                Reproducible offline pipeline
               </div>
-            )}
+            </div>
 
             {/* Metrics grid */}
             <div className="ml-grid">
@@ -150,7 +120,7 @@ export default function MLDashboardPage() {
                   </div>
                   <div className="metrics-footer-item">
                     <Cpu size={14} color="#64748b" />
-                    <span>Algorithm: <strong>Random Forest + Gradient Boost Ensemble</strong></span>
+                    <span>Algorithm: <strong>{metrics.algorithm ?? 'GradientBoostingRegressor'}</strong></span>
                   </div>
                   <div className="metrics-footer-item">
                     <CheckCircle size={14} color="#22c55e" />
@@ -165,22 +135,22 @@ export default function MLDashboardPage() {
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(99,102,241,0.12)' }}>📊</div>
                 <div className="info-title">Dataset Source</div>
-                <div className="info-desc">Real Kaggle crime dataset with 198,355+ validated samples from Delhi NCR police records</div>
+                <div className="info-desc">Real NCRB district-year data with reproducible CSV inputs and documented geocoding limitations</div>
               </div>
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(34,197,94,0.12)' }}>🎯</div>
                 <div className="info-title">Feature Engineering</div>
-                <div className="info-desc">Time of day, day of week, location cluster, weather index, historical crime density</div>
+                <div className="info-desc">Crime counts, state-percentile ranks, year-over-year growth, previous-year values, and state features</div>
               </div>
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(245,158,11,0.12)' }}>🔄</div>
-                <div className="info-title">Retraining Schedule</div>
-                <div className="info-desc">Auto-retrained weekly with new incident data. Manual trigger available for urgent updates</div>
+                <div className="info-title">Refresh Workflow</div>
+                <div className="info-desc">Run the checked-in ml-pipeline scripts after verified NCRB source files are refreshed</div>
               </div>
               <div className="model-info-card">
                 <div className="info-icon" style={{ background: 'rgba(56,189,248,0.12)' }}>🛡️</div>
-                <div className="info-title">Prediction Latency</div>
-                <div className="info-desc">Sub-50ms inference per request. Hotspot grid updated every 6 hours via batch job</div>
+                <div className="info-title">Honesty Baseline</div>
+                <div className="info-desc">Metrics are reported against a naive persistence baseline instead of overstating model lift</div>
               </div>
             </div>
           </>
@@ -223,15 +193,16 @@ export default function MLDashboardPage() {
         }
         .model-name { font-size: 1rem; font-weight: 700; color: #f1f5f9; }
         .model-meta { font-size: 0.76rem; color: #64748b; margin-top: 3px; }
-        .retrain-btn { white-space: nowrap; }
-        .retrain-msg {
-          padding: 0.7rem 1rem;
-          border-radius: 8px;
-          font-size: 0.85rem;
-          font-weight: 500;
+        .model-status {
+          white-space: nowrap;
+          color: #86efac;
+          background: rgba(34,197,94,0.1);
+          border: 1px solid rgba(34,197,94,0.25);
+          border-radius: 999px;
+          padding: 0.45rem 0.75rem;
+          font-size: 0.78rem;
+          font-weight: 700;
         }
-        .retrain-msg.success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
-        .retrain-msg.fail    { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #f87171; }
         .ml-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

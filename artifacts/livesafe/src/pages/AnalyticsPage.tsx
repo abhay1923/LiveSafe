@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useApi } from '@/app/hooks/useApi'
 import { api } from '@/app/services/api'
 import AppLayout from '@/components/layout/AppLayout'
@@ -8,43 +8,18 @@ import {
 } from 'recharts'
 import { TrendingDown, TrendingUp, AlertTriangle, Clock, CheckCircle, Activity } from 'lucide-react'
 
-// ---- Mock chart data ----
-const WEEKLY_TREND = [
-  { day: 'Mon', incidents: 24, resolved: 19, sos: 2 },
-  { day: 'Tue', incidents: 31, resolved: 28, sos: 4 },
-  { day: 'Wed', incidents: 18, resolved: 16, sos: 1 },
-  { day: 'Thu', incidents: 42, resolved: 35, sos: 6 },
-  { day: 'Fri', incidents: 38, resolved: 30, sos: 5 },
-  { day: 'Sat', incidents: 55, resolved: 44, sos: 8 },
-  { day: 'Sun', incidents: 29, resolved: 22, sos: 3 },
-]
+const CRIME_COLORS = ['#6366f1', '#ef4444', '#f97316', '#eab308', '#22c55e', '#38bdf8', '#a855f7', '#94a3b8']
 
-const CRIME_BREAKDOWN = [
-  { name: 'Theft',      value: 38, color: '#6366f1' },
-  { name: 'Robbery',    value: 18, color: '#ef4444' },
-  { name: 'Assault',    value: 12, color: '#f97316' },
-  { name: 'Harassment', value: 15, color: '#eab308' },
-  { name: 'Vandalism',  value: 9,  color: '#22c55e' },
-  { name: 'Other',      value: 8,  color: '#94a3b8' },
-]
+function titleCase(value: string) {
+  return value.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
 
-const MONTHLY_TREND = [
-  { month: 'Sep', crimes: 312 },
-  { month: 'Oct', crimes: 298 },
-  { month: 'Nov', crimes: 341 },
-  { month: 'Dec', crimes: 287 },
-  { month: 'Jan', crimes: 263 },
-  { month: 'Feb', crimes: 241 },
-  { month: 'Mar', crimes: 218 },
-]
+function formatWeekday(day: string) {
+  return new Date(`${day}T00:00:00`).toLocaleDateString('en-IN', { weekday: 'short' })
+}
 
-function buildHourHeatmap() {
-  return Array.from({ length: 24 }, (_, h) => ({
-    hour: `${h}:00`,
-    crimes: h >= 20 || h <= 4 ? Math.floor(Math.random() * 30) + 20
-          : h >= 8 && h <= 18  ? Math.floor(Math.random() * 15) + 5
-          : Math.floor(Math.random() * 10) + 3,
-  }))
+function formatMonth(month: string) {
+  return new Date(`${month}-01T00:00:00`).toLocaleDateString('en-IN', { month: 'short' })
 }
 
 interface StatCardProps {
@@ -84,8 +59,30 @@ const TOOLTIP_STYLE = {
 
 export default function AnalyticsPage() {
   const { data: stats } = useApi((sig) => api.getDashboardStats(sig))
-  // Build once per mount — not at module load — so Math.random() fires at render time
-  const HOUR_HEATMAP = useMemo(() => buildHourHeatmap(), [])
+  const { data: incidentStats } = useApi((sig) => api.getIncidentStats(sig))
+
+  const weeklyTrend = (incidentStats?.timeline_7d ?? []).map((row) => ({
+    day: formatWeekday(row.day),
+    incidents: row.count,
+    resolved: row.resolved ?? 0,
+  }))
+
+  const totalByType = (incidentStats?.by_type ?? []).reduce((sum, row) => sum + row.count, 0)
+  const crimeBreakdown = (incidentStats?.by_type ?? []).map((row, index) => ({
+    name: titleCase(row.type),
+    value: totalByType ? Math.round((row.count / totalByType) * 1000) / 10 : 0,
+    color: CRIME_COLORS[index % CRIME_COLORS.length],
+  }))
+
+  const monthlyTrend = (incidentStats?.monthly_7m ?? []).map((row) => ({
+    month: formatMonth(row.month),
+    crimes: row.count,
+  }))
+
+  const hourHeatmap = Array.from({ length: 24 }, (_, hour) => {
+    const found = incidentStats?.hourly_distribution?.find((row) => row.hour === hour)
+    return { hour: `${hour}:00`, crimes: found?.count ?? 0 }
+  })
 
   return (
     <AppLayout title="Analytics" subtitle="Crime trends and patrol performance — Delhi NCR">
@@ -120,7 +117,7 @@ export default function AnalyticsPage() {
             <h3>Weekly Incident Trend</h3>
             <p className="chart-sub">Incidents reported vs resolved (7-day window)</p>
             <ResponsiveContainer width="100%" height={220}>
-              <AreaChart data={WEEKLY_TREND} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                <AreaChart data={weeklyTrend} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorInc" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%"  stopColor="#ef4444" stopOpacity={0.3} />
@@ -149,13 +146,13 @@ export default function AnalyticsPage() {
             <ResponsiveContainer width="100%" height={220}>
               <PieChart>
                 <Pie
-                  data={CRIME_BREAKDOWN}
+                  data={crimeBreakdown}
                   cx="50%" cy="50%"
                   innerRadius={55} outerRadius={90}
                   paddingAngle={2}
                   dataKey="value"
                 >
-                  {CRIME_BREAKDOWN.map((entry, i) => (
+                  {crimeBreakdown.map((entry, i) => (
                     <Cell key={i} fill={entry.color} />
                   ))}
                 </Pie>
@@ -166,7 +163,7 @@ export default function AnalyticsPage() {
               </PieChart>
             </ResponsiveContainer>
             <div className="pie-legend">
-              {CRIME_BREAKDOWN.map((b) => (
+              {crimeBreakdown.map((b) => (
                 <div key={b.name} className="pie-legend-item">
                   <div className="pie-dot" style={{ background: b.color }} />
                   <span>{b.name}</span>
@@ -184,7 +181,7 @@ export default function AnalyticsPage() {
             <h3>Monthly Crime Count</h3>
             <p className="chart-sub">7-month historical view</p>
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={MONTHLY_TREND} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={monthlyTrend} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="month" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -199,7 +196,7 @@ export default function AnalyticsPage() {
             <h3>Crime Frequency by Hour of Day</h3>
             <p className="chart-sub">Peak hours: 8pm–4am</p>
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={HOUR_HEATMAP} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={hourHeatmap} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                 <XAxis
                   dataKey="hour"
@@ -214,7 +211,7 @@ export default function AnalyticsPage() {
                   name="Incidents"
                   radius={[2, 2, 0, 0]}
                 >
-                  {HOUR_HEATMAP.map((entry, i) => (
+                  {hourHeatmap.map((entry, i) => (
                     <Cell
                       key={i}
                       fill={entry.crimes > 25 ? '#ef4444' : entry.crimes > 15 ? '#f97316' : '#6366f1'}
