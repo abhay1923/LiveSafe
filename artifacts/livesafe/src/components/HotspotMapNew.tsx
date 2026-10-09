@@ -12,7 +12,7 @@ import { useAuth } from '@/app/hooks/useAuth'
 import { api } from '@/app/services/api'
 import type { Hotspot, RiskClassification, SOSAlert } from '@/types'
 import { cn } from '@/lib/utils'
-import { RISK_COLORS, RISK_BG } from '@/app/services/hotspots_v5'
+import { RISK_COLORS, RISK_BG } from '@/app/constants/risk'
 
 delete (L.Icon.Default.prototype as any)._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -50,6 +50,7 @@ export default function HotspotMapNew() {
   const [sosError, setSOSError] = useState('')
   const [sosResult, setSOSResult] = useState<SOSAlert | null>(null)
   const [userLocation, setUserLocation] = useState<{ lat: number; lon: number } | null>(null)
+  const [sosAccuracy, setSOSAccuracy] = useState<number | null>(null)
   const [watchId, setWatchId] = useState<number | null>(null)
   const [shareLive, setShareLive] = useState(true)
 
@@ -69,8 +70,9 @@ export default function HotspotMapNew() {
     setSOSResult(null)
     setSOSPhase('locating')
 
-    const send = async (lat: number, lon: number) => {
+    const send = async (lat: number, lon: number, accuracy: number) => {
       setUserLocation({ lat, lon })
+      setSOSAccuracy(accuracy)
       setSOSPhase('sending')
       try {
         const alert = await api.triggerSOS({
@@ -108,10 +110,20 @@ export default function HotspotMapNew() {
       return
     }
 
+    // No fallback location: an SOS is never sent with guessed coordinates.
+    // A fresh high-accuracy GPS/network fix is required (no cached position).
     navigator.geolocation.getCurrentPosition(
-      pos => send(pos.coords.latitude, pos.coords.longitude),
-      () => send(28.6139, 77.2090),
-      { timeout: 8000, maximumAge: 30000 }
+      pos => send(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy),
+      (err) => {
+        const reason = err.code === 1
+          ? 'Location permission was denied. Allow location access for this site, then try again.'
+          : err.code === 2
+          ? 'Your location could not be determined. Turn on device location services and try again.'
+          : 'Getting your location took too long. Move to an open area and try again.'
+        setSOSError(`${reason} If you are in danger, call 112 now.`)
+        setSOSPhase('error')
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     )
   }, [sosPhase, user, shareLive])
 
@@ -120,6 +132,7 @@ export default function HotspotMapNew() {
     setSOSError('')
     setSOSResult(null)
     setUserLocation(null)
+    setSOSAccuracy(null)
     if (watchId !== null && navigator.geolocation) {
       navigator.geolocation.clearWatch(watchId)
       setWatchId(null)
@@ -373,6 +386,12 @@ export default function HotspotMapNew() {
                       {typeof sosResult.whatsapp_notifications_sent === 'number' && (
                         <p className="text-emerald-300 text-xs mt-1">
                           WhatsApp alerts sent to {sosResult.whatsapp_notifications_sent} emergency contact(s).
+                        </p>
+                      )}
+                      {sosAccuracy !== null && (
+                        <p className="text-xs text-slate-500">
+                          Location accuracy: about {Math.round(sosAccuracy)} m
+                          {sosAccuracy > 100 && ' (low accuracy. Confirm your position with the police.)'}
                         </p>
                       )}
                       {userLocation && (

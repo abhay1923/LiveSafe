@@ -7,6 +7,9 @@ import dashboardRouter from "./dashboard";
 import hotspotsRouter from "./hotspots";
 import incidentsRouter from "./incidents";
 import mlRouter from "./ml";
+import publicRouter from "./public";
+import liveSignalsRouter from "./live-signals";
+import dispatchRouter from "./dispatch";
 
 const router: IRouter = Router();
 
@@ -18,5 +21,8 @@ router.use(dashboardRouter);
 router.use(hotspotsRouter);
 router.use(incidentsRouter);
 router.use(mlRouter);
+router.use(publicRouter);
+router.use(liveSignalsRouter);
+router.use(dispatchRouter);
 
 export default router;

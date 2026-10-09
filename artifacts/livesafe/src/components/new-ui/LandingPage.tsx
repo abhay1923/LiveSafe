@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Shield, Zap, Map as MapIcon, Bell, ChevronRight } from 'lucide-react'
 import { motion } from 'motion/react'
+import { api } from '@/app/services/api'
 
 export default function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
+  const [publicStats, setPublicStats] = useState<{ mapped_districts: number; states_covered: number; latest_data_year: number | null } | null>(null)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    api.getPublicStats(controller.signal)
+      .then(setPublicStats)
+      .catch(() => setPublicStats(null))
+    return () => controller.abort()
+  }, [])
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -50,20 +60,20 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           <motion.div initial={{ opacity: 0, scale: 0.93 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative hidden lg:block">
             <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 overflow-hidden">
               <div className="flex items-center justify-between mb-4">
-                <p className="font-bold text-slate-800">Live Risk Overview</p>
+                <p className="font-bold text-slate-800">Risk Data Overview</p>
                 <span className="flex items-center gap-1 text-xs font-bold text-green-600">
-                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                  Live
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                  {publicStats?.latest_data_year ? `NCRB ${publicStats.latest_data_year}` : 'NCRB data'}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-lg font-black text-slate-900">445</p>
-                  <p className="text-xs text-slate-500">Geocoded Districts</p>
+                  <p className="text-lg font-black text-slate-900">{publicStats ? publicStats.mapped_districts.toLocaleString('en-IN') : '—'}</p>
+                  <p className="text-xs text-slate-500">Mapped districts</p>
                 </div>
                 <div>
-                  <p className="text-lg font-black text-slate-900">39</p>
-                  <p className="text-xs text-slate-500">States / UTs</p>
+                  <p className="text-lg font-black text-slate-900">{publicStats ? publicStats.states_covered : '—'}</p>
+                  <p className="text-xs text-slate-500">States with mapped districts</p>
                 </div>
               </div>
             </div>

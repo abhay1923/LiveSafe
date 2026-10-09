@@ -274,6 +274,7 @@ type LocateState =
 
 export default function HotspotMapPage() {
   const { data: hotspots, isLoading, error } = useApi((sig) => api.getHotspots(sig))
+  const { data: mlMetrics } = useApi((sig) => api.getMLMetrics(sig))
   const [filter, setFilter] = useState<RiskClassification | 'all'>('all')
   const [locateState, setLocateState] = useState<LocateState>({ status: 'idle' })
   const locateFnRef = useRef<((lat: number, lng: number) => Hotspot | null) | null>(null)
@@ -327,7 +328,7 @@ export default function HotspotMapPage() {
   return (
     <AppLayout
       title="India Crime Hotspot Map"
-      subtitle="Observed NCRB risk zones — All India • 445 real geocoded districts • honest model metrics"
+      subtitle={`Observed NCRB risk zones — All India • ${counts?.total ?? 0} real geocoded districts • honest model metrics`}
     >
       <div className="map-page">
 
@@ -495,8 +496,8 @@ export default function HotspotMapPage() {
         <div className="attribution">
           Data: NCRB district-year crime data, 2010-2024 &nbsp;|&nbsp;
           Model: GradientBoostingRegressor &nbsp;|&nbsp;
-          Map: 445 real geocoded districts &nbsp;|&nbsp;
-          Holdout R2: 0.886
+          Map: {counts?.total ?? 0} real geocoded districts &nbsp;|&nbsp;
+          Holdout R2: {mlMetrics?.holdout_r2 !== undefined ? mlMetrics.holdout_r2.toFixed(3) : "—"}
         </div>
       </div>
 

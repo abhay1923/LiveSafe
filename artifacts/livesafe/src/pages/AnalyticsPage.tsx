@@ -2,6 +2,7 @@ import React from 'react'
 import { useApi } from '@/app/hooks/useApi'
 import { api } from '@/app/services/api'
 import AppLayout from '@/components/layout/AppLayout'
+import LiveSignalsPanel from '@/components/LiveSignalsPanel'
 import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
@@ -90,22 +91,22 @@ export default function AnalyticsPage() {
         {/* KPI row */}
         <div className="kpi-grid">
           <StatCard
-            label="Total Incidents" value={stats?.total_incidents ?? 1847}
-            sub="this month" icon={<AlertTriangle size={20} color="#f97316" />}
+            label="Total Incidents" value={stats ? stats.total_incidents : '—'}
+            sub="all time" icon={<AlertTriangle size={20} color="#f97316" />}
             trend="down" trendPct={12}
           />
           <StatCard
-            label="Resolution Rate" value={`${stats ? Math.round(stats.resolved_incidents / stats.total_incidents * 100) : 82}%`}
-            sub="vs 74% last month" icon={<CheckCircle size={20} color="#22c55e" />}
+            label="Resolution Rate" value={stats && stats.total_incidents > 0 ? `${Math.round(stats.resolved_incidents / stats.total_incidents * 100)}%` : '—'}
+            sub="resolved of all reports" icon={<CheckCircle size={20} color="#22c55e" />}
             trend="up" trendPct={8}
           />
           <StatCard
-            label="Avg Response Time" value={`${stats?.response_time_avg ?? 8.4}m`}
-            sub="target: ≤ 10 min" icon={<Clock size={20} color="#818cf8" />}
+            label="Avg Response Time" value={stats ? `${stats.response_time_avg} min` : '—'}
+            sub="SOS acknowledged to resolved" icon={<Clock size={20} color="#818cf8" />}
             trend="down" trendPct={5}
           />
           <StatCard
-            label="Active Hotspots" value={stats?.hotspot_count ?? 6}
+            label="Mapped Districts" value={stats ? stats.hotspot_count : '—'}
             sub="monitored zones" icon={<Activity size={20} color="#38bdf8" />}
           />
         </div>
@@ -142,7 +143,7 @@ export default function AnalyticsPage() {
           {/* Crime type pie */}
           <div className="chart-card">
             <h3>Crime Type Breakdown</h3>
-            <p className="chart-sub">Distribution this month</p>
+            <p className="chart-sub">All reported incidents</p>
             <ResponsiveContainer width="100%" height={220}>
               <PieChart>
                 <Pie
@@ -222,6 +223,8 @@ export default function AnalyticsPage() {
             </ResponsiveContainer>
           </div>
         </div>
+        <LiveSignalsPanel />
+
       </div>
 
       <style>{`

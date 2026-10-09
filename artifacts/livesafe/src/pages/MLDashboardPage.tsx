@@ -60,7 +60,7 @@ export default function MLDashboardPage() {
                   <div className="model-name">Crime Prediction Model</div>
                   <div className="model-meta">
                     Version {metrics.model_version} ·{' '}
-                    Trained on {metrics.sample_count.toLocaleString('en-IN')} samples ·{' '}
+                    Trained on {(metrics.training_records ?? 0).toLocaleString('en-IN')} samples ·{' '}
                     Last trained {new Date(metrics.last_trained).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                   </div>
                 </div>
@@ -116,7 +116,7 @@ export default function MLDashboardPage() {
                 <div className="metrics-footer">
                   <div className="metrics-footer-item">
                     <Database size={14} color="#64748b" />
-                    <span>Training samples: <strong>{metrics.sample_count.toLocaleString('en-IN')}</strong></span>
+                    <span>Training samples: <strong>{(metrics.training_records ?? 0).toLocaleString('en-IN')}</strong></span>
                   </div>
                   <div className="metrics-footer-item">
                     <Cpu size={14} color="#64748b" />

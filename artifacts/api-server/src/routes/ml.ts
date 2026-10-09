@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { db, hotspotsTable, incidentsTable } from "@workspace/db";
 import { count, gte } from "drizzle-orm";
@@ -28,6 +28,16 @@ interface ModelMetricsFile {
   naive_persistence_risk_class_accuracy: number;
   naive_persistence_risk_class_f1: number;
   top_features: Array<{ feature: string; importance: number }>;
+}
+
+function modelMetricsPath(): string {
+  const candidates = [
+    path.resolve(process.cwd(), "../../ml-pipeline/model_metrics.json"),
+    path.resolve(process.cwd(), "ml-pipeline/model_metrics.json"),
+  ];
+  const found = candidates.find((candidate) => existsSync(candidate));
+  if (!found) throw new Error("model_metrics.json not found. Run the ml-pipeline before starting the API.");
+  return found;
 }
 
 function loadModelMetrics(): ModelMetricsFile {
@@ -166,7 +176,7 @@ router.post("/ml/predict", requireAuth, async (req, res) => {
   });
 });
 
-router.get("/ml/metrics", requireAuth, requireRole("admin", "super_admin"), async (_req, res) => {
+router.get("/ml/metrics", requireAuth, async (_req, res) => {
   const total = await db.select({ c: count() }).from(incidentsTable);
   const since = new Date();
   since.setDate(since.getDate() - 30);
@@ -186,7 +196,7 @@ router.get("/ml/metrics", requireAuth, requireRole("admin", "super_admin"), asyn
     f1_score: metrics.risk_class_weighted_f1_on_holdout,
     sample_count: sample,
     recent_30d_incidents: Number(recent[0]?.c ?? 0),
-    last_trained: new Date().toISOString(),
+    last_trained: statSync(modelMetricsPath()).mtime.toISOString(),
     model_version: "ncrb-real-v1-gbr",
     algorithm: metrics.model,
     cv_strategy: "5-fold KFold on train period + true temporal holdout (2023-2024)",

@@ -1,3 +1,4 @@
+import re
 import json
 import pickle
 import numpy as np
@@ -72,7 +73,7 @@ for _, row in master.iterrows():
     data_completeness = round(min(100, (reported / len(CATS)) * 100 * recency), 1)
 
     records.append({
-        'id': f"d_{row['s_key']}_{row['d_key']}"[:60].replace(' ', '_'),
+        'id': 'd_' + re.sub(r'[^a-z0-9]+', '_', (str(row['s_key']) + '_' + str(row['district_norm'])).lower()).strip('_')[:80],
         'district': row['district_norm'].title(),
         'state': row['state_norm'].title(),
         'lat': round(float(row['lat']), 4),
@@ -94,6 +95,8 @@ for _, row in master.iterrows():
     })
 
 records.sort(key=lambda r: -r['risk_score'])
+_ids = [r['id'] for r in records]
+assert len(_ids) == len(set(_ids)), 'duplicate hotspot ids would overwrite real rows'
 print(f"exported {len(records)} real, geocoded district hotspots "
       f"(risk_level counts: {pd.Series([r['risk_level'] for r in records]).value_counts().to_dict()})")
 

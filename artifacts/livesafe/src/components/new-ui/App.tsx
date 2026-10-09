@@ -163,7 +163,7 @@ export default function NewApp() {
                     LiveSafe
                   </p>
                   <p className="text-[10px] text-slate-500 leading-tight tracking-wider mt-0.5">
-                    CRIMEPREDICT AI · v5
+                    Public safety portal
                   </p>
                 </motion.div>
               )}

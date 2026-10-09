@@ -7,6 +7,7 @@ const LoginPage = React.lazy(() => import('@/pages/LoginPage'))
 const NewApp = React.lazy(() => import('@/components/new-ui/App'))
 const ReportIncidentPage = React.lazy(() => import('@/pages/ReportIncidentPage'))
 const SOSAlertsPage = React.lazy(() => import('@/pages/SOSAlertsPage'))
+const DispatchPage = React.lazy(() => import('@/pages/DispatchPage'))
 const AnalyticsPage = React.lazy(() => import('@/pages/AnalyticsPage'))
 const MLDashboardPage = React.lazy(() => import('@/pages/MLDashboardPage'))
 const UserManagementPage = React.lazy(() => import('@/pages/UserManagementPage'))
@@ -145,6 +146,14 @@ export default function App() {
         element={
           <ProtectedRoute allowedRoles={['super_admin']}>
             <SuperAdminRequestsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/super-admin/dispatch"
+        element={
+          <ProtectedRoute allowedRoles={['super_admin']}>
+            <DispatchPage />
           </ProtectedRoute>
         }
       />

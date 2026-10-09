@@ -1,3 +1,4 @@
+import { useAuth } from '@/app/hooks/useAuth'
 import { useEffect, useMemo, useState } from 'react'
 import { api } from '@/app/services/api'
 import type { Incident } from '@/types'
@@ -25,6 +26,7 @@ const STATUS_COLORS: Record<string, string> = {
 }
 
 export default function Reports() {
+  const { user } = useAuth()
   const [incidents, setIncidents] = useState<Incident[]>([])
   const [stats, setStats] = useState<Awaited<ReturnType<typeof api.getIncidentStats>> | null>(null)
   const [loading, setLoading] = useState(true)
@@ -43,9 +45,13 @@ export default function Reports() {
         to:   filters.to   ? new Date(filters.to).toISOString()   : undefined,
         limit: 200,
       }
+      // Aggregate statistics are restricted to police and admin on the
+      // backend. Citizens get the incident list only, so their page doesn't
+      // fail on a 403 that would also block the list.
+      const canSeeStats = user?.role === 'police' || user?.role === 'admin' || user?.role === 'super_admin'
       const [list, st] = await Promise.all([
         api.getIncidents(f, signal),
-        api.getIncidentStats(signal),
+        canSeeStats ? api.getIncidentStats(signal) : Promise.resolve(null),
       ])
       setIncidents(list)
       setStats(st)

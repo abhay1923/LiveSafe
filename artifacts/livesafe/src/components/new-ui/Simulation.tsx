@@ -93,7 +93,7 @@ export default function Simulation() {
         </div>
         {metrics && (
           <div className="sm-model-badge">
-            <Brain size={14}/> {metrics.model_version ?? 'v5.0'} •{' '}
+            <Brain size={14}/> {metrics.model_version ?? '—'} •{' '}
             {metrics.accuracy ? `${(metrics.accuracy * 100).toFixed(1)}% acc` : ''}
           </div>
         )}

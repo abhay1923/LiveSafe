@@ -13,7 +13,7 @@ import { db, hotspotsTable } from "@workspace/db";
 import { sql } from "drizzle-orm";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_PATH = path.resolve(__dirname, "../../../ml-pipeline/hotspots_real.json");
+const DATA_PATH = path.resolve(__dirname, "../../ml-pipeline/hotspots_real.json");
 
 interface RealHotspot {
   id: string;

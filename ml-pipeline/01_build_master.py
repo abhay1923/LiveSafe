@@ -8,7 +8,7 @@ ncrb['s_key'] = ncrb['state_norm'].apply(norm).replace(STATE_MAP)
 # latest available year per district
 latest = (
     ncrb.sort_values('year')
-    .groupby(['s_key', 'd_key', 'state_norm', 'district_norm'], as_index=False)
+    .groupby(['s_key', 'd_key'], as_index=False)
     .tail(1)
     .reset_index(drop=True)
 )

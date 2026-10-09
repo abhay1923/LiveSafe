@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { TrendingDown, ShieldCheck, MapPin, Activity, AlertOctagon, Flame, Siren } from 'lucide-react'
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '@/app/services/api'
+import { useAuth } from '@/app/hooks/useAuth'
 
 const TOOLTIP_STYLE = {
   background: 'rgba(15,23,42,0.95)',
@@ -21,6 +22,7 @@ function formatDay(day: string) {
 }
 
 export default function Dashboard() {
+  const { user } = useAuth()
   const [stats, setStats] = useState({
     hotspot_count: 0,
     critical_hotspot_count: 0,
@@ -31,12 +33,20 @@ export default function Dashboard() {
   })
   const [incidentStats, setIncidentStats] = useState<Awaited<ReturnType<typeof api.getIncidentStats>> | null>(null)
   const [loading, setLoading] = useState(true)
+  const [holdoutR2, setHoldoutR2] = useState<number | null>(null)
 
   useEffect(() => {
     const controller = new AbortController()
+    api.getMLMetrics(controller.signal)
+      .then((m) => setHoldoutR2(m.holdout_r2 ?? null))
+      .catch(() => setHoldoutR2(null))
+    // Incident statistics are police/admin only on the backend. Requesting
+    // them as a citizen rejected the whole Promise.all, so the dashboard's
+    // own stats never loaded for citizens.
+    const canSeeIncidentStats = user?.role === 'police' || user?.role === 'admin' || user?.role === 'super_admin'
     Promise.all([
       api.getDashboardStats(controller.signal),
-      api.getIncidentStats(controller.signal),
+      canSeeIncidentStats ? api.getIncidentStats(controller.signal) : Promise.resolve(null),
     ])
       .then(([dashboardData, incidentData]) => {
         setStats({
@@ -48,7 +58,7 @@ export default function Dashboard() {
       .catch(e => { if (e.name !== 'AbortError') console.error('Dashboard stats error:', e) })
       .finally(() => setLoading(false))
     return () => controller.abort()
-  }, [])
+  }, [user?.role])
 
   const trendData = (incidentStats?.timeline_7d ?? []).map((row) => ({
     day: formatDay(row.day),
@@ -70,7 +80,7 @@ export default function Dashboard() {
             Main Analytics Dashboard
           </h1>
           <p className="text-slate-400 text-sm mt-1.5">
-            LiveSafe AI · Real-time crime prediction across India
+            Crime risk overview for India
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
@@ -83,7 +93,7 @@ export default function Dashboard() {
             <StatPill
               icon={<ShieldCheck className="text-indigo-400 w-5 h-5" />}
             label="Holdout R2"
-            value="0.886"
+            value={holdoutR2 === null ? '—' : holdoutR2.toFixed(3)}
             accent="indigo"
           />
           <StatPill

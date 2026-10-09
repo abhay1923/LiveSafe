@@ -52,13 +52,17 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (!id.includes("node_modules")) return undefined;
-          if (id.includes("react") || id.includes("react-dom") || id.includes("react-router-dom")) return "react";
-          if (id.includes("lucide-react")) return "icons";
-          if (id.includes("leaflet") || id.includes("react-leaflet")) return "map";
-          if (id.includes("recharts")) return "charts";
-          if (id.includes("motion") || id.includes("framer-motion")) return "animation";
-          if (id.includes("@tanstack")) return "data";
-          if (id.includes("@radix-ui")) return "ui";
+          // Match exact package folders. Substring checks such as
+          // id.includes("react") also match react-leaflet, react-icons,
+          // react-hook-form, etc., which pulled leaflet code into the React
+          // chunk and created a circular map <-> react import at load time.
+          const pkg = (name) => id.includes(`/node_modules/${name}/`) || id.includes(`/node_modules/.pnpm/${name}@`);
+          if (pkg("react") || pkg("react-dom") || pkg("scheduler") || pkg("react-router-dom") || pkg("react-router")) return "react";
+          if (pkg("lucide-react")) return "icons";
+          if (pkg("leaflet") || pkg("react-leaflet")) return "map";
+          if (pkg("recharts")) return "charts";
+          if (pkg("motion") || pkg("framer-motion")) return "animation";
+          if (pkg("@tanstack/react-query") || pkg("@tanstack/query-core")) return "data";
           return undefined;
         },
       },

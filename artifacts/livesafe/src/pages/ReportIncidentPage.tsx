@@ -54,7 +54,8 @@ export default function ReportIncidentPage() {
       () => {
         setError('Unable to retrieve your location. Please enter coordinates manually.')
         setLocLoading(false)
-      }
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     )
   }
 

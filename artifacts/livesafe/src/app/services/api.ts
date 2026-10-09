@@ -96,6 +96,70 @@ const HotspotSchema: z.ZodType<Hotspot> = z.object({
   created_at: z.string(),
 })
 
+const LiveSignalSchema = z.object({
+  id: z.string(),
+  district: z.string(),
+  state: z.string(),
+  title: z.string(),
+  snippet: z.string().nullable(),
+  source_url: z.string(),
+  source_domain: z.string(),
+  provider: z.string(),
+  verification_status: z.enum(['pending', 'verified', 'rejected']),
+  verified_by: z.string().nullable(),
+  verified_at: z.string().nullable(),
+  retrieved_at: z.string(),
+})
+
+export type LiveSignal = z.infer<typeof LiveSignalSchema>
+
+const DispatchStationSchema = z.object({
+  id: z.number(),
+  state: z.string(),
+  police_district: z.string(),
+  police_station: z.string(),
+  landline: z.string().nullable(),
+  mobile: z.string().nullable(),
+  official_email: z.string().nullable(),
+  station_address: z.string().nullable(),
+  source_url: z.string(),
+  verification_status: z.string(),
+  notes: z.string().nullable(),
+})
+
+const DispatchViewSchema = z.object({
+  alert: z.object({
+    id: z.string(),
+    user_name: z.string().nullable(),
+    latitude: z.number(),
+    longitude: z.number(),
+    status: z.string(),
+    created_at: z.string(),
+  }),
+  routing: z.object({
+    status: z.enum(['routed', 'outside_coverage', 'district_not_in_directory', 'state_not_compiled']),
+    nearest_district: z.object({ district: z.string(), state: z.string(), distance_km: z.number() }).nullable(),
+    coverage: z.object({
+      state: z.string(),
+      official_portal: z.string(),
+      coverage_status: z.string(),
+      notes: z.string().nullable(),
+    }).nullable(),
+    stations: z.array(DispatchStationSchema),
+    message: z.string(),
+  }),
+  dispatches: z.array(z.object({
+    id: z.string(),
+    station_id: z.string(),
+    channel: z.enum(['call', 'email']),
+    performed_by: z.string(),
+    performed_at: z.string(),
+  })),
+})
+
+export type DispatchView = z.infer<typeof DispatchViewSchema>
+export type DispatchStation = DispatchView['routing']['stations'][number]
+
 const SOSAlertSchema: z.ZodType<SOSAlert> = z.object({
   id: z.string(),
   user_id: z.string(),
@@ -385,15 +449,59 @@ export const api = {
     })
   },
 
+  // ---- Regional police dispatch (super admin) ----
+  async getDispatch(sosId: string, signal?: AbortSignal): Promise<DispatchView> {
+    const data = await apiFetch<unknown>(`/dispatch/sos/${sosId}`, { signal })
+    return DispatchViewSchema.parse(data)
+  },
+
+  async logDispatch(sosId: string, stationId: string, channel: 'call' | 'email'): Promise<void> {
+    await apiFetch(`/dispatch/sos/${sosId}/log`, {
+      method: 'POST',
+      body: JSON.stringify({ station_id: Number(stationId), channel }),
+    })
+  },
+
+  // ---- Live public signals (TinyFish-discovered, human-reviewed) ----
+  async getLiveSignals(status?: 'pending' | 'verified' | 'rejected', signal?: AbortSignal): Promise<LiveSignal[]> {
+    const qs = status ? `?status=${status}` : ''
+    const data = await apiFetch<unknown>(`/live-signals${qs}`, { signal })
+    return z.array(LiveSignalSchema).parse(data)
+  },
+
+  async refreshLiveSignals(): Promise<{ districts_queried: number; signals_added: number; errors: Array<{ district: string; error: string }> }> {
+    return apiFetch('/live-signals/refresh', { method: 'POST' })
+  },
+
+  async reviewLiveSignal(id: string, decision: 'verified' | 'rejected'): Promise<void> {
+    await apiFetch(`/live-signals/${id}/review`, { method: 'PATCH', body: JSON.stringify({ decision }) })
+  },
+
   // ---- ML (real backend) ----
   async getMLMetrics(signal?: AbortSignal): Promise<MLMetrics & {
     recent_30d_incidents?: number
     algorithm?: string
     cv_strategy?: string
     training_records?: number
+    holdout_records?: number
     feature_count?: number
+    holdout_r2?: number
+    holdout_mae?: number
+    train_r2?: number
+    naive_persistence_baseline_r2?: number
+    naive_persistence_baseline_accuracy?: number
+    data_source?: string
+    last_trained?: string
   }> {
     return apiFetch('/ml/metrics', { signal })
+  },
+
+  async getPublicStats(signal?: AbortSignal): Promise<{
+    mapped_districts: number
+    states_covered: number
+    latest_data_year: number | null
+  }> {
+    return apiFetch('/public/stats', { signal })
   },
 
   async getPrediction(

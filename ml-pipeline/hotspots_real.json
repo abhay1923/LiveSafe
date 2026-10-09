@@ -48,7 +48,7 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_uttar_pradesh_lucknow",
+    "id": "d_uttar_pradesh_lucknow_commissionarate",
     "district": "Lucknow Commissionarate",
     "state": "Uttar Pradesh",
     "lat": 26.8467,
@@ -72,31 +72,7 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_gujarat_ahmedabad",
-    "district": "Ahmedabad City",
-    "state": "Gujarat",
-    "lat": 23.0225,
-    "lon": 72.5714,
-    "risk_level": "critical",
-    "risk_score": 97.6,
-    "data_completeness": 100,
-    "total_crimes_reported": 51647,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "CRITICAL RISK: Ahmedabad City ranks in the top 2% of districts in Gujarat for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 94.4,
-    "predicted_next_year_risk_level": "critical"
-  },
-  {
-    "id": "d_karnataka_bengaluru",
+    "id": "d_karnataka_bengaluru_city",
     "district": "Bengaluru City",
     "state": "Karnataka",
     "lat": 12.9716,
@@ -118,30 +94,6 @@
     "geo_source": "exact",
     "predicted_next_year_severity": 85.3,
     "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_madhya_pradesh_indore",
-    "district": "Indore",
-    "state": "Madhya Pradesh",
-    "lat": 22.7196,
-    "lon": 75.8577,
-    "risk_level": "critical",
-    "risk_score": 96.9,
-    "data_completeness": 85.0,
-    "total_crimes_reported": 34632,
-    "crime_rate_per_lakh": 1056.9,
-    "reported_categories": [
-      "sll",
-      "women"
-    ],
-    "primary_warning": "CRITICAL RISK: Indore ranks in the top 2% of districts in Madhya Pradesh for Special & Local Laws offences (NCRB 2020 data).",
-    "trend": "falling",
-    "population_lakh": 32.77,
-    "radius_meters": 1910,
-    "data_year": 2020,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 99.2,
-    "predicted_next_year_risk_level": "critical"
   },
   {
     "id": "d_chhattisgarh_raipur",
@@ -192,7 +144,7 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_gujarat_surat",
+    "id": "d_gujarat_surat_city",
     "district": "Surat City",
     "state": "Gujarat",
     "lat": 21.1702,
@@ -216,7 +168,7 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_madhya_pradesh_bhopal",
+    "id": "d_madhya_pradesh_bhopal_commissionarate",
     "district": "Bhopal Commissionarate",
     "state": "Madhya Pradesh",
     "lat": 23.2599,
@@ -237,30 +189,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 89.8,
-    "predicted_next_year_risk_level": "critical"
-  },
-  {
-    "id": "d_madhya_pradesh_indore",
-    "district": "Indore Commissionarate",
-    "state": "Madhya Pradesh",
-    "lat": 22.7196,
-    "lon": 75.8577,
-    "risk_level": "critical",
-    "risk_score": 95.6,
-    "data_completeness": 100,
-    "total_crimes_reported": 20458,
-    "crime_rate_per_lakh": 624.3,
-    "reported_categories": [
-      "women",
-      "children"
-    ],
-    "primary_warning": "CRITICAL RISK: Indore Commissionarate ranks in the top 2% of districts in Madhya Pradesh for crimes against women (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 32.77,
-    "radius_meters": 1910,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 90.4,
     "predicted_next_year_risk_level": "critical"
   },
   {
@@ -408,30 +336,6 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_karnataka_bengaluru",
-    "district": "Bengaluru District",
-    "state": "Karnataka",
-    "lat": 12.9716,
-    "lon": 77.5946,
-    "risk_level": "critical",
-    "risk_score": 93.1,
-    "data_completeness": 100,
-    "total_crimes_reported": 11392,
-    "crime_rate_per_lakh": 118.4,
-    "reported_categories": [
-      "ipc",
-      "cyber"
-    ],
-    "primary_warning": "CRITICAL RISK: Bengaluru District ranks in the top 5% of districts in Karnataka for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "stable",
-    "population_lakh": 96.22,
-    "radius_meters": 2200,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 86.3,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_tamil_nadu_cuddalore",
     "district": "Cuddalore",
     "state": "Tamil Nadu",
@@ -480,7 +384,7 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_telangana_hyderabad",
+    "id": "d_telangana_hyderabad_commissionerate",
     "district": "Hyderabad Commissionerate",
     "state": "Telangana",
     "lat": 17.3849,
@@ -622,30 +526,6 @@
     "geo_source": "exact",
     "predicted_next_year_severity": 83.3,
     "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_madhya_pradesh_bhopal",
-    "district": "Bhopal",
-    "state": "Madhya Pradesh",
-    "lat": 23.2599,
-    "lon": 77.4126,
-    "risk_level": "critical",
-    "risk_score": 91.3,
-    "data_completeness": 85.0,
-    "total_crimes_reported": 34521,
-    "crime_rate_per_lakh": 1455.9,
-    "reported_categories": [
-      "ipc",
-      "sll"
-    ],
-    "primary_warning": "CRITICAL RISK: Bhopal ranks in the top 2% of districts in Madhya Pradesh for IPC crimes (general penal code offences) (NCRB 2020 data).",
-    "trend": "rising",
-    "population_lakh": 23.71,
-    "radius_meters": 1548,
-    "data_year": 2020,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 89.6,
-    "predicted_next_year_risk_level": "critical"
   },
   {
     "id": "d_assam_nagaon",
@@ -813,30 +693,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 82.2,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_arunachal_pradesh_papum_pare",
-    "district": "Papum Pare City",
-    "state": "Arunachal Pradesh",
-    "lat": 27.0816,
-    "lon": 93.6027,
-    "risk_level": "critical",
-    "risk_score": 88.7,
-    "data_completeness": 100,
-    "total_crimes_reported": 1010,
-    "crime_rate_per_lakh": 572.0,
-    "reported_categories": [
-      "ipc",
-      "sll"
-    ],
-    "primary_warning": "CRITICAL RISK: Papum Pare City ranks in the top 4% of districts in Arunachal Pradesh for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 1.77,
-    "radius_meters": 670,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 84.6,
     "predicted_next_year_risk_level": "high"
   },
   {
@@ -1080,7 +936,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_telangana_warangal",
+    "id": "d_telangana_warangal_commissionerate",
     "district": "Warangal Commissionerate",
     "state": "Telangana",
     "lat": 17.9758,
@@ -1176,7 +1032,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_uttar_pradesh_kanpur",
+    "id": "d_uttar_pradesh_kanpur_commissionarate",
     "district": "Kanpur Commissionarate",
     "state": "Uttar Pradesh",
     "lat": 26.448,
@@ -1368,7 +1224,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_gujarat_rajkot",
+    "id": "d_gujarat_rajkot_city",
     "district": "Rajkot City",
     "state": "Gujarat",
     "lat": 22.3039,
@@ -1440,30 +1296,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_tamil_nadu_thirunelveli",
-    "district": "Thirunelveli Rural",
-    "state": "Tamil Nadu",
-    "lat": 8.7139,
-    "lon": 77.7567,
-    "risk_level": "high",
-    "risk_score": 83.5,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 11251,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "women",
-      "children"
-    ],
-    "primary_warning": "HIGH RISK: Thirunelveli Rural ranks in the top 2% of districts in Tamil Nadu for crimes against women (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2013,
-    "geo_source": "fuzzy:tirunelveli",
-    "predicted_next_year_severity": 77.6,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_odisha_mayurbhanj",
     "district": "Mayurbhanj",
     "state": "Odisha",
@@ -1488,7 +1320,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_kerala_thiruvananthapuram",
+    "id": "d_kerala_trivandrum_rural",
     "district": "Trivandrum Rural",
     "state": "Kerala",
     "lat": 8.5241,
@@ -1656,30 +1488,6 @@
     "predicted_next_year_risk_level": "critical"
   },
   {
-    "id": "d_gujarat_vadodara",
-    "district": "Vadodara City",
-    "state": "Gujarat",
-    "lat": 22.3072,
-    "lon": 73.1812,
-    "risk_level": "high",
-    "risk_score": 82.6,
-    "data_completeness": 100,
-    "total_crimes_reported": 14701,
-    "crime_rate_per_lakh": 352.9,
-    "reported_categories": [
-      "cyber",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Vadodara City ranks in the top 6% of districts in Gujarat for cyber crimes (NCRB 2024 data).",
-    "trend": "stable",
-    "population_lakh": 41.66,
-    "radius_meters": 2200,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 82.1,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_tamil_nadu_thirunelveli",
     "district": "Thirunelveli",
     "state": "Tamil Nadu",
@@ -1800,7 +1608,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_maharashtra_pune",
+    "id": "d_maharashtra_pune_rural",
     "district": "Pune Rural",
     "state": "Maharashtra",
     "lat": 18.5204,
@@ -1870,30 +1678,6 @@
     "geo_source": "fuzzy:purba medinipur",
     "predicted_next_year_severity": 86.2,
     "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_uttar_pradesh_lucknow",
-    "district": "Lucknow",
-    "state": "Uttar Pradesh",
-    "lat": 26.8467,
-    "lon": 80.9462,
-    "risk_level": "high",
-    "risk_score": 81.9,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 17647,
-    "crime_rate_per_lakh": 384.5,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Lucknow ranks in the top 1% of districts in Uttar Pradesh for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "rising",
-    "population_lakh": 45.9,
-    "radius_meters": 2200,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 91.0,
-    "predicted_next_year_risk_level": "critical"
   },
   {
     "id": "d_uttarakhand_udhamsingh_nagar",
@@ -2061,30 +1845,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 80.8,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_haryana_gurugram",
-    "district": "Gurgaon",
-    "state": "Haryana",
-    "lat": 28.4595,
-    "lon": 77.0266,
-    "risk_level": "high",
-    "risk_score": 80.5,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 12870,
-    "crime_rate_per_lakh": 849.8,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Gurgaon ranks in the top 4% of districts in Haryana for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "rising",
-    "population_lakh": 15.14,
-    "radius_meters": 1205,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 84.7,
     "predicted_next_year_risk_level": "high"
   },
   {
@@ -2256,7 +2016,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_telangana_khammam",
+    "id": "d_telangana_khammam_commissionerate",
     "district": "Khammam Commissionerate",
     "state": "Telangana",
     "lat": 17.2473,
@@ -2352,30 +2112,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_uttar_pradesh_prayagraj",
-    "district": "Allahabad",
-    "state": "Uttar Pradesh",
-    "lat": 25.4358,
-    "lon": 81.8463,
-    "risk_level": "high",
-    "risk_score": 78.6,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 11477,
-    "crime_rate_per_lakh": 192.7,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Allahabad ranks in the top 5% of districts in Uttar Pradesh for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "rising",
-    "population_lakh": 59.54,
-    "radius_meters": 2200,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 83.2,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_punjab_hoshiarpur",
     "district": "Hoshiarpur",
     "state": "Punjab",
@@ -2397,30 +2133,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 80.4,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_gujarat_surat",
-    "district": "Surat Rural",
-    "state": "Gujarat",
-    "lat": 21.1702,
-    "lon": 72.8311,
-    "risk_level": "high",
-    "risk_score": 78.5,
-    "data_completeness": 100,
-    "total_crimes_reported": 21341,
-    "crime_rate_per_lakh": 350.9,
-    "reported_categories": [
-      "ipc",
-      "cyber"
-    ],
-    "primary_warning": "HIGH RISK: Surat Rural ranks in the top 6% of districts in Gujarat for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "rising",
-    "population_lakh": 60.81,
-    "radius_meters": 2200,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 84.5,
     "predicted_next_year_risk_level": "high"
   },
   {
@@ -2520,30 +2232,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_arunachal_pradesh_papum_pare",
-    "district": "Papum Pare",
-    "state": "Arunachal Pradesh",
-    "lat": 27.0816,
-    "lon": 93.6027,
-    "risk_level": "high",
-    "risk_score": 77.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 685,
-    "crime_rate_per_lakh": 387.9,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Papum Pare ranks in the top 5% of districts in Arunachal Pradesh for IPC crimes (general penal code offences) (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 1.77,
-    "radius_meters": 670,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 76.9,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_bihar_darbhanga",
     "district": "Darbhanga",
     "state": "Bihar",
@@ -2568,7 +2256,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_maharashtra_nasik",
+    "id": "d_maharashtra_nasik_rural",
     "district": "Nasik Rural",
     "state": "Maharashtra",
     "lat": 19.9975,
@@ -2688,30 +2376,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_rajasthan_kota",
-    "district": "Kota City",
-    "state": "Rajasthan",
-    "lat": 25.2138,
-    "lon": 75.8648,
-    "risk_level": "high",
-    "risk_score": 76.7,
-    "data_completeness": 100,
-    "total_crimes_reported": 8116,
-    "crime_rate_per_lakh": 416.0,
-    "reported_categories": [
-      "cyber",
-      "children"
-    ],
-    "primary_warning": "HIGH RISK: Kota City ranks in the top 7% of districts in Rajasthan for cyber crimes (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 19.51,
-    "radius_meters": 1380,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 76.4,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_punjab_bhatinda",
     "district": "Bhatinda",
     "state": "Punjab",
@@ -2784,7 +2448,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_uttar_pradesh_varanasi",
+    "id": "d_uttar_pradesh_varanasi_commissionarate",
     "district": "Varanasi Commissionarate",
     "state": "Uttar Pradesh",
     "lat": 25.3176,
@@ -2832,31 +2496,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_tamil_nadu_coimbatore",
-    "district": "Coimbatore",
-    "state": "Tamil Nadu",
-    "lat": 11.0168,
-    "lon": 76.9558,
-    "risk_level": "high",
-    "risk_score": 76.1,
-    "data_completeness": 100,
-    "total_crimes_reported": 12771,
-    "crime_rate_per_lakh": 369.3,
-    "reported_categories": [
-      "cyber",
-      "children"
-    ],
-    "primary_warning": "HIGH RISK: Coimbatore ranks in the top 10% of districts in Tamil Nadu for cyber crimes (NCRB 2024 data).",
-    "trend": "rising",
-    "population_lakh": 34.58,
-    "radius_meters": 1983,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 78.1,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_tamil_nadu_coimbatore",
+    "id": "d_tamil_nadu_coimbatore_city",
     "district": "Coimbatore City",
     "state": "Tamil Nadu",
     "lat": 11.0168,
@@ -2928,7 +2568,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_telangana_nizamabad",
+    "id": "d_telangana_nizamabad_commissionerate",
     "district": "Nizamabad Commissionerate",
     "state": "Telangana",
     "lat": 18.6734,
@@ -3048,30 +2688,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_tamil_nadu_madurai",
-    "district": "Madurai",
-    "state": "Tamil Nadu",
-    "lat": 9.9252,
-    "lon": 78.1198,
-    "risk_level": "high",
-    "risk_score": 75.3,
-    "data_completeness": 100,
-    "total_crimes_reported": 11101,
-    "crime_rate_per_lakh": 365.4,
-    "reported_categories": [
-      "ipc",
-      "cyber"
-    ],
-    "primary_warning": "HIGH RISK: Madurai ranks in the top 16% of districts in Tamil Nadu for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 30.38,
-    "radius_meters": 1815,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 75.9,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_andaman_and_nicobar_islands_south_andaman",
     "district": "South Andaman",
     "state": "A N Islands",
@@ -3165,30 +2781,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 74.2,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_telangana_hyderabad",
-    "district": "Hyderabad City",
-    "state": "Telangana",
-    "lat": 17.3849,
-    "lon": 78.4866,
-    "risk_level": "high",
-    "risk_score": 74.5,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 21141,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Hyderabad City ranks in the top 14% of districts in Telangana for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 77.0,
     "predicted_next_year_risk_level": "high"
   },
   {
@@ -3408,30 +3000,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_karnataka_belagavi",
-    "district": "Belagavi District",
-    "state": "Karnataka",
-    "lat": 15.8497,
-    "lon": 74.4977,
-    "risk_level": "high",
-    "risk_score": 73.7,
-    "data_completeness": 100,
-    "total_crimes_reported": 7179,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "sll",
-      "ipc"
-    ],
-    "primary_warning": "HIGH RISK: Belagavi District ranks in the top 10% of districts in Karnataka for Special & Local Laws offences (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 74.3,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
     "id": "d_karnataka_davanagere",
     "district": "Davanagere",
     "state": "Karnataka",
@@ -3600,7 +3168,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_kerala_ernakulam",
+    "id": "d_kerala_ernakulam_rural",
     "district": "Ernakulam Rural",
     "state": "Kerala",
     "lat": 9.9312,
@@ -3624,7 +3192,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_gujarat_ahmedabad",
+    "id": "d_gujarat_ahmedabad_rural",
     "district": "Ahmedabad Rural",
     "state": "Gujarat",
     "lat": 23.0225,
@@ -3717,30 +3285,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 75.1,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_tamil_nadu_madurai",
-    "district": "Madurai Rural",
-    "state": "Tamil Nadu",
-    "lat": 9.9252,
-    "lon": 78.1198,
-    "risk_level": "high",
-    "risk_score": 72.2,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 8357,
-    "crime_rate_per_lakh": 275.1,
-    "reported_categories": [
-      "women",
-      "ipc"
-    ],
-    "primary_warning": "HIGH RISK: Madurai Rural ranks in the top 7% of districts in Tamil Nadu for crimes against women (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 30.38,
-    "radius_meters": 1815,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 70.7,
     "predicted_next_year_risk_level": "high"
   },
   {
@@ -3912,7 +3456,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_punjab_amritsar",
+    "id": "d_punjab_amritsar_rural",
     "district": "Amritsar Rural",
     "state": "Punjab",
     "lat": 31.634,
@@ -3936,31 +3480,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_karnataka_bengaluru",
-    "district": "Bangalore Rural",
-    "state": "Karnataka",
-    "lat": 12.9716,
-    "lon": 77.5946,
-    "risk_level": "high",
-    "risk_score": 70.8,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 6069,
-    "crime_rate_per_lakh": 63.1,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "HIGH RISK: Bangalore Rural ranks in the top 11% of districts in Karnataka for IPC crimes (general penal code offences) (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 96.22,
-    "radius_meters": 2200,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 72.1,
-    "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_gujarat_vadodara",
+    "id": "d_gujarat_vadodara_rural",
     "district": "Vadodara Rural",
     "state": "Gujarat",
     "lat": 22.3072,
@@ -4272,31 +3792,7 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_tamil_nadu_salem",
-    "district": "Salem Rural",
-    "state": "Tamil Nadu",
-    "lat": 11.6643,
-    "lon": 78.146,
-    "risk_level": "medium",
-    "risk_score": 69.0,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 6094,
-    "crime_rate_per_lakh": 175.0,
-    "reported_categories": [
-      "children",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Salem Rural ranks in the top 12% of districts in Tamil Nadu for crimes against children (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 34.82,
-    "radius_meters": 1992,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 68.3,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_maharashtra_solapur",
+    "id": "d_maharashtra_solapur_rural",
     "district": "Solapur Rural",
     "state": "Maharashtra",
     "lat": 17.6599,
@@ -4344,7 +3840,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_karnataka_mysuru",
+    "id": "d_karnataka_mysuru_district",
     "district": "Mysuru District",
     "state": "Karnataka",
     "lat": 12.2958,
@@ -4486,30 +3982,6 @@
     "geo_source": "exact",
     "predicted_next_year_severity": 73.7,
     "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_tamil_nadu_coimbatore",
-    "district": "Coimbatore Urban",
-    "state": "Tamil Nadu",
-    "lat": 11.0168,
-    "lon": 76.9558,
-    "risk_level": "medium",
-    "risk_score": 68.0,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 18048,
-    "crime_rate_per_lakh": 521.9,
-    "reported_categories": [
-      "ipc",
-      "children"
-    ],
-    "primary_warning": "MEDIUM RISK: Coimbatore Urban ranks in the top 2% of districts in Tamil Nadu for IPC crimes (general penal code offences) (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 34.58,
-    "radius_meters": 1983,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 67.9,
-    "predicted_next_year_risk_level": "medium"
   },
   {
     "id": "d_rajasthan_dholpur",
@@ -4728,30 +4200,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_telangana_khammam",
-    "district": "Khammam",
-    "state": "Telangana",
-    "lat": 17.2473,
-    "lon": 80.1514,
-    "risk_level": "medium",
-    "risk_score": 67.0,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 12310,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Khammam ranks in the top 21% of districts in Telangana for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 67.7,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_uttar_pradesh_gautambudh_nagar",
     "district": "Gautambudh Nagar",
     "state": "Uttar Pradesh",
@@ -4848,30 +4296,6 @@
     "predicted_next_year_risk_level": "high"
   },
   {
-    "id": "d_dadra_and_nagar_haveli_and_daman_and_diu_daman",
-    "district": "Daman",
-    "state": "Daman Diu",
-    "lat": 20.3974,
-    "lon": 72.8328,
-    "risk_level": "medium",
-    "risk_score": 66.7,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 214,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Daman ranks in the top 33% of districts in Daman Diu for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 67.1,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_puducherry_puducherry",
     "district": "Puducherry",
     "state": "Puducherry",
@@ -4942,30 +4366,6 @@
     "geo_source": "exact",
     "predicted_next_year_severity": 71.9,
     "predicted_next_year_risk_level": "high"
-  },
-  {
-    "id": "d_uttar_pradesh_varanasi",
-    "district": "Varanasi",
-    "state": "Uttar Pradesh",
-    "lat": 25.3176,
-    "lon": 82.9739,
-    "risk_level": "medium",
-    "risk_score": 66.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 4790,
-    "crime_rate_per_lakh": 130.3,
-    "reported_categories": [
-      "women",
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Varanasi ranks in the top 23% of districts in Uttar Pradesh for crimes against women (NCRB 2014 data).",
-    "trend": "falling",
-    "population_lakh": 36.77,
-    "radius_meters": 2070,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 69.8,
-    "predicted_next_year_risk_level": "medium"
   },
   {
     "id": "d_madhya_pradesh_khargon",
@@ -5064,30 +4464,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_telangana_karimnagar",
-    "district": "Karimnagar",
-    "state": "Telangana",
-    "lat": 18.4385,
-    "lon": 79.1289,
-    "risk_level": "medium",
-    "risk_score": 65.2,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 10843,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Karimnagar ranks in the top 29% of districts in Telangana for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 68.1,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_kerala_kottayam",
     "district": "Kottayam",
     "state": "Kerala",
@@ -5112,7 +4488,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_punjab_jalandhar",
+    "id": "d_punjab_jalandhar_rural",
     "district": "Jalandhar Rural",
     "state": "Punjab",
     "lat": 31.326,
@@ -5208,7 +4584,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_arunachal_pradesh_papum_pare",
+    "id": "d_arunachal_pradesh_papum_pare_rural",
     "district": "Papum Pare Rural",
     "state": "Arunachal Pradesh",
     "lat": 27.0816,
@@ -5328,7 +4704,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_rajasthan_jaipur",
+    "id": "d_rajasthan_jaipur_rural",
     "district": "Jaipur Rural",
     "state": "Rajasthan",
     "lat": 26.9124,
@@ -5376,7 +4752,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_maharashtra_nagpur",
+    "id": "d_maharashtra_nagpur_rural",
     "district": "Nagpur Rural",
     "state": "Maharashtra",
     "lat": 21.1458,
@@ -5616,7 +4992,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_telangana_karimnagar",
+    "id": "d_telangana_karimnagar_commissionerate",
     "district": "Karimnagar Commissionerate",
     "state": "Telangana",
     "lat": 18.4385,
@@ -5688,7 +5064,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_maharashtra_amravati",
+    "id": "d_maharashtra_amravati_rural",
     "district": "Amravati Rural",
     "state": "Maharashtra",
     "lat": 20.9374,
@@ -5832,7 +5208,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_madhya_pradesh_indore",
+    "id": "d_madhya_pradesh_indore_rural",
     "district": "Indore Rural",
     "state": "Madhya Pradesh",
     "lat": 22.7196,
@@ -5973,30 +5349,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 64.0,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_andhra_pradesh_guntur",
-    "district": "Guntur",
-    "state": "Andhra Pradesh",
-    "lat": 16.3067,
-    "lon": 80.4365,
-    "risk_level": "medium",
-    "risk_score": 60.2,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 8197,
-    "crime_rate_per_lakh": 167.7,
-    "reported_categories": [
-      "women",
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Guntur ranks in the top 19% of districts in Andhra Pradesh for crimes against women (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": 48.88,
-    "radius_meters": 2200,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 65.6,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -6192,30 +5544,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_gujarat_rajkot",
-    "district": "Rajkot Rural",
-    "state": "Gujarat",
-    "lat": 22.3039,
-    "lon": 70.8022,
-    "risk_level": "medium",
-    "risk_score": 59.7,
-    "data_completeness": 100,
-    "total_crimes_reported": 14938,
-    "crime_rate_per_lakh": 392.6,
-    "reported_categories": [
-      "sll",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Rajkot Rural ranks in the top 22% of districts in Gujarat for Special & Local Laws offences (NCRB 2024 data).",
-    "trend": "rising",
-    "population_lakh": 38.05,
-    "radius_meters": 2121,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 68.4,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_haryana_palwal",
     "district": "Palwal",
     "state": "Haryana",
@@ -6285,29 +5613,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 62.1,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_punjab_ludhiana",
-    "district": "Ludhiana",
-    "state": "Punjab",
-    "lat": 30.901,
-    "lon": 75.8573,
-    "risk_level": "medium",
-    "risk_score": 58.7,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 33313,
-    "crime_rate_per_lakh": 952.1,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Ludhiana ranks in the top 6% of districts in Punjab for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 34.99,
-    "radius_meters": 1999,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 64.1,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -6407,29 +5712,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_rajasthan_jaipur",
-    "district": "Jaipur",
-    "state": "Rajasthan",
-    "lat": 26.9124,
-    "lon": 75.7873,
-    "risk_level": "medium",
-    "risk_score": 57.8,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 99527,
-    "crime_rate_per_lakh": 1502.0,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Jaipur ranks in the top 4% of districts in Rajasthan for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 66.26,
-    "radius_meters": 2200,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 57.9,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_west_bengal_paschim_medinipur",
     "district": "Paschim Medinipur",
     "state": "West Bengal",
@@ -6499,76 +5781,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 57.3,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_punjab_jalandhar",
-    "district": "Jalandhar",
-    "state": "Punjab",
-    "lat": 31.326,
-    "lon": 75.5762,
-    "risk_level": "medium",
-    "risk_score": 57.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 30397,
-    "crime_rate_per_lakh": 1385.7,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Jalandhar ranks in the top 8% of districts in Punjab for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 21.94,
-    "radius_meters": 1477,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 63.4,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_tamil_nadu_tiruppur",
-    "district": "Tiruppur",
-    "state": "Tamil Nadu",
-    "lat": 11.1085,
-    "lon": 77.3411,
-    "risk_level": "medium",
-    "risk_score": 57.1,
-    "data_completeness": 100,
-    "total_crimes_reported": 9781,
-    "crime_rate_per_lakh": 394.5,
-    "reported_categories": [
-      "ipc",
-      "cyber"
-    ],
-    "primary_warning": "MEDIUM RISK: Tiruppur ranks in the top 37% of districts in Tamil Nadu for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 24.79,
-    "radius_meters": 1591,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 57.4,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_kerala_thrissur",
-    "district": "Thrissur",
-    "state": "Kerala",
-    "lat": 10.5276,
-    "lon": 76.2144,
-    "risk_level": "medium",
-    "risk_score": 56.9,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 101593,
-    "crime_rate_per_lakh": 3254.9,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Thrissur ranks in the top 11% of districts in Kerala for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 31.21,
-    "radius_meters": 1848,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 58.2,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -6763,30 +5975,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_tamil_nadu_coimbatore",
-    "district": "Coimbatore Rural",
-    "state": "Tamil Nadu",
-    "lat": 11.0168,
-    "lon": 76.9558,
-    "risk_level": "medium",
-    "risk_score": 54.6,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 5194,
-    "crime_rate_per_lakh": 150.2,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Coimbatore Rural ranks in the top 37% of districts in Tamil Nadu for IPC crimes (general penal code offences) (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 34.58,
-    "radius_meters": 1983,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 55.0,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_rajasthan_bundi",
     "district": "Bundi",
     "state": "Rajasthan",
@@ -6955,7 +6143,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_tamil_nadu_madurai",
+    "id": "d_tamil_nadu_madurai_city",
     "district": "Madurai City",
     "state": "Tamil Nadu",
     "lat": 9.9252,
@@ -7051,30 +6239,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_kerala_kannur",
-    "district": "Kannur",
-    "state": "Kerala",
-    "lat": 11.8745,
-    "lon": 75.3704,
-    "risk_level": "medium",
-    "risk_score": 53.1,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 7748,
-    "crime_rate_per_lakh": 307.1,
-    "reported_categories": [
-      "women",
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Kannur ranks in the top 18% of districts in Kerala for crimes against women (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": 25.23,
-    "radius_meters": 1609,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 60.4,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_madhya_pradesh_khandwa",
     "district": "Khandwa",
     "state": "Madhya Pradesh",
@@ -7144,30 +6308,6 @@
     "data_year": 2014,
     "geo_source": "exact",
     "predicted_next_year_severity": 59.0,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_telangana_nizamabad",
-    "district": "Nizamabad",
-    "state": "Telangana",
-    "lat": 18.6734,
-    "lon": 78.0926,
-    "risk_level": "medium",
-    "risk_score": 52.7,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 8218,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "women",
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Nizamabad ranks in the top 43% of districts in Telangana for crimes against women (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 55.4,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -7243,29 +6383,6 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_punjab_amritsar",
-    "district": "Amritsar",
-    "state": "Punjab",
-    "lat": 31.634,
-    "lon": 74.8723,
-    "risk_level": "medium",
-    "risk_score": 52.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 15878,
-    "crime_rate_per_lakh": 637.5,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Amritsar ranks in the top 19% of districts in Punjab for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 24.91,
-    "radius_meters": 1596,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 60.2,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_karnataka_haveri",
     "district": "Haveri",
     "state": "Karnataka",
@@ -7311,29 +6428,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 54.0,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_kerala_kollam",
-    "district": "Kollam",
-    "state": "Kerala",
-    "lat": 8.8932,
-    "lon": 76.6141,
-    "risk_level": "medium",
-    "risk_score": 51.9,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 97571,
-    "crime_rate_per_lakh": 3702.4,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "MEDIUM RISK: Kollam ranks in the top 22% of districts in Kerala for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 26.35,
-    "radius_meters": 1654,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 51.6,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -7406,30 +6500,6 @@
     "data_year": 2013,
     "geo_source": "fuzzy:firozpur",
     "predicted_next_year_severity": 50.2,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_karnataka_mysuru",
-    "district": "Mysuru City",
-    "state": "Karnataka",
-    "lat": 12.2958,
-    "lon": 76.6394,
-    "risk_level": "medium",
-    "risk_score": 51.3,
-    "data_completeness": 100,
-    "total_crimes_reported": 3916,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "cyber",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Mysuru City ranks in the top 10% of districts in Karnataka for cyber crimes (NCRB 2024 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 53.3,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -7553,7 +6623,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_andhra_pradesh_guntur",
+    "id": "d_andhra_pradesh_guntur_urban",
     "district": "Guntur Urban",
     "state": "Andhra Pradesh",
     "lat": 16.3067,
@@ -7649,7 +6719,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_kerala_kozhikode",
+    "id": "d_kerala_kozhikode_rural",
     "district": "Kozhikode Rural",
     "state": "Kerala",
     "lat": 11.2588,
@@ -7697,7 +6767,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_maharashtra_aurangabad",
+    "id": "d_maharashtra_aurangabad_rural",
     "district": "Aurangabad Rural",
     "state": "Maharashtra",
     "lat": 19.8762,
@@ -7766,30 +6836,6 @@
     "data_year": 2024,
     "geo_source": "fuzzy:mahbubnagar",
     "predicted_next_year_severity": 48.3,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_haryana_ambala",
-    "district": "Ambala Urban",
-    "state": "Haryana",
-    "lat": 30.3782,
-    "lon": 76.7767,
-    "risk_level": "medium",
-    "risk_score": 47.6,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 2671,
-    "crime_rate_per_lakh": 236.7,
-    "reported_categories": [
-      "children",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Ambala Urban ranks in the top 35% of districts in Haryana for crimes against children (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 11.28,
-    "radius_meters": 1051,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 47.2,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -7937,7 +6983,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_kerala_thrissur",
+    "id": "d_kerala_thrissur_rural",
     "district": "Thrissur Rural",
     "state": "Kerala",
     "lat": 10.5276,
@@ -7961,7 +7007,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_andhra_pradesh_kadapa",
+    "id": "d_andhra_pradesh_cuddapah",
     "district": "Cuddapah",
     "state": "Andhra Pradesh",
     "lat": 14.4674,
@@ -8105,7 +7151,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_kerala_kollam",
+    "id": "d_kerala_kollam_rural",
     "district": "Kollam Rural",
     "state": "Kerala",
     "lat": 8.8932,
@@ -8342,30 +7388,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 48.3,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_tamil_nadu_madurai",
-    "district": "Madurai Urban",
-    "state": "Tamil Nadu",
-    "lat": 9.9252,
-    "lon": 78.1198,
-    "risk_level": "medium",
-    "risk_score": 42.7,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 3215,
-    "crime_rate_per_lakh": 105.8,
-    "reported_categories": [
-      "children",
-      "women"
-    ],
-    "primary_warning": "MEDIUM RISK: Madurai Urban ranks in the top 34% of districts in Tamil Nadu for crimes against children (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 30.38,
-    "radius_meters": 1815,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 43.0,
     "predicted_next_year_risk_level": "medium"
   },
   {
@@ -8849,7 +7871,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_punjab_ludhiana",
+    "id": "d_punjab_ludhiana_rural",
     "district": "Ludhiana Rural",
     "state": "Punjab",
     "lat": 30.901,
@@ -8871,30 +7893,6 @@
     "geo_source": "exact",
     "predicted_next_year_severity": 42.1,
     "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_tamil_nadu_salem",
-    "district": "Salem Urban",
-    "state": "Tamil Nadu",
-    "lat": 11.6643,
-    "lon": 78.146,
-    "risk_level": "low",
-    "risk_score": 38.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 2982,
-    "crime_rate_per_lakh": 85.6,
-    "reported_categories": [
-      "children",
-      "women"
-    ],
-    "primary_warning": "LOW RISK: Salem Urban ranks in the top 37% of districts in Tamil Nadu for crimes against children (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 34.82,
-    "radius_meters": 1992,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 37.2,
-    "predicted_next_year_risk_level": "low"
   },
   {
     "id": "d_uttar_pradesh_amroha",
@@ -8921,7 +7919,7 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_rajasthan_jodhpur",
+    "id": "d_rajasthan_jodhpur_rural",
     "district": "Jodhpur Rural",
     "state": "Rajasthan",
     "lat": 26.2389,
@@ -9017,7 +8015,7 @@
     "predicted_next_year_risk_level": "medium"
   },
   {
-    "id": "d_rajasthan_kota",
+    "id": "d_rajasthan_kota_rural",
     "district": "Kota Rural",
     "state": "Rajasthan",
     "lat": 25.2138,
@@ -9039,30 +8037,6 @@
     "geo_source": "exact",
     "predicted_next_year_severity": 45.7,
     "predicted_next_year_risk_level": "medium"
-  },
-  {
-    "id": "d_telangana_warangal",
-    "district": "Warangal",
-    "state": "Telangana",
-    "lat": 17.9758,
-    "lon": 79.6012,
-    "risk_level": "low",
-    "risk_score": 37.3,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 5022,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "LOW RISK: Warangal ranks in the top 71% of districts in Telangana for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 36.3,
-    "predicted_next_year_risk_level": "low"
   },
   {
     "id": "d_chhattisgarh_kanker",
@@ -9353,30 +8327,6 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_tamil_nadu_salem",
-    "district": "Salem City",
-    "state": "Tamil Nadu",
-    "lat": 11.6643,
-    "lon": 78.146,
-    "risk_level": "low",
-    "risk_score": 34.9,
-    "data_completeness": 100,
-    "total_crimes_reported": 12662,
-    "crime_rate_per_lakh": 363.6,
-    "reported_categories": [
-      "sll",
-      "children"
-    ],
-    "primary_warning": "LOW RISK: Salem City ranks in the top 10% of districts in Tamil Nadu for Special & Local Laws offences (NCRB 2024 data).",
-    "trend": "rising",
-    "population_lakh": 34.82,
-    "radius_meters": 1992,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 46.6,
-    "predicted_next_year_risk_level": "medium"
-  },
-  {
     "id": "d_west_bengal_dakshin_dinajpur",
     "district": "Dakshin Dinajpur",
     "state": "West Bengal",
@@ -9425,29 +8375,6 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_rajasthan_kota",
-    "district": "Kota",
-    "state": "Rajasthan",
-    "lat": 25.2138,
-    "lon": 75.8648,
-    "risk_level": "low",
-    "risk_score": 34.3,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 33935,
-    "crime_rate_per_lakh": 1739.4,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Kota ranks in the top 56% of districts in Rajasthan for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 19.51,
-    "radius_meters": 1380,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 34.6,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
     "id": "d_odisha_jharsuguda",
     "district": "Jharsuguda",
     "state": "Odisha",
@@ -9493,52 +8420,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 35.1,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_kerala_ernakulam",
-    "district": "Ernakulam",
-    "state": "Kerala",
-    "lat": 9.9312,
-    "lon": 76.2673,
-    "risk_level": "low",
-    "risk_score": 33.5,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 30516,
-    "crime_rate_per_lakh": 929.7,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Ernakulam ranks in the top 63% of districts in Kerala for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 32.82,
-    "radius_meters": 1912,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 35.7,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_rajasthan_jodhpur",
-    "district": "Jodhpur",
-    "state": "Rajasthan",
-    "lat": 26.2389,
-    "lon": 73.0243,
-    "risk_level": "low",
-    "risk_score": 33.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 33821,
-    "crime_rate_per_lakh": 917.3,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Jodhpur ranks in the top 58% of districts in Rajasthan for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 36.87,
-    "radius_meters": 2074,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 34.6,
     "predicted_next_year_risk_level": "low"
   },
   {
@@ -9611,30 +8492,6 @@
     "data_year": 2013,
     "geo_source": "fuzzy:datia",
     "predicted_next_year_severity": 35.3,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_telangana_warangal",
-    "district": "Warangal Urban",
-    "state": "Telangana",
-    "lat": 17.9758,
-    "lon": 79.6012,
-    "risk_level": "low",
-    "risk_score": 32.7,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 4302,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "LOW RISK: Warangal Urban ranks in the top 79% of districts in Telangana for IPC crimes (general penal code offences) (NCRB 2014 data).",
-    "trend": "stable",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2014,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 31.9,
     "predicted_next_year_risk_level": "low"
   },
   {
@@ -9734,7 +8591,7 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_tamil_nadu_tiruppur",
+    "id": "d_tamil_nadu_tiruppur_city",
     "district": "Tiruppur City",
     "state": "Tamil Nadu",
     "lat": 11.1085,
@@ -9878,29 +8735,6 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_kerala_thiruvananthapuram",
-    "district": "Trivandrum",
-    "state": "Kerala",
-    "lat": 8.5241,
-    "lon": 76.9366,
-    "risk_level": "low",
-    "risk_score": 28.5,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 24058,
-    "crime_rate_per_lakh": 728.7,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Trivandrum ranks in the top 74% of districts in Kerala for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 33.01,
-    "radius_meters": 1920,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 30.1,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
     "id": "d_bihar_kishanganj",
     "district": "Kishanganj",
     "state": "Bihar",
@@ -9922,53 +8756,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 29.1,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_kerala_kannur",
-    "district": "Kannur City",
-    "state": "Kerala",
-    "lat": 11.8745,
-    "lon": 75.3704,
-    "risk_level": "low",
-    "risk_score": 27.4,
-    "data_completeness": 100,
-    "total_crimes_reported": 15021,
-    "crime_rate_per_lakh": 595.4,
-    "reported_categories": [
-      "cyber",
-      "sll"
-    ],
-    "primary_warning": "LOW RISK: Kannur City ranks in the top 43% of districts in Kerala for cyber crimes (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 25.23,
-    "radius_meters": 1609,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 30.5,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_kerala_kozhikode",
-    "district": "Kozhikode",
-    "state": "Kerala",
-    "lat": 11.2588,
-    "lon": 75.7804,
-    "risk_level": "low",
-    "risk_score": 26.9,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 17140,
-    "crime_rate_per_lakh": 555.4,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Kozhikode ranks in the top 78% of districts in Kerala for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 30.86,
-    "radius_meters": 1834,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 29.0,
     "predicted_next_year_risk_level": "low"
   },
   {
@@ -10044,54 +8831,7 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_rajasthan_jodhpur",
-    "district": "Jodhpur City",
-    "state": "Rajasthan",
-    "lat": 26.2389,
-    "lon": 73.0243,
-    "risk_level": "low",
-    "risk_score": 24.9,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 21731,
-    "crime_rate_per_lakh": 589.4,
-    "reported_categories": [
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Jodhpur City ranks in the top 77% of districts in Rajasthan for IPC crimes (general penal code offences) (NCRB 2012 data).",
-    "trend": "stable",
-    "population_lakh": 36.87,
-    "radius_meters": 2074,
-    "data_year": 2012,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 30.5,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_karnataka_dharwad",
-    "district": "Dharwad Rural",
-    "state": "Karnataka",
-    "lat": 15.3647,
-    "lon": 75.124,
-    "risk_level": "low",
-    "risk_score": 24.6,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 1320,
-    "crime_rate_per_lakh": 71.5,
-    "reported_categories": [
-      "children",
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Dharwad Rural ranks in the top 65% of districts in Karnataka for crimes against children (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": 18.47,
-    "radius_meters": 1338,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 26.7,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_karnataka_belagavi",
+    "id": "d_karnataka_belagavi_city",
     "district": "Belagavi City",
     "state": "Karnataka",
     "lat": 15.8497,
@@ -10112,30 +8852,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 26.5,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_tamil_nadu_thirunelveli",
-    "district": "Thirunelveli Urban",
-    "state": "Tamil Nadu",
-    "lat": 8.7139,
-    "lon": 77.7567,
-    "risk_level": "low",
-    "risk_score": 24.4,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 1575,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "children",
-      "ipc"
-    ],
-    "primary_warning": "LOW RISK: Thirunelveli Urban ranks in the top 74% of districts in Tamil Nadu for crimes against children (NCRB 2013 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2013,
-    "geo_source": "fuzzy:tirunelveli",
-    "predicted_next_year_severity": 25.9,
     "predicted_next_year_risk_level": "low"
   },
   {
@@ -10187,30 +8903,6 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_haryana_ambala",
-    "district": "Ambala Rural",
-    "state": "Haryana",
-    "lat": 30.3782,
-    "lon": 76.7767,
-    "risk_level": "low",
-    "risk_score": 23.6,
-    "data_completeness": 65.0,
-    "total_crimes_reported": 1331,
-    "crime_rate_per_lakh": 118.0,
-    "reported_categories": [
-      "children",
-      "women"
-    ],
-    "primary_warning": "LOW RISK: Ambala Rural ranks in the top 77% of districts in Haryana for crimes against children (NCRB 2013 data).",
-    "trend": "stable",
-    "population_lakh": 11.28,
-    "radius_meters": 1051,
-    "data_year": 2013,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 23.3,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
     "id": "d_maharashtra_bhandara",
     "district": "Bhandara",
     "state": "Maharashtra",
@@ -10259,31 +8951,7 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_karnataka_kalaburgi",
-    "district": "Kalaburgi City",
-    "state": "Karnataka",
-    "lat": 17.3297,
-    "lon": 76.8343,
-    "risk_level": "low",
-    "risk_score": 23.2,
-    "data_completeness": 100,
-    "total_crimes_reported": 2787,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "ipc",
-      "women"
-    ],
-    "primary_warning": "LOW RISK: Kalaburgi City ranks in the top 74% of districts in Karnataka for IPC crimes (general penal code offences) (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2024,
-    "geo_source": "fuzzy:kalburgi",
-    "predicted_next_year_severity": 24.8,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_maharashtra_thane",
+    "id": "d_maharashtra_thane_rural",
     "district": "Thane Rural",
     "state": "Maharashtra",
     "lat": 19.2813,
@@ -10307,7 +8975,7 @@
     "predicted_next_year_risk_level": "low"
   },
   {
-    "id": "d_kerala_kannur",
+    "id": "d_kerala_kannur_rural",
     "district": "Kannur Rural",
     "state": "Kerala",
     "lat": 11.8745,
@@ -10424,30 +9092,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 23.2,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_tamil_nadu_thirunelveli",
-    "district": "Thirunelveli City",
-    "state": "Tamil Nadu",
-    "lat": 8.7139,
-    "lon": 77.7567,
-    "risk_level": "low",
-    "risk_score": 17.8,
-    "data_completeness": 100,
-    "total_crimes_reported": 3630,
-    "crime_rate_per_lakh": null,
-    "reported_categories": [
-      "cyber",
-      "women"
-    ],
-    "primary_warning": "LOW RISK: Thirunelveli City ranks in the top 65% of districts in Tamil Nadu for cyber crimes (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": null,
-    "radius_meters": 640,
-    "data_year": 2024,
-    "geo_source": "fuzzy:tirunelveli",
-    "predicted_next_year_severity": 18.5,
     "predicted_next_year_risk_level": "low"
   },
   {
@@ -10639,30 +9283,6 @@
     "data_year": 2024,
     "geo_source": "exact",
     "predicted_next_year_severity": 13.8,
-    "predicted_next_year_risk_level": "low"
-  },
-  {
-    "id": "d_madhya_pradesh_bhopal",
-    "district": "Bhopal Rural",
-    "state": "Madhya Pradesh",
-    "lat": 23.2599,
-    "lon": 77.4126,
-    "risk_level": "low",
-    "risk_score": 13.1,
-    "data_completeness": 100,
-    "total_crimes_reported": 2840,
-    "crime_rate_per_lakh": 119.8,
-    "reported_categories": [
-      "women",
-      "children"
-    ],
-    "primary_warning": "LOW RISK: Bhopal Rural ranks in the top 85% of districts in Madhya Pradesh for crimes against women (NCRB 2024 data).",
-    "trend": "falling",
-    "population_lakh": 23.71,
-    "radius_meters": 1548,
-    "data_year": 2024,
-    "geo_source": "exact",
-    "predicted_next_year_severity": 18.3,
     "predicted_next_year_risk_level": "low"
   }
 ]

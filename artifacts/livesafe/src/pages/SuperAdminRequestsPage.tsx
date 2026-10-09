@@ -82,6 +82,7 @@ export default function SuperAdminRequestsPage() {
         </div>
         <div className="sa-header-right">
           <span className="sa-user">{user?.name} ({user?.email})</span>
+          <button className="sa-refresh" onClick={() => navigate('/super-admin/dispatch')} title="SOS dispatch" style={{width:'auto',padding:'0 .75rem',fontSize:'.8rem'}}>SOS Dispatch</button>
           <button className="sa-refresh" onClick={() => load()} title="Refresh"><RefreshCw size={16}/></button>
           <button className="sa-logout" onClick={logout} title="Sign out"><LogOut size={16}/></button>
         </div>

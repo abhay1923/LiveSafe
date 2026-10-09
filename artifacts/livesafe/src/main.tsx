@@ -5,6 +5,7 @@ import { ErrorBoundary } from '@/app/components/ErrorBoundary'
 import { AuthProvider } from '@/app/hooks/useAuth'
 import App from './App'
 import './index.css'
+import './styles/government.css'
 
 const rootElement = document.getElementById('root')
 

@@ -70,7 +70,7 @@ function serialize(row: typeof sosAlertsTable.$inferSelect) {
   };
 }
 
-router.get("/sos", requireAuth, requireRole("police", "admin"), async (_req, res) => {
+router.get("/sos", requireAuth, requireRole("police", "admin", "super_admin"), async (_req, res) => {
   const rows = await db.select().from(sosAlertsTable).orderBy(desc(sosAlertsTable.createdAt));
   res.json(rows.map(serialize));
 });
