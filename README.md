@@ -1,244 +1,398 @@
-<p align="center">
-  <img src="artifacts/livesafe/public/favicon.svg" width="88" alt="LiveSafe logo" />
-</p>
+# LiveSafe
 
-<h1 align="center">LiveSafe AI</h1>
+LiveSafe is a public-safety web app for India. It shows crime-risk hotspots built from National Crime Records Bureau (NCRB) district data, lets citizens report incidents and send SOS alerts with their location, and gives police and administrators the tools to act on those alerts. A super admin can route each SOS to the nearest regional police station and log the call or email.
 
-<p align="center">
-  A real-data public safety dashboard for mapping crime risk, emergency SOS response, and transparent NCRB-based forecasting across India.
-</p>
-
-<p align="center">
-  <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1020" />
-  <img alt="Vite" src="https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
-  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-ready-3ECF8E?style=for-the-badge&logo=supabase&logoColor=0B1020" />
-  <img alt="NCRB data" src="https://img.shields.io/badge/NCRB-2010--2024-0EA5E9?style=for-the-badge" />
-</p>
-
-<p align="center">
-  <a href="#why-livesafe">Why</a>
-  |
-  <a href="#features">Features</a>
-  |
-  <a href="#quick-start">Quick Start</a>
-  |
-  <a href="#data-and-model">Data</a>
-  |
-  <a href="#project-map">Project Map</a>
-</p>
+Everything the app displays comes from a database or from a trained model's output file. There is no demo or placeholder data in the running app. Hotspots appear only after the NCRB data is loaded, and incidents and SOS alerts appear only after people use the app.
 
 ---
 
-## Why LiveSafe
+## Contents
 
-LiveSafe AI turns public safety data into an operational interface: citizens can report incidents and trigger SOS alerts, police teams can monitor response workflows, and administrators can inspect hotspot and model performance without hiding the uncertainty in the data.
+- [What the app does](#what-the-app-does)
+- [Repository layout](#repository-layout)
+- [Requirements](#requirements)
+- [Quick start (local)](#quick-start-local)
+- [Environment variables](#environment-variables)
+- [Loading the data](#loading-the-data)
+- [Running the app](#running-the-app)
+- [Accounts and roles](#accounts-and-roles)
+- [Using the main features](#using-the-main-features)
+- [API overview](#api-overview)
+- [Data, model and limitations](#data-model-and-limitations)
+- [Troubleshooting](#troubleshooting)
+- [Security notes](#security-notes)
+- [Development checks](#development-checks)
 
-The hotspot layer is built from real National Crime Records Bureau district-year data instead of fabricated demo values. The app currently ships with 445 real geocoded districts, Census-backed population fields where available, and a reproducible ML pipeline that reports both model performance and the naive baseline it is measured against.
+---
 
-## Product Snapshot
+## What the app does
 
-| Area | What it does |
-| --- | --- |
-| Hotspot map | Leaflet map of Indian districts with risk bands, safety warnings, trend labels, and nearest-zone location support. |
-| SOS response | Citizen SOS flow with live location updates, police acknowledgement, resolution status, and navigation handoff. |
-| Incident reporting | Structured reports with severity, coordinates, evidence fields, and lifecycle states. |
-| Dashboards | Recharts views for public safety trends, incident mix, response statistics, and model health. |
-| Access control | Citizen, police, admin, and super-admin roles with scoped screens and actions. |
-| Real-data pipeline | Python pipeline for NCRB normalization, geocoding, feature engineering, model training, and hotspot export. |
+| Area | What it does | Who |
+|---|---|---|
+| Hotspot map | Shows 387 districts with NCRB-derived risk levels, colour-coded by severity | Everyone signed in |
+| Dashboard | Totals for hotspots, critical zones, incidents and active SOS alerts, plus the model's holdout R² | Everyone signed in |
+| Report incident | Submit a crime report with type, description, severity and location | Citizens |
+| SOS | One-tap emergency alert with the device location and optional live tracking, sent to saved emergency contacts over WhatsApp when configured | Citizens |
+| SOS alerts | View, acknowledge and resolve alerts | Police and admins |
+| Analytics | Charts built from recorded incidents (status, severity, type, hour of day) | Police and admins |
+| Live public signals | Searches public web sources for high-risk districts through the TinyFish API. Each result is reviewed by a person before it is marked verified | Police review; admins run searches |
+| ML dashboard | Model metrics and the naive baseline they are compared with | Admins |
+| User management | Lists registered users | Admins |
+| Access requests | Approve or reject requests for police and admin accounts | Super admin |
+| SOS dispatch | For an active SOS, shows the nearest regional police station with Call and Email actions, and logs each contact | Super admin |
 
-## Features
+---
 
-- Real NCRB district-year hotspot data for 2010 to 2024.
-- 445 mapped districts with real coordinates from an open geodata source.
-- Risk bands: low, medium, high, and critical.
-- Express API with Drizzle ORM and PostgreSQL/Supabase support.
-- Vite frontend with React, TypeScript, Tailwind CSS, shadcn/ui patterns, Leaflet, and Recharts.
-- Real API-backed views for hotspots, incidents, analytics, dashboard statistics, SOS alerts, and users.
-- Supabase browser client helper and environment examples.
-- Reproducible ML scripts under `ml-pipeline/`.
+## Repository layout
 
-## Tech Stack
+```
+LiveSafe/
+├── artifacts/
+│   ├── api-server/        Express 5 API (auth, incidents, SOS, hotspots, dispatch, ML endpoints)
+│   ├── livesafe/          React 19 + Vite frontend (the web app)
+│   └── mockup-sandbox/    Design preview sandbox. Not needed to run the app
+├── lib/
+│   ├── db/                Drizzle ORM schema and database push command
+│   ├── api-zod/           Shared request and response schemas
+│   └── api-client-react/  Shared client helpers
+├── ml-pipeline/           Python pipeline that builds the hotspot data and trains the model
+├── scripts/
+│   ├── src/               Seed and import scripts
+│   └── data/              Bundled police station directory (CSV) and README
+├── attached_assets/       Archived files. Not used by the app at runtime
+└── README.md
+```
 
-| Layer | Tools |
-| --- | --- |
-| Frontend | React 19, Vite 7, TypeScript, Tailwind CSS, Radix UI, Leaflet, Recharts |
-| Backend | Node.js, Express 5, Zod, Pino |
-| Database | PostgreSQL, Supabase, Drizzle ORM |
-| ML pipeline | Python, pandas, NumPy, scikit-learn |
-| Workspace | pnpm monorepo |
+---
 
-## Quick Start
+## Requirements
 
-### Prerequisites
+Install these first. The versions below are the ones this project was run with.
 
-- Node.js 22 or newer
-- pnpm 10 or newer
-- PostgreSQL or Supabase for full backend mode
+| Tool | Version | Notes |
+|---|---|---|
+| Node.js | 22 LTS (20.19 or newer also works) | Vite 7 needs a recent Node. Download from nodejs.org |
+| pnpm | 11 | `npm install -g pnpm@11` |
+| PostgreSQL | 16 or newer | Tested with 18. Default port 5432 |
+| Git | any recent version | To clone the repository |
 
-### Install
+Optional, for regenerating the ML data only: Python 3.11+ with `pandas`, `numpy` and `scikit-learn`. See [`ml-pipeline/README.md`](ml-pipeline/README.md).
 
-```powershell
-cd "C:\path\to\LiveSafe"
+---
+
+## Quick start (local)
+
+Commands are shown for Windows (cmd) and macOS/Linux (bash). Where they differ, the Windows command comes first.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/abhay1923/LiveSafe.git
+cd LiveSafe
+```
+
+### 2. Install dependencies
+
+```bash
 pnpm install
 ```
 
-### Run Frontend
+If pnpm reports `ERR_PNPM_IGNORED_BUILDS` for `esbuild`, approve it and install again:
 
-The frontend expects the API server and database-backed endpoints to be available.
-
-```powershell
-$env:PORT="5173"
-pnpm --filter @workspace/livesafe run dev
+```bash
+pnpm approve-builds
+pnpm install
 ```
 
-Open `http://localhost:5173`.
+Choose `esbuild` when prompted.
 
-### Run With API And Database
+### 3. Create the database
 
-Create `artifacts/api-server/.env`:
+Create an empty database called `livesafe`. Using `psql` (you will be asked for the `postgres` password you set during install):
 
-```env
-PORT=3000
-CORS_ORIGIN=http://localhost:5173
-DATABASE_URL=postgresql://postgres.project-ref:YOUR_PASSWORD@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true
-DIRECT_URL=postgresql://postgres.project-ref:YOUR_PASSWORD@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_PUBLISHABLE_KEY=your-publishable-key
-SUPABASE_SECRET_KEY=your-secret-key
-SUPABASE_JWKS_URL=https://your-project.supabase.co/auth/v1/.well-known/jwks.json
+```bash
+psql -U postgres -h localhost -c "CREATE DATABASE livesafe;"
 ```
 
-Create `artifacts/livesafe/.env.local`:
+On Windows the `psql` program is usually at `"C:\Program Files\PostgreSQL\18\bin\psql.exe"`. If you get `already exists`, the database is ready.
 
-```env
-VITE_API_URL=http://localhost:3000/api
-VITE_API_PROXY_TARGET=http://localhost:3000
-PORT=5173
-BASE_PATH=/
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+### 4. Create the environment files
+
+Copy the templates and fill in your values (see [Environment variables](#environment-variables)):
+
+```bash
+cp artifacts/api-server/.env.example artifacts/api-server/.env
+cp artifacts/livesafe/.env.example artifacts/livesafe/.env.local
 ```
 
-Push the database schema:
+Windows cmd:
 
-```powershell
-$env:DATABASE_URL="postgresql://postgres.project-ref:YOUR_PASSWORD@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+```cmd
+copy artifacts\api-server\.env.example artifacts\api-server\.env
+copy artifacts\livesafe\.env.example artifacts\livesafe\.env.local
+```
+
+### 5. Create the tables
+
+Set the database URL for this terminal session and push the schema:
+
+```bash
+export DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/livesafe"
 pnpm --filter @workspace/db run push
 ```
 
-Seed hotspots after schema setup:
+Windows cmd:
 
-```powershell
-$env:DATABASE_URL="postgresql://postgres.project-ref:YOUR_PASSWORD@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+```cmd
+set DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/livesafe
+pnpm --filter @workspace/db run push
+```
+
+If your password contains special characters, encode them in the URL (for example `@` becomes `%40`). See [Environment variables](#environment-variables).
+
+### 6. Load the data
+
+```bash
 pnpm --filter @workspace/scripts run seed-hotspots
+pnpm --filter @workspace/scripts run import-police-directory
 ```
 
-Start the API:
+Expected output: `Upserted 387 hotspot rows` and `Imported 59 station records and 36 State/UT coverage rows`. Both scripts are safe to run again.
 
-```powershell
-pnpm --filter @workspace/api-server run dev
-```
+### 7. Start the API
 
-Start the frontend in another shell:
+Terminal 1:
 
-```powershell
-pnpm --filter @workspace/livesafe run dev
-```
-
-## Data And Model
-
-The ML layer is intentionally transparent. Earlier demo claims were removed and replaced with a reproducible pipeline built from NCRB district-year CSVs.
-
-| Metric | Result |
-| --- | --- |
-| Model | GradientBoostingRegressor |
-| Holdout window | 2023 to 2024 |
-| Holdout R2 | 0.886 |
-| Naive persistence R2 | 0.929 |
-| Risk-class accuracy | 77.7% |
-| Naive persistence accuracy | 82.5% |
-| Geocoded districts | 445 of 1,326 reported districts |
-| Critical districts | 40 |
-
-The model is useful as a transparent forecasting experiment, but it does not decisively beat a simple "next year equals this year" baseline. That finding is reported in the product and docs because district-level severity is highly persistent year over year.
-
-Read the full methodology in [`ml-pipeline/README.md`](./ml-pipeline/README.md).
-
-## Project Map
-
-```text
-LiveSafe
-|-- artifacts
-|   |-- livesafe              React + Vite frontend
-|   |   |-- src
-|   |   |   |-- app            hooks and API service
-|   |   |   |-- components     UI, dashboards, map components
-|   |   |   |-- pages          route-level screens
-|   |   |   |-- types          shared frontend types
-|   |   |   `-- utils          Supabase client helpers
-|   |   `-- public            static assets and hotspot JSON
-|   `-- api-server            Express API
-|       `-- src
-|           |-- routes         auth, incidents, SOS, hotspots, ML
-|           |-- lib            auth, logger, seed helpers
-|           `-- middlewares
-|-- lib
-|   |-- db                    Drizzle schema and database client
-|   |-- api-spec              OpenAPI specification
-|   |-- api-zod               runtime validation schemas
-|   `-- api-client-react      generated API client
-|-- ml-pipeline               NCRB processing and model training
-`-- scripts                   seed and workspace utilities
-```
-
-## API Surface
-
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `GET` | `/api/health` | Server health check |
-| `POST` | `/api/auth/register` | Create a user |
-| `POST` | `/api/auth/login` | Start a session |
-| `GET` | `/api/auth/me` | Read current user |
-| `GET` | `/api/hotspots` | Read hotspot data |
-| `POST` | `/api/sos` | Trigger SOS alert |
-| `GET` | `/api/sos` | List SOS alerts |
-| `POST` | `/api/sos/:id/acknowledge` | Acknowledge an alert |
-| `POST` | `/api/sos/:id/resolve` | Resolve an alert |
-| `POST` | `/api/incidents` | Report an incident |
-| `GET` | `/api/incidents` | List incidents |
-| `GET` | `/api/dashboard/stats` | Dashboard metrics |
-| `GET` | `/api/ml/metrics` | Model metrics |
-
-## Useful Commands
-
-```powershell
-pnpm run typecheck
-pnpm --filter @workspace/livesafe run typecheck
-pnpm --filter @workspace/livesafe run build
+```bash
 pnpm --filter @workspace/api-server run build
-pnpm --filter @workspace/db run push
-pnpm --filter @workspace/scripts run seed-hotspots
+pnpm --filter @workspace/api-server run start
 ```
 
-## Security Notes
+Wait for `Server listening`. On the first start, the super admin account is created. Its email is logged, and if `SUPER_ADMIN_PASSWORD` was not set, the generated password is logged once. Save it.
 
-- Keep `.env` and `.env.local` out of git.
-- Never commit Supabase secret keys or database passwords.
-- Use the publishable Supabase key in the browser only.
-- Use the database password only for server-side API, schema, and seed commands.
+Check it is up:
 
-## Acknowledgements
+```bash
+curl http://localhost:3000/api/healthz
+```
 
-- National Crime Records Bureau for the source crime data.
-- OpenStreetMap and CARTO for map tiles.
-- Vynex Indian cities geodata for open coordinate matching.
-- Census of India 2011 for population references.
-- scikit-learn, pandas, Drizzle, Supabase, React, and Vite.
+You should see `{"status":"ok"}`.
+
+### 8. Start the frontend
+
+Terminal 2:
+
+```bash
+pnpm --filter @workspace/livesafe run dev
+```
+
+Open **http://localhost:5173** in your browser.
 
 ---
 
-<p align="center">
-  <strong>LiveSafe AI</strong><br />
-  Built for clearer public safety decisions, with real data and honest uncertainty.
-</p>
+## Environment variables
+
+### API server: `artifacts/api-server/.env`
+
+| Variable | Required | Example | Purpose |
+|---|---|---|---|
+| `PORT` | Yes | `3000` | Port the API listens on |
+| `DATABASE_URL` | Yes | `postgresql://postgres:pass%40word@localhost:5432/livesafe` | PostgreSQL connection. Encode special characters in the password |
+| `CORS_ORIGIN` | Recommended | `http://localhost:5173` | Frontend origin allowed to call the API |
+| `SUPER_ADMIN_EMAIL` | No | `superadmin@livesafe.local` | Email for the super admin account created on first start |
+| `SUPER_ADMIN_PASSWORD` | Recommended | a strong password | Password for that account. If it is unset on first start, a random one is generated and logged once |
+| `TINYFISH_API_KEY` | Optional | your key | Enables the live public signals search. Without it, the search returns "TinyFish is not configured" |
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_WHATSAPP_FROM` | Optional | | WhatsApp notifications to emergency contacts when an SOS is sent |
+| `LOG_LEVEL` | No | `info` | Logging level |
+
+### Frontend: `artifacts/livesafe/.env.local`
+
+| Variable | Value for local use | Purpose |
+|---|---|---|
+| `VITE_API_URL` | `http://localhost:3000/api` | Where the browser sends API requests |
+| `VITE_API_PROXY_TARGET` | `http://localhost:3000` | Used by the Vite dev server to forward `/api` requests |
+
+The frontend template also lists `VITE_SUPABASE_*` variables. The app does not use them and they can be deleted.
+
+---
+
+## Loading the data
+
+| Step | Command | What it does |
+|---|---|---|
+| Schema | `pnpm --filter @workspace/db run push` | Creates or updates all tables. Run after pulling new code |
+| Hotspots | `pnpm --filter @workspace/scripts run seed-hotspots` | Loads the 387 NCRB-derived districts from `ml-pipeline/hotspots_real.json` |
+| Police directory | `pnpm --filter @workspace/scripts run import-police-directory` | Loads station contacts and State/UT portal links from `scripts/data/police-directory/` |
+
+To regenerate the hotspot data from the NCRB CSV files, see [`ml-pipeline/README.md`](ml-pipeline/README.md).
+
+---
+
+## Running the app
+
+### Development (recommended for local use)
+
+Two terminals, as in the quick start:
+
+```bash
+# Terminal 1: API on http://localhost:3000
+pnpm --filter @workspace/api-server run build
+pnpm --filter @workspace/api-server run start
+
+# Terminal 2: frontend on http://localhost:5173
+pnpm --filter @workspace/livesafe run dev
+```
+
+Stop either server with `Ctrl+C`.
+
+### Production build
+
+```bash
+pnpm --filter @workspace/livesafe run build      # writes static files to artifacts/livesafe/dist
+pnpm --filter @workspace/livesafe run serve      # previews the built frontend
+```
+
+For a real deployment, serve the built frontend over HTTPS from a web server or hosting platform, run the API behind a reverse proxy that uses HTTPS, set `CORS_ORIGIN` to your frontend's address, and set `VITE_API_URL` to the API's public URL before building. This setup has not been tested in this repository.
+
+---
+
+## Accounts and roles
+
+On first start, the API creates the super admin account from `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD`. Other accounts are created in one of two ways:
+
+- **Citizens** sign up on the login page. No approval is needed.
+- **Police and admin** accounts are requested on the login page with a badge number. A super admin approves or rejects the request on the **Access Requests** page. Until approved, sign-in is refused and the app says the request is pending.
+
+| Role | Can do |
+|---|---|
+| Citizen | View the map and dashboard, report incidents, send SOS alerts, manage emergency contacts |
+| Police | Everything citizens can do, plus view and act on SOS alerts, view analytics, review live signals |
+| Admin | Everything police can do, plus run live-signal searches, view the ML dashboard and user list |
+| Super admin | Approve or reject access requests, open the SOS Dispatch page |
+
+Use a fresh database for any real deployment. Do not reuse the local super admin password anywhere else.
+
+---
+
+## Using the main features
+
+**Report an incident (citizen):** open **Report Incident**, choose the type, add a description, and use the location button. The browser asks for permission. If location is unavailable, enter coordinates manually.
+
+**Send an SOS (citizen):** on the map, press the SOS button. The app requests a fresh high-accuracy location. It never sends a guessed or cached position. If location fails, the app shows the reason and tells you to call 112. After a successful send, the app shows the location accuracy in metres. Accuracy above 100 m is flagged. Laptops often locate using Wi-Fi, which can be inaccurate by hundreds of metres. A phone with GPS gives better results.
+
+**Acknowledge an SOS (police):** open **SOS Alerts**, select an alert, and acknowledge or resolve it.
+
+**Dispatch an SOS (super admin):** open **Access Requests** and press **SOS Dispatch**. Select an active alert. The app finds the nearest mapped district and lists the compiled police stations for it:
+
+- **Routed:** the station list is shown. Confirm the closest station on a map before calling.
+- **State contacts not compiled** or **District not in directory:** the app shows the official state police portal and asks you to use 112.
+- **Outside routing area:** the nearest mapped district is more than 50 km away, so no station is suggested.
+
+**Call** and **Email** open your phone or mail app. The email is pre-filled with the reference, reporter name, coordinates and a map link. Each action is recorded in the dispatch log. The app never places calls or sends email by itself.
+
+**Live public signals (optional):** requires `TINYFISH_API_KEY`. On the Analytics page, an admin presses **Check sources** to search public web results for the highest-risk districts. Results are saved as pending. A police officer or admin marks each one as verified or rejected. Only verified items are counted as verified. Nothing from these searches changes risk scores.
+
+---
+
+## API overview
+
+All endpoints are under `/api`. Most require a session token in the `Authorization: Bearer <token>` header, obtained from `POST /auth/login`.
+
+| Method and path | Access | Purpose |
+|---|---|---|
+| `GET /healthz`, `GET /healthz/db` | Public | Health checks |
+| `GET /public/stats` | Public | Mapped district and state counts for the landing page |
+| `POST /auth/signup-citizen`, `POST /auth/login`, `POST /auth/logout`, `GET /auth/me` | Public / signed in | Accounts and sessions |
+| `POST /auth/request-access` | Public | Request a police or admin account |
+| `GET /hotspots` | Signed in | NCRB-derived districts |
+| `GET /dashboard/stats` | Signed in | Dashboard totals |
+| `GET /ml/metrics` | Signed in | Holdout accuracy, R² and baseline figures |
+| `POST /ml/predict` | Signed in | Risk estimate for a location |
+| `POST /incidents`, `GET /incidents` | Citizen create; signed in read | Incident reports |
+| `GET /incidents/stats` | Police, admin | Aggregates for analytics |
+| `POST /sos`, `GET /sos` | Citizen create; police, admin, super admin read | SOS alerts |
+| `POST /sos/:id/location` | Owner | Live location updates |
+| `PATCH /sos/:id/acknowledge`, `PATCH /sos/:id/resolve` | Police, admin | Handle alerts |
+| `GET /sos/contacts`, `POST /sos/contacts` | Citizen | Emergency contacts |
+| `GET /dispatch/sos/:id`, `POST /dispatch/sos/:id/log` | Super admin | Regional station routing and dispatch log |
+| `GET /live-signals`, `PATCH /live-signals/:id/review`, `POST /live-signals/refresh` | Police / admin | Public signals review; refresh needs TinyFish |
+| `GET /admin/access-requests`, `POST /admin/access-requests/:id/approve`, `POST /admin/access-requests/:id/reject` | Super admin | Access requests |
+| `GET /admin/users` | Admin, super admin | User list |
+
+---
+
+## Data, model and limitations
+
+**Sources**
+- NCRB district-year crime data, 2010 to 2024, as supplied in `ml-pipeline/`. Five crime heads are covered: IPC offences, Special and Local Laws, crimes against women, crimes against children, and cyber crime.
+- Census 2011 district population, used where a district matched.
+- Geographic coordinates from an open city dataset ([Vynex/indian-cities-geodata](https://github.com/Vynex/indian-cities-geodata)).
+- Police station contacts from official police pages. The sources are listed on each row in `scripts/data/police-directory/`.
+
+**Coverage**
+- 1,231 district reporting units after de-duplication. 387 are placed on the map, because only those could be matched to a coordinate. All 1,231 contribute to the state summaries.
+- 29 states have at least one mapped district.
+- The police directory covers 59 stations: Faridabad and Jind (Haryana) and parts of West Bengal (Asansol Durgapur and Alipurduar). Every other State and UT has only its official portal link. Missing numbers do not mean a station has no phone.
+
+**Model** (GradientBoostingRegressor, trained on 2010 to 2022, tested on 2023 to 2024)
+- Holdout R² 0.886 for severity. A naive "same as last year" baseline scores 0.929 on the same test. The model does not beat this baseline, and the app reports both numbers.
+- Risk-class accuracy 77.7%, against 82.5% for the baseline.
+- The data is annual. It does not show live crime.
+
+**Other limits**
+- Incidents and SOS alerts are only what people report in the app.
+- SOS location accuracy depends on the device, as described above.
+- Police station phone numbers and emails were copied from official pages and must be confirmed before use.
+- WhatsApp alerts and live public signals only work after you add the relevant keys.
+- There is no automated test suite. Use the typecheck and build commands below.
+- `artifacts/livesafe/src/utils/supabase/` is unused.
+
+---
+
+## Troubleshooting
+
+| Symptom | Cause and fix |
+|---|---|
+| `password authentication failed for user "postgres"` | Wrong password, or the URL was typed incorrectly. Test with `psql -U postgres -h localhost -d livesafe` |
+| `No schema files found` when pushing | Use the current code. `lib/db/drizzle.config.ts` must point to `./src/schema/index.ts` as a relative path |
+| `relation "..." does not exist` | The schema push has not been run. Run it, then rerun the failing script |
+| `ERR_PNPM_IGNORED_BUILDS` (esbuild) | Run `pnpm approve-builds`, select `esbuild`, then `pnpm install` |
+| `drizzle-kit is not recognized` | Dependencies are not installed. Run `pnpm install` from the repository root |
+| Map shows 0 hotspots | Run the hotspot seed command |
+| Dispatch page shows "Outside routing area" for a known place | The nearest mapped district may be far away, or the place is outside India's mapped districts |
+| `TinyFish is not configured` | Expected unless `TINYFISH_API_KEY` is set |
+| Frontend loads but shows red errors | Check the API is running on port 3000 and `VITE_API_URL` is correct. Press F12 and read the Console tab |
+| Port already in use | Stop the other process, or change `PORT` (API) or `PORT` (frontend `.env.local`) |
+
+---
+
+## Security notes
+
+- `.env` and `.env.local` files contain secrets. They are excluded from git by `.gitignore`. Never commit them.
+- Rotate any key or password that has been shared in chat, email or screenshots.
+- Set `SUPER_ADMIN_PASSWORD` to a strong value. Do not use the same password as your database.
+- Use HTTPS in any deployment. The app's login tokens are sent in headers, so plain HTTP exposes them.
+- SOS and dispatch data contain personal and location information. Restrict database and dashboard access accordingly.
+
+---
+
+## Development checks
+
+From the repository root:
+
+```bash
+pnpm run typecheck                                 # type-checks the libraries, API, frontend and scripts
+pnpm --filter @workspace/api-server run build      # builds the API
+pnpm --filter @workspace/livesafe run build        # builds the frontend for production
+```
+
+---
+
+## Acknowledgements
+
+- NCRB for the published crime data.
+- Census of India for district population.
+- Vynex for the open city geodata.
+- The official state police portals linked in the police directory.
+
+License: not specified yet. Add a `LICENSE` file before reusing or redistributing this code.
